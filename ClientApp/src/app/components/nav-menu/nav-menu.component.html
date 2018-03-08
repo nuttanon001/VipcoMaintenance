@@ -1,0 +1,156 @@
+<nav class="navbar navbar-expand navbar-dark bg-bar">
+  <!--<a class="navbar-brand" href="#">Always expand</a>-->
+  <a class="navbar-brand" href="http://192.168.2.31/">
+    <img src="/maintenance/images/logoVIPCO.png" width="36" height="36" class="d-inline-block align-top">
+    Vipco Painting System (To apps page)
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Mynavbars"
+          aria-controls="Mynavbars" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse pl-4" id="Mynavbars" style="z-index:1500;">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/paint-task/paint-task-master-schedule','1']" routerLinkActive="active">
+          <i class="fa fa-calendar-o" aria-hidden="true"></i>
+          <span>Paint Task Schedule</span>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="GetLevel1">
+        <a #mainMenu="matMenuTrigger" [matMenuTriggerFor]="menu1"
+           (onMenuOpen)="menuOnCloseMenu(1)" (mouseover)="menuOnOpenMenu(1)"
+           class="nav-link" [routerLink]="['/initial-painting/workitem-master']" routerLinkActive="active">
+          <i class="fa fa-flag" aria-hidden="true"></i>
+          <span>Request Painting</span>
+        </a>
+        <!--initial-painting-->
+        <mat-menu #menu1="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item [routerLink]="['/initial-painting/workitem-master']" routerLinkActive="active">
+            <i class="fa fa-clone" aria-hidden="true"></i>
+            <span>Request Painting By initial</span>
+          </button>
+
+          <button mat-menu-item [routerLink]="['/require-list-painting-initial']" routerLinkActive="active">
+            <i class="fa fa-signal fa-rotate-90" aria-hidden="true"></i>
+            <span>List Painting By initial</span>
+          </button>
+          <hr />
+          <button mat-menu-item [routerLink]="['/initial-painting']" routerLinkActive="active" [disabled]="!GetLevel2">
+            <i class="fa fa-assistive-listening-systems" aria-hidden="true"></i>
+            <span>initial Painting</span>
+          </button>
+          <button mat-menu-item [routerLink]="['/require-painting']" routerLinkActive="active">
+            <i class="fa fa-flag" aria-hidden="true"></i>
+            <span>Request Painting</span>
+          </button>
+        </mat-menu>
+      </li>
+      <li class="nav-item" *ngIf="GetLevel2">
+        <a #subMenu="matMenuTrigger" [matMenuTriggerFor]="menu2"
+           (onMenuOpen)="menuOnCloseMenu(2)" (mouseover)="menuOnOpenMenu(2)"
+           class="nav-link">
+          <i class="fa fa-comments-o" aria-hidden="true"></i>
+          Paint Process
+        </a>
+        <mat-menu #menu2="matMenu" [overlapTrigger]="false">
+          <div>
+            <button mat-menu-item [routerLink]="['/require-painting/require-schedule']" routerLinkActive="active">
+              <i class="fa fa-history" aria-hidden="true"></i>
+              <span>RequestPaint Waiting</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/paint-task/paint-task-master-schedule','2']" routerLinkActive="active">
+              <i class="fa fa-tasks" aria-hidden="true"></i>
+              <span>PaintTask(Processing)</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/paint-task']" routerLinkActive="active">
+              <i class="fa fa-paint-brush" aria-hidden="true"></i>
+              <span>PaintTaskMaster</span>
+            </button>
+            <hr />
+            <button mat-menu-item [routerLink]="['/project']" routerLinkActive="active">
+              <i class="fa fa-product-hunt" aria-hidden="true"></i>
+              <span>JobNumber</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/blast-room']" routerLinkActive="active">
+              <i class="fa fa-rocket" aria-hidden="true"></i>
+              <span>Blast Room</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/paint-team']" routerLinkActive="active">
+              <i class="fa fa-group" aria-hidden="true"></i>
+              <span>Paint Team</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/standard-time']" routerLinkActive="active">
+              <i class="fa fa-hourglass-2" aria-hidden="true"></i>
+              <span>Standard-Time</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/surface-type']" routerLinkActive="active">
+              <i class="fa fa-leaf" aria-hidden="true"></i>
+              <span>Surface-Type</span>
+            </button>
+            <hr />
+            <button mat-menu-item [routerLink]="['/sub-payment']" routerLinkActive="active">
+              <i class="fa fa-dollar" aria-hidden="true"></i>
+              <span>SubPayment</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/payment-detail']" routerLinkActive="active">
+              <i class="fa fa-info" aria-hidden="true"></i>
+              <span>Payment Info</span>
+            </button>
+          </div>
+        </mat-menu>
+      </li>
+
+      <li class="nav-item" *ngIf="GetLevel2">
+        <a #subMenu2="matMenuTrigger" [matMenuTriggerFor]="menu3"
+           (onMenuOpen)="menuOnCloseMenu(3)" (mouseover)="menuOnOpenMenu(3)"
+           class="nav-link">
+          <i class="fa fa-inbox" aria-hidden="true"></i>
+          Paint Stock
+        </a>
+        <mat-menu #menu3="matMenu" [overlapTrigger]="false">
+          <div>
+            <button mat-menu-item [routerLink]="['/color-item']" routerLinkActive="active">
+              <i class="fa fa-tint" aria-hidden="true"></i>
+              <span>ColorItem</span>
+            </button>
+
+            <button mat-menu-item [routerLink]="['/movement-stock']" routerLinkActive="active">
+              <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+              <span>Movement Stock</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/movement-status']" routerLinkActive="active">
+              <i class="fa fa-map-pin" aria-hidden="true"></i>
+              <span>Movement Status</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/finished-goods']" routerLinkActive="active">
+              <i class="fa fa-sign-in fa-rotate-90" aria-hidden="true"></i>
+              <span>Finished Goods</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/requisition']" routerLinkActive="active">
+              <i class="fa fa-sign-out fa-rotate-270" aria-hidden="true"></i>
+              <span>Requisition</span>
+            </button>
+          </div>
+        </mat-menu>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a *ngIf="showLogin; else elseBlock" [routerLink]="['/login']">
+          <i class="fa fa-sign-in" aria-hidden="true"></i>
+          Login
+        </a>
+        <ng-template #elseBlock>
+          <a class="mx-1" [routerLink]="['/register','1']" routerLinkActive="active">
+            Welcome <i>{{userName}}</i>
+          </a>
+          <a (click)="onLogOut()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            Logout
+          </a>
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+</nav>

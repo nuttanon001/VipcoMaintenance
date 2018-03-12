@@ -29,7 +29,7 @@ export abstract class BaseRestService<Model>{
     this.handleError = httpErrorHandler.createHandleError(serviceName);
   }
   /* Parameter */
-  private handleError: HandleError;
+  public handleError: HandleError;
 
   //===================== Privete Members =======================\\
   // extract data

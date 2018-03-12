@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 using Microsoft.EntityFrameworkCore;
 
-using VipcoMaintenance.Models.Contexts;
+using VipcoMaintenance.Models.Maintenances;
 
 namespace VipcoMaintenance.Services
 {

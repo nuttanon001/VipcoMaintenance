@@ -10,6 +10,9 @@ using Microsoft.EntityFrameworkCore;
 
 using AutoMapper;
 
+using VipcoMaintenance.Models.Machines;
+using VipcoMaintenance.Models.Maintenances;
+
 namespace VipcoMaintenance
 {
     public class Startup
@@ -31,10 +34,13 @@ namespace VipcoMaintenance
             services.AddAutoMapper(typeof(Startup));
             // AddDbContextPool
             // Change AddDbContextPool if EF Core 2.1
-            services.AddDbContextPool<VipcoMaintenance.Models.Contexts.MaintenanceContext>(option =>
-                option.UseSqlServer(Configuration.GetConnectionString("MaintenanceConnection")));
+            services.AddDbContextPool<MaintenanceContext>(option =>
+                option.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("MaintenanceConnection")))
+                    .AddDbContext<MachineContext>(option =>
+                option.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("MachineConnection")));
             // Add Repositoy
-
+            // Setting up CORS
+            services.AddCors();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -57,7 +63,9 @@ namespace VipcoMaintenance
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // Http to Https
+            // app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

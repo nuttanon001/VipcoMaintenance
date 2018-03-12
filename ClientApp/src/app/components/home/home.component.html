@@ -13,11 +13,8 @@
 </ul>
 <p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
 <p>If you want to enable server-side prerendering, see the steps in <code>Startup.cs</code>.</p>
-Test
-<div *ngIf="allUsers">
-  {{allUsers.length}}
-  <ul *ngFor="let item of allUsers">
-    <li>{{ item | json }}</li>
-  </ul>
-</div>
 
+<hr class="w-100"/>
+<li *ngFor="let item of users">
+  <ul>{{item | json}}</ul>
+</li>

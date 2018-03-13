@@ -16,6 +16,8 @@ export interface RequireMaintenance extends BaseModel {
   ItemId?: number;
   // Branch
   BranchId?: number;
+  // ProjectCodeMaster
+  ProjectCodeMasterId?: number;
 }
 
 enum RequireStatus {

@@ -38,24 +38,24 @@ import {
 import { AngularSplitModule } from "angular-split";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 // component
-//import { DataTableComponent } from "../../components/base-component/data-table.component";
-//import { SearchBoxComponent } from "../../components/base-component/search-box.component";
+import { DataTableComponent } from "../../components/base/data-table.component";
+import { SearchBoxComponent } from "../../components/base/search-box.component";
 //import { AttactFileComponent } from "../../components/base-component/attact-file.component";
 //import { AttachFileViewComponent } from "../../components/base-component/attach-file-view.component";
-//import { ReuseTableComponent } from "../../components/base-component/reuse-table.component";
+import { ReuseTableComponent } from "../../components/base/reuse-table.component";
 //import { BaseChartComponent } from "../../components/base-component/base-chart.component";
-//import { DateOnlyPipe } from "../../pipes/date-only.pipe";
+import { DateOnlyPipe } from "../../pipes/date-only.pipe";
 
 @NgModule({
   declarations: [
     // component
-    //DataTableComponent,
-    //SearchBoxComponent,
+    DataTableComponent,
+    SearchBoxComponent,
     //AttactFileComponent,
-    //ReuseTableComponent,
+    ReuseTableComponent,
     //BaseChartComponent,
     // pipe
-    //DateOnlyPipe,
+    DateOnlyPipe,
   ],
   imports: [
     // material
@@ -128,20 +128,20 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
     CheckboxModule,
     // component
     //SearchBoxComponent,
-    //DataTableComponent,
+    DataTableComponent,
     //AttactFileComponent,
-    //ReuseTableComponent,
+    ReuseTableComponent,
     //BaseChartComponent,
     // pipe
-    //DateOnlyPipe,
+    DateOnlyPipe,
     // chart
     //ChartsModule
   ],
   entryComponents: [
-    //SearchBoxComponent,
-    //DataTableComponent,
+    SearchBoxComponent,
+    DataTableComponent,
     //AttactFileComponent,
-    //ReuseTableComponent,
+    ReuseTableComponent,
     //BaseChartComponent,
   ]
 })

@@ -15,19 +15,19 @@
         <a #mainMenu="matMenuTrigger" [matMenuTriggerFor]="menu1"
            (onMenuOpen)="menuOnCloseMenu(1)" (mouseover)="menuOnOpenMenu(1)"
            class="nav-link" [routerLink]="['/home']" routerLinkActive="active">
-          <i class="fa fa-flag" aria-hidden="true"></i>
-          <span>Request Painting</span>
+          <mat-icon>home</mat-icon>
+          <span>Main1</span>
         </a>
         <!--initial-painting-->
         <mat-menu #menu1="matMenu" [overlapTrigger]="false">
           <button mat-menu-item [routerLink]="['/home']" routerLinkActive="active">
-            <i class="fa fa-clone" aria-hidden="true"></i>
-            <span>MainMenu</span>
+            <mat-icon>home</mat-icon>
+            <span>Item-1/1</span>
           </button>
 
           <button mat-menu-item [routerLink]="['/home']" routerLinkActive="active">
-            <i class="fa fa-signal fa-rotate-90" aria-hidden="true"></i>
-            <span>Item-1/1</span>
+            <mat-icon>home</mat-icon>
+            <span>Item-1/2</span>
           </button>
         </mat-menu>
       </li>
@@ -35,14 +35,14 @@
         <a #subMenu="matMenuTrigger" [matMenuTriggerFor]="menu2"
            (onMenuOpen)="menuOnCloseMenu(2)" (mouseover)="menuOnOpenMenu(2)"
            class="nav-link">
-          <i class="fa fa-comments-o" aria-hidden="true"></i>
-          SubMenu
+          <mat-icon>home</mat-icon>
+          Menu2
         </a>
         <mat-menu #menu2="matMenu" [overlapTrigger]="false">
           <div>
-            <button mat-menu-item [routerLink]="['/require-painting/require-schedule']" routerLinkActive="active">
-              <i class="fa fa-history" aria-hidden="true"></i>
-              <span>Item-2/1</span>
+            <button mat-menu-item [routerLink]="['/branch']" routerLinkActive="active">
+              <mat-icon>room</mat-icon>
+              <span>Branch</span>
             </button>
           </div>
         </mat-menu>
@@ -52,19 +52,23 @@
         <a #subMenu2="matMenuTrigger" [matMenuTriggerFor]="menu3"
            (onMenuOpen)="menuOnCloseMenu(3)" (mouseover)="menuOnOpenMenu(3)"
            class="nav-link">
-          <i class="fa fa-inbox" aria-hidden="true"></i>
-          SubMenu
+          <mat-icon>home</mat-icon>
+          Menu3
         </a>
         <mat-menu #menu3="matMenu" [overlapTrigger]="false">
-          <div>
-            <button mat-menu-item [routerLink]="['/color-item']" routerLinkActive="active">
-              <i class="fa fa-tint" aria-hidden="true"></i>
-              <span>Item3/1</span>
-            </button>
-          </div>
+          <button mat-menu-item [routerLink]="['/color-item']" routerLinkActive="active">
+            <mat-icon>home</mat-icon>
+            <span>Item-3/1</span>
+          </button>
+
+          <button mat-menu-item [routerLink]="['/home']" routerLinkActive="active">
+            <mat-icon>home</mat-icon>
+            <span>Item-3/2</span>
+          </button>
         </mat-menu>
       </li>
     </ul>
+
     <ul class="navbar-nav">
       <li class="nav-item">
         <a *ngIf="showLogin; else elseBlock" [routerLink]="['/login']">

@@ -22,6 +22,9 @@ import { AuthGuard } from "./services/auth/auth-guard.service";
 import { MessageService } from "./services/base/message.service";
 import { HttpErrorHandler } from "./services/base/http-error-handler.service";
 
+import "hammerjs";
+import "popper.js";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +52,11 @@ import { HttpErrorHandler } from "./services/base/http-error-handler.service";
       { path: "login", component: LoginComponent },
       { path: "register/:condition", component: RegisterComponent },
       { path: "register", component: RegisterComponent },
-      { path: "**", redirectTo: "home" }
+      {
+        path: "branch",
+        loadChildren: './modules/branch/branch.module#BranchModule'
+      },
+      { path: "**", redirectTo: "home" },
     ]),
   ],
   providers: [

@@ -8,21 +8,24 @@ import "rxjs/Rx";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 // classes
-import { Scroll } from "../models/model.index";
+import { Scroll, ScrollData } from "../models/model.index";
+import { BaseRestService } from "../services/base/base-rest.service";
 // services
 import { DialogsService } from "../services/dialog/dialogs.service";
+import { AuthService } from "../services/auth/auth.service";
 import { DataTableServiceCommunicate } from "../services/base/data-table.service";
 
-export abstract class BaseMasterComponent<Model, Service>
+export abstract class BaseMasterComponent<Model, Service extends BaseRestService<Model>>
   implements OnInit, OnDestroy {
   /*
    * constructor
    */
   constructor(
     protected service: Service,
-    protected serviceCom: any,
-    protected serviceDataTableCom: DataTableServiceCommunicate<Model>,
-    protected serviceDialogs: DialogsService,
+    protected comService: any,
+    protected authService:AuthService,
+    protected dataTableComService: DataTableServiceCommunicate<Model>,
+    protected dialogsService: DialogsService,
     protected viewContainerRef: ViewContainerRef,
   ) { }
   /*
@@ -37,6 +40,7 @@ export abstract class BaseMasterComponent<Model, Service>
   _showEdit: boolean;
   canSave: boolean;
   hideleft: boolean;
+  onlyCre: boolean;
   scroll: Scroll;
 
   /*
@@ -68,13 +72,13 @@ export abstract class BaseMasterComponent<Model, Service>
     this.ShowEdit = false;
     this.canSave = false;
 
-    this.subscription1 = this.serviceCom.ToParent$.subscribe(
+    this.subscription1 = this.comService.ToParent$.subscribe(
       (TypeValue: [Model, boolean]) => {
         this.editValue = TypeValue[0];
         this.canSave = TypeValue[1];
       });
 
-    this.subscription2 = this.serviceDataTableCom.ToParent$
+    this.subscription2 = this.dataTableComService.ToParent$
       .subscribe((scroll: Scroll) => this.loadPagedData(scroll));
   }
   // angular hook
@@ -91,7 +95,7 @@ export abstract class BaseMasterComponent<Model, Service>
   onDetailEdit(editValue?: Model): void {
     this.displayValue = editValue;
     this.ShowEdit = true;
-    setTimeout(() => this.serviceCom.toChildEdit(this.displayValue), 1000);
+    setTimeout(() => this.comService.toChildEdit(this.displayValue), 1000);
   }
   // on cancel edit
   onCancelEdit(): void {
@@ -112,25 +116,102 @@ export abstract class BaseMasterComponent<Model, Service>
   }
   // on save complete
   onSaveComplete(): void {
-    this.serviceDialogs.context("System message", "Save completed.", this.viewContainerRef)
+    this.dialogsService.context("System message", "Save completed.", this.viewContainerRef)
       .subscribe(result => {
         this.canSave = false;
         this.ShowEdit = false;
         this.editValue = undefined;
         this.onDetailView(undefined);
         setTimeout(() => {
-          this.serviceDataTableCom.toReload(true);
+          this.dataTableComService.toReload(true);
         }, 150);
       });
   }
   // on detail view
-  abstract onDetailView(value: any): void;
+  // abstract onDetailView(value: any): void;
+  onDetailView(valueId?: number): void {
+    if (this.ShowEdit) {
+      return;
+    }
+    if (valueId) {
+      this.service.getOneKeyNumber(valueId)
+        .subscribe(dbData => {
+          this.displayValue = dbData;
+        }, error => this.displayValue = undefined);
+    } else {
+      this.displayValue = undefined;
+    }
+  }
   // on get all with scroll
-  abstract loadPagedData(scroll: Scroll): void;
+  // abstract loadPagedData(scroll: Scroll): void;
+  loadPagedData(scroll: Scroll): void {
+    if (this.onlyCre) {
+      if (this.authService.getAuth) {
+        scroll.Where = this.authService.getAuth.UserName || "";
+      }
+    } else {
+      scroll.Where = "";
+    }
+
+    if (this.scroll) {
+      if (this.scroll.Filter && scroll.Reload) {
+        scroll.Filter = this.scroll.Filter;
+      }
+    }
+
+    this.scroll = scroll;
+    this.service.getAllWithScroll(scroll)
+      .subscribe((scrollData: ScrollData<Model>) => {
+        if (scrollData) {
+          this.dataTableComService.toChild(scrollData);
+        }
+      }, error => console.error(error));
+  }
+  // on insert data
+  //abstract onInsertToDataBase(value: Model): void;
+  onInsertToDataBase(value: Model): void {
+    if (this.authService.getAuth) {
+      value["Creator"] = this.authService.getAuth.UserName || "";
+    }
+    // change timezone
+    value = this.changeTimezone(value);
+    // insert data
+    this.service.addModel(value).subscribe(
+      (complete: any) => {
+        this.displayValue = complete;
+        this.onSaveComplete();
+      },
+      (error: any) => {
+        console.error(error);
+        this.editValue.Creator = undefined;
+        this.canSave = true;
+        this.dialogsService.error("Failed !",
+          "Save failed with the following error: Invalid Identifier code !!!", this.viewContainerRef);
+      }
+    );
+  }
+  // on update data
+  // abstract onUpdateToDataBase(value: Model): void;
+  onUpdateToDataBase(value: Model): void {
+    if (this.authService.getAuth) {
+      value["Modifyer"] = this.authService.getAuth.UserName || "";
+    }
+    // change timezone
+    value = this.changeTimezone(value);
+    // update data
+    this.service.updateModel(value).subscribe(
+      (complete: any) => {
+        this.displayValue = complete;
+        this.onSaveComplete();
+      },
+      (error: any) => {
+        console.error(error);
+        this.canSave = true;
+        this.dialogsService.error("Failed !",
+          "Save failed with the following error: Invalid Identifier code !!!", this.viewContainerRef);
+      }
+    );
+  }
   // change data to timezone
   abstract changeTimezone(value: Model): Model;
-  // on insert data
-  abstract onInsertToDataBase(value: Model): void;
-  // on update data
-  abstract onUpdateToDataBase(value: Model): void;
 }

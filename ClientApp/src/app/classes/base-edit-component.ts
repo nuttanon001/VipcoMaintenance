@@ -36,8 +36,6 @@ export abstract class BaseEditComponent<Model, Service>
   }
   // on get data by key
   abstract onGetDataByKey(value: Model): void;
-  // define data for edit form
-  abstract defineData(): void;
   // build form
   abstract buildForm(): void;
   // on value of form change

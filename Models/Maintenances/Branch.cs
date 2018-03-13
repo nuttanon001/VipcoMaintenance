@@ -12,6 +12,9 @@ namespace VipcoMaintenance.Models.Maintenances
         public int BranchId { get; set; }
         [StringLength(50)]
         public string Name { get; set; }
+        [StringLength(250)]
+        public string Address { get; set; }
+
         //Fk
         //Item
         public virtual ICollection<Item> Items { get; set; }

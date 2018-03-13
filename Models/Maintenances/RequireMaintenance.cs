@@ -31,6 +31,8 @@ namespace VipcoMaintenance.Models.Maintenances
         public virtual Branch Branch { get; set; }
         // ItemMaintenance
         public virtual ItemMaintenance ItemMaintenance { get; set; }
+        // JobNumber
+        public int? ProjectCodeMasterId { get; set; }
 
     }
 

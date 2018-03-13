@@ -16,11 +16,9 @@ export class HomeComponent implements OnInit {
   /**
    * Parameter
    */
-  users: Array<User>;
   /**
    * On angular core Init
    */
   ngOnInit(): void {
-    this.service.getAll().subscribe(dbData => this.users = dbData);
   }
 }

@@ -14,6 +14,10 @@ namespace VipcoMaintenance.Models.Maintenances
         public string Name { get; set; }
         [StringLength(200)]
         public string Description { get; set; }
+        //FK
+        // ItemType
+        public int? ItemTypeId { get; set; }
+        public virtual ItemType ItemType { get; set; }
         // ItemMaintenance
         public virtual ICollection<ItemMaintenance> ItemMaintenances { get; set; }
     }

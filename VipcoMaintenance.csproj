@@ -34,8 +34,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\components\branch\branch-center.component.ts" />
+    <None Remove="ClientApp\src\app\services\base\base-communicate.service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\src\app\models\workgroup\" />
+    <Folder Include="ClientApp\src\app\modules\branch\" />
     <Folder Include="ClientApp\src\app\services\user\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\components\branch\branch-center.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\base\base-communicate.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

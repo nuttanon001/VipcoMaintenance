@@ -13,6 +13,8 @@ namespace VipcoMaintenance.Models.Maintenances
         public string PurchaseOrder { get; set; }
         [StringLength(200)]
         public string Remark { get; set; }
+        public double Quantity { get; set; }
+        public DateTime ReceiveDate { get; set; }
         // FK
         // Employee
         public string ReceiveEmp { get; set; }

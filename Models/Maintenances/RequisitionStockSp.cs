@@ -10,7 +10,10 @@ namespace VipcoMaintenance.Models.Maintenances
     {
         [Key]
         public int RequisitionStockSpId { get; set; }
+        public string PaperNo { get; set; }
         public string Remark { get; set; }
+        public double Quantity { get; set; }
+        public DateTime RequisitionDate { get; set; }
         // Fk
         // Employee
         public string RequisitionEmp { get; set; }

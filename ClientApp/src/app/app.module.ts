@@ -8,19 +8,20 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Components
-import { AppComponent } from "./components/app/app.component";
-import { NavMenuComponent } from "./components/nav-menu/nav-menu.component";
-import { HomeComponent } from "./components/home/home.component";
+import { AppComponent } from "./core/app/app.component";
+import { NavMenuComponent } from "./core/nav-menu/nav-menu.component";
+import { HomeComponent } from "./core/home/home.component";
+import { LoginComponent } from './users/login/login.component';
+import { RegisterComponent } from './users/register/register.component';
 // Modules
-import { CustomMaterialModule,DialogsModule } from "./modules/module.index";
-// Components
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { CustomMaterialModule } from "./shared/customer-material/customer-material.module";
+import { DialogsModule } from "./dialogs/dialog.module";
 // Serices
-import { AuthService } from "./services/auth/auth.service";
-import { AuthGuard } from "./services/auth/auth-guard.service";
-import { MessageService } from "./services/base/message.service";
-import { HttpErrorHandler } from "./services/base/http-error-handler.service";
+import { ShareService } from "./shared/share.service";
+import { AuthService } from "./core/auth/auth.service";
+import { AuthGuard } from "./core/auth/auth-guard.service";
+import { MessageService } from "./shared/message.service";
+import { HttpErrorHandler } from "./shared/http-error-handler.service";
 
 import "hammerjs";
 import "popper.js";
@@ -32,6 +33,7 @@ import "popper.js";
     HomeComponent,
     LoginComponent,
     RegisterComponent,
+    // SearchBoxComponent,
   ],
   imports: [
     // Angular Core
@@ -54,7 +56,48 @@ import "popper.js";
       { path: "register", component: RegisterComponent },
       {
         path: "branch",
-        loadChildren: './modules/branch/branch.module#BranchModule'
+        loadChildren: './branchs/branch.module#BranchModule',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "item",
+        loadChildren: "./items/item.module#ItemModule",
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "item-type",
+        loadChildren: './item-types/item-type.module#ItemTypeModule',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "work-group",
+        loadChildren: "./work-groups/work-group.module#WorkGroupModule",
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "type-mainten",
+        loadChildren: "./type-maintenances/type-mainten.module#TypeMaintenModule",
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "require-mainten",
+        loadChildren: "./require-maintenances/require-mainten.module#RequireMaintenModule",
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "maintenance",
+        loadChildren: "./item-maintenances/item-mainten.module#ItemMaintenModule",
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "spare-part",
+        loadChildren: "./spare-parts/spare-part.module#SparePartModule",
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "inventories",
+        loadChildren: "./inventories/inventory.module#InventoriyModule",
+        canActivate: [AuthGuard],
       },
       { path: "**", redirectTo: "home" },
     ]),
@@ -62,6 +105,7 @@ import "popper.js";
   providers: [
     AuthGuard,
     AuthService,
+    ShareService,
     MessageService,
     HttpErrorHandler,
   ],

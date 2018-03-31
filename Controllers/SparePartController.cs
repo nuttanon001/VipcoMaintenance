@@ -11,14 +11,24 @@ using Microsoft.EntityFrameworkCore;
 using VipcoMaintenance.Services;
 using VipcoMaintenance.ViewModels;
 using VipcoMaintenance.Models.Maintenances;
+using AutoMapper;
+
 namespace VipcoMaintenance.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class SparePartController : GenericController<SparePart>
     {
-
-        public SparePartController(IRepositoryMaintenance<SparePart> repo):base(repo) { }
+        private IMapper mapper;
+        private IRepositoryMaintenance<MovementStockSp> repositoryMovement;
+        public SparePartController(IRepositoryMaintenance<SparePart> repo,
+            IRepositoryMaintenance<MovementStockSp> repoMovement,
+            IMapper map):base(repo) {
+            //Repository
+            this.repositoryMovement = repoMovement;
+            //Mapper
+            this.mapper = map;
+        }
 
         // POST: api/SparePart/GetScroll
         [HttpPost("GetScroll")]
@@ -38,9 +48,11 @@ namespace VipcoMaintenance.Controllers
 
             foreach (var keyword in filters)
             {
-                QueryData = QueryData.Where(x => x.Name.ToLower().Contains(keyword) &&
-                                                 x.Description.ToLower().Contains(keyword) &&
-                                                 x.Model.ToLower().Contains(keyword) &&
+                QueryData = QueryData.Where(x => x.Name.ToLower().Contains(keyword) ||
+                                                 x.Description.ToLower().Contains(keyword) ||
+                                                 x.Model.ToLower().Contains(keyword) ||
+                                                 x.Size.ToLower().Contains(keyword) ||
+                                                 x.Property.ToLower().Contains(keyword) ||
                                                  x.Remark.ToLower().Contains(keyword));
             }
 
@@ -53,21 +65,36 @@ namespace VipcoMaintenance.Controllers
                     else
                         QueryData = QueryData.OrderBy(e => e.Name);
                     break;
-                case "Description":
+                case "Model":
                     if (Scroll.SortOrder == -1)
-                        QueryData = QueryData.OrderByDescending(e => e.Description);
+                        QueryData = QueryData.OrderByDescending(e => e.Model);
                     else
-                        QueryData = QueryData.OrderBy(e => e.Description);
+                        QueryData = QueryData.OrderBy(e => e.Model);
                     break;
                 default:
                     QueryData = QueryData.OrderByDescending(e => e.Name);
                     break;
             }
+            // Get TotalRow
+            Scroll.TotalRow = await QueryData.CountAsync();
             // Skip Take
             QueryData = QueryData.Skip(Scroll.Skip ?? 0).Take(Scroll.Take ?? 50);
 
-            return new JsonResult(new ScrollDataViewModel<SparePart>(Scroll,
-                await QueryData.AsNoTracking().ToListAsync()), this.DefaultJsonSettings);
+            var HasData = await QueryData.AsNoTracking().ToListAsync();
+            var listData = new List<SparePartViewModel>();
+            foreach (var item in HasData)
+            {
+                var MapData = this.mapper.Map<SparePart, SparePartViewModel>(item);
+                MapData.OnHand = await this.repositoryMovement.GetAllAsQueryable()
+                                            .Include(x => x.RequisitionStockSp)
+                                            .Include(x => x.ReceiveStockSp)
+                                            .Where(x => x.SparePartId == MapData.SparePartId && x.MovementStatus != MovementStatus.Cancel)
+                                            .SumAsync(x => x.MovementStatus == MovementStatus.AdjustIncrement || 
+                                                           x.MovementStatus == MovementStatus.ReceiveStock ? x.Quantity : (x.Quantity * -1));
+                listData.Add(MapData);
+            }
+
+            return new JsonResult(new ScrollDataViewModel<SparePartViewModel>(Scroll, listData), this.DefaultJsonSettings);
         }
     }
 }

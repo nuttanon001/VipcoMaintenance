@@ -11,7 +11,7 @@ namespace VipcoMaintenance.Models.Maintenances
         [Key]
         public int ItemMaintenanceId { get; set; }
         [Required]
-        public string ItemMaintenanceCode { get; set; }
+        public string ItemMaintenanceNo { get; set; }
         [Required]
         public DateTime PlanStartDate { get; set; }
         [Required]

@@ -35,9 +35,9 @@ namespace VipcoMaintenance.Controllers
 
             foreach (var keyword in filters)
             {
-                QueryData = QueryData.Where(x => x.Name.ToLower().Contains(keyword) &&
-                                                 x.Description.ToLower().Contains(keyword) &&
-                                                 x.Remark.ToLower().Contains(keyword) &&
+                QueryData = QueryData.Where(x => x.Name.ToLower().Contains(keyword) ||
+                                                 x.Description.ToLower().Contains(keyword) ||
+                                                 x.Remark.ToLower().Contains(keyword) ||
                                                  x.WorkGroup.Name.ToLower().Contains(keyword));
             }
 
@@ -66,6 +66,8 @@ namespace VipcoMaintenance.Controllers
                     QueryData = QueryData.OrderByDescending(e => e.Name);
                     break;
             }
+            // Get TotalRow
+            Scroll.TotalRow = await QueryData.CountAsync();
             // Skip Take
             QueryData = QueryData.Skip(Scroll.Skip ?? 0).Take(Scroll.Take ?? 50);
 

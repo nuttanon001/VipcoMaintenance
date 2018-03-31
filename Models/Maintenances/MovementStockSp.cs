@@ -22,6 +22,9 @@ namespace VipcoMaintenance.Models.Maintenances
             (MovementStatus == MovementStatus.AdjustDecrement ? -1 :
             (MovementStatus == MovementStatus.RequisitionStock ? -1 : 0))));
         // FK
+        // SparePart
+        public int? SparePartId { get; set; }
+        public virtual SparePart SparePart { get; set; }
         // ReceiveStockSp
         public virtual ReceiveStockSp ReceiveStockSp { get; set; }
         // RequisitionStockSp

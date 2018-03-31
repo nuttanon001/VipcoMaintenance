@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 using AutoMapper;
 
+using VipcoMaintenance.Services;
 using VipcoMaintenance.Models.Machines;
 using VipcoMaintenance.Models.Maintenances;
 
@@ -39,6 +40,8 @@ namespace VipcoMaintenance
                     .AddDbContext<MachineContext>(option =>
                 option.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("MachineConnection")));
             // Add Repositoy
+            services.AddTransient(typeof(IRepositoryMaintenance<>), typeof(RepositoryMaintenance<>))
+                    .AddTransient(typeof(IRepositoryMachine<>), typeof(RepositoryMachine<>));
             // Setting up CORS
             services.AddCors();
             // In production, the Angular files will be served from this directory

@@ -44,14 +44,28 @@ namespace VipcoMaintenance.Controllers
         }
 
         // GET: api/controller/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("GetKeyNumber")]
+        public virtual async Task<IActionResult> Get(int key)
         {
-            return new JsonResult(await this.repository.GetAsync(id),this.DefaultJsonSettings);
+            return new JsonResult(await this.repository.GetAsync(key),this.DefaultJsonSettings);
         }
 
+        // GET: api/controller/5
+        [HttpGet("GetKeyString")]
+        public async Task<IActionResult> Get(string key)
+        {
+            return new JsonResult(await this.repository.GetAsync(key), this.DefaultJsonSettings);
+        }
+
+        //// GET: api/controller/5
+        //[HttpGet()]
+        //public async Task<IActionResult> Get2(string key)
+        //{
+        //    return new JsonResult(await this.repository.GetAsync(key), this.DefaultJsonSettings);
+        //}
+
         [HttpPost]
-        public  async Task<IActionResult> Create([FromBody] Entity record)
+        public virtual async Task<IActionResult> Create([FromBody] Entity record)
         {
             // Set date for CrateDate Entity
             if (record == null)
@@ -66,10 +80,10 @@ namespace VipcoMaintenance.Controllers
             return new JsonResult(record, this.DefaultJsonSettings);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Entity record)
+        [HttpPut]
+        public virtual async Task<IActionResult> Update(int key, [FromBody] Entity record)
         {
-            if (id < 1)
+            if (key < 1)
                 return BadRequest();
             if (record == null)
                 return BadRequest();
@@ -80,15 +94,15 @@ namespace VipcoMaintenance.Controllers
             // Set date for CrateDate Entity
             if (record.GetType().GetProperty("ModifyDate") != null)
                 record.GetType().GetProperty("ModifyDate").SetValue(record, DateTime.Now);
-            if (await this.repository.UpdateAsync(record,id) != null)
+            if (await this.repository.UpdateAsync(record, key) != null)
                 return BadRequest();
             return new JsonResult(record, this.DefaultJsonSettings);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{key}")]
+        public async Task<IActionResult> Delete(int key)
         {
-            if (await this.repository.DeleteAsync(id) == 0)
+            if (await this.repository.DeleteAsync(key) == 0)
                 return BadRequest();
             return NoContent();
         }

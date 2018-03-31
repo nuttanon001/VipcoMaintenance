@@ -31,5 +31,8 @@ namespace VipcoMaintenance.Models.Maintenances
         public virtual WorkGroup WorkGroup { get; set; }
         // MaintenanceHasSpare
         public virtual ICollection<RequisitionStockSp> RequisitionStockSps { get; set; }
+        public virtual ICollection<ReceiveStockSp> ReceiveStockSps { get; set; }
+        //MovementStock
+        public virtual ICollection<MovementStockSp> MovementStockSps { get; set; }
     }
 }

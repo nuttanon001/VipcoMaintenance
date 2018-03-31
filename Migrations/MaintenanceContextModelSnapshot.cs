@@ -26,6 +26,9 @@ namespace VipcoMaintenance.Migrations
                     b.Property<int>("BranchId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Address")
+                        .HasMaxLength(250);
+
                     b.Property<DateTime?>("CreateDate");
 
                     b.Property<string>("Creator")
@@ -119,7 +122,7 @@ namespace VipcoMaintenance.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(500);
 
-                    b.Property<string>("ItemMaintenanceCode")
+                    b.Property<string>("ItemMaintenanceNo")
                         .IsRequired();
 
                     b.Property<string>("MaintenanceEmp");
@@ -207,7 +210,11 @@ namespace VipcoMaintenance.Migrations
 
                     b.Property<double>("Quantity");
 
+                    b.Property<int?>("SparePartId");
+
                     b.HasKey("MovementStockSpId");
+
+                    b.HasIndex("SparePartId");
 
                     b.ToTable("MovementStockSp");
                 });
@@ -255,6 +262,10 @@ namespace VipcoMaintenance.Migrations
 
                     b.Property<string>("PurchaseOrder");
 
+                    b.Property<double>("Quantity");
+
+                    b.Property<DateTime>("ReceiveDate");
+
                     b.Property<string>("ReceiveEmp");
 
                     b.Property<string>("Remark")
@@ -297,6 +308,8 @@ namespace VipcoMaintenance.Migrations
                     b.Property<string>("Modifyer")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("ProjectCodeMasterId");
+
                     b.Property<string>("Remark")
                         .HasMaxLength(200);
 
@@ -336,7 +349,13 @@ namespace VipcoMaintenance.Migrations
 
                     b.Property<int?>("MovementStockSpId");
 
+                    b.Property<string>("PaperNo");
+
+                    b.Property<double>("Quantity");
+
                     b.Property<string>("Remark");
+
+                    b.Property<DateTime>("RequisitionDate");
 
                     b.Property<string>("RequisitionEmp");
 
@@ -357,7 +376,7 @@ namespace VipcoMaintenance.Migrations
 
             modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.SparePart", b =>
                 {
-                    b.Property<int?>("SparePartId")
+                    b.Property<int>("SparePartId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("CreateDate");
@@ -416,6 +435,8 @@ namespace VipcoMaintenance.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(200);
 
+                    b.Property<int?>("ItemTypeId");
+
                     b.Property<DateTime?>("ModifyDate");
 
                     b.Property<string>("Modifyer")
@@ -425,6 +446,8 @@ namespace VipcoMaintenance.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("TypeMaintenanceId");
+
+                    b.HasIndex("ItemTypeId");
 
                     b.ToTable("TypeMaintenance");
                 });
@@ -487,6 +510,13 @@ namespace VipcoMaintenance.Migrations
                         .HasForeignKey("WorkGroupId");
                 });
 
+            modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.MovementStockSp", b =>
+                {
+                    b.HasOne("VipcoMaintenance.Models.Maintenances.SparePart", "SparePart")
+                        .WithMany("MovementStockSps")
+                        .HasForeignKey("SparePartId");
+                });
+
             modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.ReceiveStockSp", b =>
                 {
                     b.HasOne("VipcoMaintenance.Models.Maintenances.MovementStockSp", "MovementStockSp")
@@ -494,7 +524,7 @@ namespace VipcoMaintenance.Migrations
                         .HasForeignKey("VipcoMaintenance.Models.Maintenances.ReceiveStockSp", "MovementStockSpId");
 
                     b.HasOne("VipcoMaintenance.Models.Maintenances.SparePart", "SparePart")
-                        .WithMany()
+                        .WithMany("ReceiveStockSps")
                         .HasForeignKey("SparePartId");
                 });
 
@@ -529,6 +559,13 @@ namespace VipcoMaintenance.Migrations
                     b.HasOne("VipcoMaintenance.Models.Maintenances.WorkGroup", "WorkGroup")
                         .WithMany("SpareParts")
                         .HasForeignKey("WorkGroupId");
+                });
+
+            modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.TypeMaintenance", b =>
+                {
+                    b.HasOne("VipcoMaintenance.Models.Maintenances.ItemType", "ItemType")
+                        .WithMany()
+                        .HasForeignKey("ItemTypeId");
                 });
 #pragma warning restore 612, 618
         }

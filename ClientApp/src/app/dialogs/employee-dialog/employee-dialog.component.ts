@@ -32,11 +32,10 @@ export class EmployeeDialogComponent
       service,
       dialogRef
     );
-
   }
 
   // on init
   onInit(): void {
-    this.fastSelectd = true;
+    this.fastSelectd = this.mode === 0 ? true : false;
   }
 }

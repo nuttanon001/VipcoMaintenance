@@ -45,12 +45,22 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         RequireDate
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">{{(row?.RequireDate | date:'dd/MM/yyyy') || "-"}}</mat-cell>
+      <mat-cell *matCellDef="let row"
+                [ngClass]="{'is-require': row.RequireStatus === 1,
+                'is-wait': row.RequireStatus === 2,
+                'is-complate' : row.RequireStatus === 3,
+                'is-cancel' : row.RequireStatus === 4}">
+        {{(row?.RequireDate | date:'dd/MM/yyyy') || "-"}}
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <!-- [ngClass]="{'mat-row-highlight': selectedRow === row}"  -->
     <mat-row *matRowDef="let row; columns: displayedColumns;"
-             [ngClass]="{'mat-row-highlight': selectedRow === row}"
+             [ngClass]="{'is-require': row.RequireStatus === 1,
+                'is-wait': row.RequireStatus === 2 || row.RequireStatus === 5,
+                'is-complate' : row.RequireStatus === 3,
+                'is-cancel' : row.RequireStatus === 4}"
              (click)="selection.toggle(row)"></mat-row>
   </mat-table>
 

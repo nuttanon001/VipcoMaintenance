@@ -3,10 +3,14 @@ import { Component, Output, EventEmitter, Input } from "@angular/core";
 // models
 import { ItemMaintenance } from "../shared/item-maintenance.model";
 import { RequireMaintenance } from "../../require-maintenances/shared/require-maintenance.model";
+import { ItemMaintenanceHasEmp } from "../shared/item-maintenance-has-emp.model";
+import { RequisitionStock } from "../../inventories/shared/requisition-stock.model";
 // components
 import { BaseViewComponent } from "../../shared/base-view-component";
 // services
 import { RequireMaintenService } from "../../require-maintenances/shared/require-mainten.service";
+import { ItemMaintenHasEmpService } from "../shared/item-mainten-has-emp.service";
+import { RequisitionStockService } from "../../inventories/shared/requisition-stock.service";
 
 @Component({
   selector: 'app-item-mainten-view',
@@ -15,12 +19,16 @@ import { RequireMaintenService } from "../../require-maintenances/shared/require
 })
 export class ItemMaintenViewComponent extends BaseViewComponent<ItemMaintenance> {
   constructor(
-    private serviceRequireMainten:RequireMaintenService
+    private serviceRequireMainten: RequireMaintenService,
+    private serviceItemMainHasEmp: ItemMaintenHasEmpService,
+    private serviceRequistionStock: RequisitionStockService,
   ) {
     super();
   }
   // Parameter
   requireMainten: RequireMaintenance;
+  itemMainHasEmployees: Array<ItemMaintenanceHasEmp>;
+  requisitionStockes: Array<RequisitionStock>;
   // load more data
   onLoadMoreData(value: ItemMaintenance) {
     if (value) {
@@ -31,6 +39,14 @@ export class ItemMaintenViewComponent extends BaseViewComponent<ItemMaintenance>
               this.requireMainten = dbData;
             }
           })
+      }
+
+      if (value.ItemMaintenanceId) {
+        this.serviceItemMainHasEmp.actionItemMaintenanceHasEmployee(value.ItemMaintenanceId)
+          .subscribe(dbData => this.itemMainHasEmployees = dbData.slice());
+
+        this.serviceRequistionStock.getRequisitionByItemMaintenance(value.ItemMaintenanceId)
+          .subscribe(dbData => this.requisitionStockes = dbData.slice());
       }
     }
   }

@@ -20,7 +20,7 @@ export class ItemMaintenTableComponent extends CustomMatTableComponent<ItemMaint
     authService: AuthService,
   ) {
     super(service, authService);
-    this.displayedColumns =["select", "ItemCode", "TypeMaintenanceString", "StatusMaintenanceString"];
+    this.displayedColumns = ["select", "ItemCode", "TypeMaintenanceString", "StatusMaintenanceString"];
 
   }
 }

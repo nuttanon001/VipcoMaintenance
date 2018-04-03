@@ -14,8 +14,10 @@ namespace VipcoMaintenance.Models.Maintenances
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AdjustStockSp>().ToTable("AdjustStockSp");
             modelBuilder.Entity<Branch>().ToTable("Branch");
             modelBuilder.Entity<Item>().ToTable("Item");
+            modelBuilder.Entity<ItemMainHasEmployee>().ToTable("ItemMainHasEmployee");
             modelBuilder.Entity<ItemMaintenance>().ToTable("ItemMaintenance");
             modelBuilder.Entity<ItemType>().ToTable("ItemType");
             modelBuilder.Entity<MovementStockSp>().ToTable("MovementStockSp");
@@ -26,11 +28,14 @@ namespace VipcoMaintenance.Models.Maintenances
             modelBuilder.Entity<SparePart>().ToTable("SparePart");
             modelBuilder.Entity<TypeMaintenance>().ToTable("TypeMaintenance");
             modelBuilder.Entity<WorkGroup>().ToTable("WorkGroup");
+            modelBuilder.Entity<WorkGroupMaintenance>().ToTable("WorkGroupMaintenance");
         }
 
         // Dbset
+        public DbSet<AdjustStockSp> AdjustStockSps { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<ItemMainHasEmployee> ItemMainHasEmployees { get; set; }
         public DbSet<ItemMaintenance> ItemMaintenances { get; set; }
         public DbSet<ItemType> ItemTypes { get; set; }
         public DbSet<MovementStockSp> MovementStockSps { get; set; }
@@ -41,5 +46,6 @@ namespace VipcoMaintenance.Models.Maintenances
         public DbSet<SparePart> SpareParts { get; set; }
         public DbSet<TypeMaintenance> TypeMaintenances { get; set; }
         public DbSet<WorkGroup> WorkGroups { get; set; }
+        public DbSet<WorkGroupMaintenance> WorkGroupMaintenances { get; set; }
     }
 }

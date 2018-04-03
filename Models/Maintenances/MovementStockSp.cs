@@ -29,6 +29,8 @@ namespace VipcoMaintenance.Models.Maintenances
         public virtual ReceiveStockSp ReceiveStockSp { get; set; }
         // RequisitionStockSp
         public virtual RequisitionStockSp RequisitionStockSp { get; set; }
+        // AdjsutStockSp
+        public virtual AdjustStockSp AdjustStockSp { get; set; }
     }
 
     public enum MovementStatus

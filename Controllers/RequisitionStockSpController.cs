@@ -39,7 +39,30 @@ namespace VipcoMaintenance.Controllers
             // Mapper
             this.mapper = map;
         }
-        // GET: api/ReceiveStockSp/5
+
+        // GET:api/RequisitionStockSp/GetRequisitionByItemMaintenance/5
+        [HttpGet("GetRequisitionByItemMaintenance")]
+        public async Task<IActionResult> GetRequisitionByItemMaintenance(int key)
+        {
+            if (key > 0)
+            {
+                var HasData = await this.repository.GetAllAsQueryable().Where(x => x.ItemMaintenanceId == key)
+                                       .Include(x => x.SparePart)
+                                       .ToListAsync();
+
+                if (HasData != null)
+                {
+                    var ListData = new List<RequisitionStockSpViewModel>();
+                    foreach (var item in HasData)
+                        ListData.Add(this.mapper.Map<RequisitionStockSp, RequisitionStockSpViewModel>(item));
+                   
+                    return new JsonResult(ListData, this.DefaultJsonSettings);
+                }
+            }
+            return BadRequest();
+        }
+
+        // GET: api/RequisitionStockSp/5
         [HttpGet("GetKeyNumber")]
         public override async Task<IActionResult> Get(int key)
         {
@@ -55,7 +78,7 @@ namespace VipcoMaintenance.Controllers
             return BadRequest();
         }
 
-        // POST: api/ReceiveStockSp/GetScroll
+        // POST: api/RequisitionStockSp/GetScroll/
         [HttpPost("GetScroll")]
         public async Task<IActionResult> GetScroll([FromBody] ScrollViewModel Scroll)
         {
@@ -122,7 +145,7 @@ namespace VipcoMaintenance.Controllers
             return new JsonResult(new ScrollDataViewModel<RequisitionStockSpViewModel>(Scroll, listData), this.DefaultJsonSettings);
         }
 
-        // POST: api/ReceiveStockSp/
+        // POST: api/RequisitionStockSp/
         [HttpPost]
         public override async Task<IActionResult> Create([FromBody] RequisitionStockSp record)
         {
@@ -130,7 +153,7 @@ namespace VipcoMaintenance.Controllers
             if (record == null)
                 return BadRequest();
             // +7 Hour
-            record = this.helper.AddHourMethod(record);
+            // record = this.helper.AddHourMethod(record);
             record.CreateDate = DateTime.Now;
 
             if (record.MovementStockSp == null)
@@ -148,7 +171,7 @@ namespace VipcoMaintenance.Controllers
                 return BadRequest();
             return new JsonResult(record, this.DefaultJsonSettings);
         }
-
+        // PUT: api/RequisitionStockSp/
         [HttpPut]
         public override async Task<IActionResult> Update(int key, [FromBody] RequisitionStockSp record)
         {
@@ -158,11 +181,11 @@ namespace VipcoMaintenance.Controllers
                 return BadRequest();
 
             // +7 Hour
-            record = this.helper.AddHourMethod(record);
+            //record = this.helper.AddHourMethod(record);
 
             // Set date for CrateDate Entity
             record.ModifyDate = DateTime.Now;
-            if (await this.repository.UpdateAsync(record, key) != null)
+            if (await this.repository.UpdateAsync(record, key) == null)
                 return BadRequest();
             else
             {

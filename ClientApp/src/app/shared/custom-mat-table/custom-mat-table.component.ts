@@ -35,14 +35,16 @@ export class CustomMatTableComponent<Model,Service extends BaseRestService<Model
   // Parameter
   displayedColumns: Array<string> = ["select", "Col1", "Col2", "Col3"];
   @Input() isDisabled: boolean = true;
+  @Input() isMultiple: boolean = false;
   @Output() returnSelected: EventEmitter<Model> = new EventEmitter<Model>();
+  @Output() returnSelectesd: EventEmitter<Array<Model>> = new EventEmitter<Array<Model>>();
 
   // Parameter MatTable
   dataSource = new MatTableDataSource<Model>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(SearchBoxComponent) searchBox: SearchBoxComponent;
-  selection = new SelectionModel<Model>(false, [], true);
+  selection:SelectionModel<Model>;
 
   // Parameter Component
   resultsLength = 0;
@@ -84,11 +86,19 @@ export class CustomMatTableComponent<Model,Service extends BaseRestService<Model
         return observableOf([]);
       })
     ).subscribe(data => this.dataSource.data = data);
-
+    // Selection
+    this.selection = new SelectionModel<Model>(this.isMultiple, [], true)
     this.selection.onChange.subscribe(selected => {
-      if (selected.source.selected[0]) {
-        this.selectedRow = selected.source.selected[0];
-        this.returnSelected.emit(selected.source.selected[0]);
+      if (this.isMultiple) {
+        if (selected.source) {
+          // this.selectedRow = selected.source.selected[0];
+          this.returnSelectesd.emit(selected.source.selected);
+        }
+      } else {
+        if (selected.source.selected[0]) {
+          this.selectedRow = selected.source.selected[0];
+          this.returnSelected.emit(selected.source.selected[0]);
+        }
       }
     });
   }
@@ -102,7 +112,6 @@ export class CustomMatTableComponent<Model,Service extends BaseRestService<Model
       SortOrder: this.sort.direction === "desc" ? 1 : -1,
       Where: this.searchBox.onlyCreate2 ? this.authService.getAuth.UserName || "" : ""
     };
-
     this.service.getAllWithScroll(scroll).subscribe(dbData => {
       this.isLoadingResults = false;
       this.isRateLimitReached = false;

@@ -67,7 +67,7 @@ namespace VipcoMaintenance.Controllers
                     break;
 
                 default:
-                    QueryData = QueryData.OrderByDescending(e => e.EmpCode.Length)
+                    QueryData = QueryData.OrderBy(e => e.EmpCode.Length)
                                          .ThenBy(e => e.EmpCode);
                     break;
             }

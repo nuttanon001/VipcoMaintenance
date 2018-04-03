@@ -177,7 +177,7 @@ export abstract class BaseMasterComponent<Model extends BaseModel, Service exten
       value["Modifyer"] = this.authService.getAuth.UserName || "";
     }
     // debug here
-    console.log("Value is: ",JSON.stringify(value));
+    // console.log("Value is: ",JSON.stringify(value));
     // change timezone
     value = this.changeTimezone(value);
     // update data

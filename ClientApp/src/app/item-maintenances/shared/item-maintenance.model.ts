@@ -1,4 +1,6 @@
 import { BaseModel } from "../../shared/base-model.model";
+import { RequisitionStock } from "../../inventories/shared/requisition-stock.model";
+import { ItemMaintenanceHasEmp } from "./item-maintenance-has-emp.model";
 
 export interface ItemMaintenance extends BaseModel {
   ItemMaintenanceId: number;
@@ -10,6 +12,7 @@ export interface ItemMaintenance extends BaseModel {
   StatusMaintenance?: StatusMaintenance;
   Description?: string;
   Remark?: string;
+  WorkGroupMaintenanceId?: number;
   // FK
   // Employee
   MaintenanceEmp?: string;
@@ -17,11 +20,14 @@ export interface ItemMaintenance extends BaseModel {
   RequireMaintenanceId?: number;
   // TypeMaintenance
   TypeMaintenanceId?: number;
+  RequisitionStockSps?: Array<RequisitionStock>;
+  ItemMainHasEmployees?: Array<ItemMaintenanceHasEmp>;
   //ViewModel
   ItemCode?: string;
   MaintenanceEmpString?: string;
   TypeMaintenanceString?: string;
   StatusMaintenanceString?: string;
+  WorkGroupMaintenanceString?: string;
 }
 
 export enum StatusMaintenance {

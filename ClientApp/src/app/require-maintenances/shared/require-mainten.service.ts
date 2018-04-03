@@ -36,8 +36,10 @@ export class RequireMaintenService extends BaseRestService<RequireMaintenance> {
 
   // ===================== Action Require Maintenance ===========================\\
   // action require maintenance
-  actionRequireMaintenance(RequireMaintenaceId: number): Observable<RequireMaintenance> {
-    const options = { params: new HttpParams().set("key", RequireMaintenaceId.toString()) } ;
+  actionRequireMaintenance(RequireMaintenaceId: number,ByEmployee:string): Observable<RequireMaintenance> {
+    const options = {
+      params: new HttpParams().set("key", RequireMaintenaceId.toString()).set("byEmp",ByEmployee)
+    };
     return this.http.get<RequireMaintenance>(this.baseUrl + "ActionRequireMaintenance/", options)
       .pipe(catchError(this.handleError(this.serviceName + "/action require maintenance model", <RequireMaintenance>{})));
   }

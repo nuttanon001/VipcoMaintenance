@@ -18,6 +18,7 @@ namespace VipcoMaintenance.Models.Maintenances
         [StringLength(200)]
         public string Remark { get; set; }
         public RequireStatus? RequireStatus { get; set; }
+        public DateTime? MaintenanceApply { get; set; }
         // FK
         // GroupMis
         public string GroupMIS { get; set; }
@@ -41,6 +42,7 @@ namespace VipcoMaintenance.Models.Maintenances
         Waiting = 1,
         InProcess,
         Complate,
-        Cancel
+        Cancel,
+        MaintenanceResponse
     }
 }

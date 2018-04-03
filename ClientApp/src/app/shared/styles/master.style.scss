@@ -1,4 +1,4 @@
-﻿/* Structure */
+/* Structure */
 .master-container {
     display: flex;
     flex-direction: column;
@@ -102,46 +102,6 @@
     box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
     /*-webkit-border-radius: 3px;
     -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);*/
-}
-
-:host /deep/ .ngx-datatable.material .datatable-header .datatable-header-cell {
-    text-align: left;
-    padding: .9rem 1.2rem;
-    color: black !important;
-    vertical-align: bottom;
-    font-size: 15px !important;
-    font-weight: bold !important;
-}
-
-:host /deep/ .ngx-datatable.material .datatable-body-row .datatable-body-cell {
-    text-align: left;
-    padding: .9rem 1.2rem;
-    color: black !important;
-    vertical-align: central;
-    font-size: 12px !important;
-    font-weight:800 !important;
-    cursor: pointer;
-}
-
-:host /deep/ .ngx-datatable.material.single-selection .datatable-body-row.active,
-:host /deep/ .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-body-cell,
-:host /deep/ .ngx-datatable.material.single-selection .datatable-body-row.active .datatable-row-group,
-:host /deep/ .ngx-datatable.material.multi-selection .datatable-body-row.active,
-:host /deep/ .ngx-datatable.material.multi-selection .datatable-body-row.active .datatable-row-group,
-:host /deep/ .ngx-datatable.material.multi-click-selection .datatable-body-row.active,
-:host /deep/ .ngx-datatable.material.multi-click-selection .datatable-body-row.active .datatable-row-group {
-    // background-color: inherit !important;
-    color: white !important;
-    background-color: lightsteelblue !important;
-}
-
-:host /deep/ .ngx-datatable.material.single-selection .datatable-body-row.active:hover,
-:host /deep/ .ngx-datatable.material.single-selection .datatable-body-row.active:hover .datatable-row-group,
-:host /deep/ .ngx-datatable.material.multi-selection .datatable-body-row.active:hover,
-:host /deep/ .ngx-datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group,
-:host /deep/ .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover,
-:host /deep/ .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group {
-    background-color: blue !important;
 }
 
 // Style For Primeng

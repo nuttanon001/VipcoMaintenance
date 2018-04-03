@@ -75,6 +75,11 @@ import "popper.js";
         canActivate: [AuthGuard],
       },
       {
+        path: "work-group-mainten",
+        loadChildren: './work-group-maintenances/work-group-mainten.module#WorkGroupMaintenModule',
+        canActivate: [AuthGuard],
+      },
+      {
         path: "type-mainten",
         loadChildren: "./type-maintenances/type-mainten.module#TypeMaintenModule",
         canActivate: [AuthGuard],

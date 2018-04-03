@@ -34,6 +34,11 @@ namespace VipcoMaintenance.Models.Maintenances
         public virtual TypeMaintenance TypeMaintenance { get; set; }
         // MaintenanceHasSpare
         public virtual ICollection<RequisitionStockSp> RequisitionStockSps { get; set; }
+        // WorkGroupMaintenance
+        public int? WorkGroupMaintenanceId { get; set; }
+        public virtual WorkGroupMaintenance WorkGroupMaintenance { get; set; }
+        // ItemMainHasEmployee
+        public virtual ICollection<ItemMainHasEmployee> ItemMainHasEmployees { get; set; }
     }
 
     public enum StatusMaintenance

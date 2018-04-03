@@ -89,6 +89,7 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
       ItemId: [this.editValue.ItemId],
       BranchId: [this.editValue.BranchId],
       ProjectCodeMasterId: [this.editValue.ProjectCodeMasterId],
+      MaintenanceApply: [this.editValue.MaintenanceApply],
       // BaseModel
       Creator: [this.editValue.Creator],
       CreateDate: [this.editValue.CreateDate],

@@ -11,6 +11,7 @@ export interface SparePart extends BaseModel {
   SparePartImage?: string;
   MinStock?: number;
   MaxStock?: number;
+  UnitPrice?: number;
   //FK
   // WorkGroup
   WorkGroupId?: number;

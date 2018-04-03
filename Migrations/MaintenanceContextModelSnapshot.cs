@@ -21,6 +21,48 @@ namespace VipcoMaintenance.Migrations
                 .HasAnnotation("ProductVersion", "2.1.0-preview1-28290")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.AdjustStockSp", b =>
+                {
+                    b.Property<int>("AdjustStockSpId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("AdjustDate");
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("EmpCode");
+
+                    b.Property<DateTime?>("ModifyDate");
+
+                    b.Property<string>("Modifyer")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("MovementStockSpId");
+
+                    b.Property<double>("Quantity");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(200);
+
+                    b.Property<int?>("SparePartId");
+
+                    b.HasKey("AdjustStockSpId");
+
+                    b.HasIndex("MovementStockSpId")
+                        .IsUnique()
+                        .HasFilter("[MovementStockSpId] IS NOT NULL");
+
+                    b.HasIndex("SparePartId");
+
+                    b.ToTable("AdjustStockSp");
+                });
+
             modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.Branch", b =>
                 {
                     b.Property<int>("BranchId")
@@ -105,6 +147,35 @@ namespace VipcoMaintenance.Migrations
                     b.ToTable("Item");
                 });
 
+            modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.ItemMainHasEmployee", b =>
+                {
+                    b.Property<int>("ItemMainHasEmployeeId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("EmpCode");
+
+                    b.Property<int?>("ItemMaintenanceId");
+
+                    b.Property<DateTime?>("ModifyDate");
+
+                    b.Property<string>("Modifyer")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(200);
+
+                    b.HasKey("ItemMainHasEmployeeId");
+
+                    b.HasIndex("ItemMaintenanceId");
+
+                    b.ToTable("ItemMainHasEmployee");
+                });
+
             modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.ItemMaintenance", b =>
                 {
                     b.Property<int>("ItemMaintenanceId")
@@ -145,6 +216,8 @@ namespace VipcoMaintenance.Migrations
 
                     b.Property<int?>("TypeMaintenanceId");
 
+                    b.Property<int?>("WorkGroupMaintenanceId");
+
                     b.HasKey("ItemMaintenanceId");
 
                     b.HasIndex("RequireMaintenanceId")
@@ -152,6 +225,8 @@ namespace VipcoMaintenance.Migrations
                         .HasFilter("[RequireMaintenanceId] IS NOT NULL");
 
                     b.HasIndex("TypeMaintenanceId");
+
+                    b.HasIndex("WorkGroupMaintenanceId");
 
                     b.ToTable("ItemMaintenance");
                 });
@@ -303,6 +378,8 @@ namespace VipcoMaintenance.Migrations
 
                     b.Property<int?>("ItemId");
 
+                    b.Property<DateTime?>("MaintenanceApply");
+
                     b.Property<DateTime?>("ModifyDate");
 
                     b.Property<string>("Modifyer")
@@ -413,6 +490,8 @@ namespace VipcoMaintenance.Migrations
 
                     b.Property<string>("SparePartImage");
 
+                    b.Property<double?>("UnitPrice");
+
                     b.Property<int?>("WorkGroupId");
 
                     b.HasKey("SparePartId");
@@ -481,6 +560,46 @@ namespace VipcoMaintenance.Migrations
                     b.ToTable("WorkGroup");
                 });
 
+            modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.WorkGroupMaintenance", b =>
+                {
+                    b.Property<int>("WorkGroupMaintenanceId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<string>("Creator")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime?>("ModifyDate");
+
+                    b.Property<string>("Modifyer")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(200);
+
+                    b.HasKey("WorkGroupMaintenanceId");
+
+                    b.ToTable("WorkGroupMaintenance");
+                });
+
+            modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.AdjustStockSp", b =>
+                {
+                    b.HasOne("VipcoMaintenance.Models.Maintenances.MovementStockSp", "MovementStockSp")
+                        .WithOne("AdjustStockSp")
+                        .HasForeignKey("VipcoMaintenance.Models.Maintenances.AdjustStockSp", "MovementStockSpId");
+
+                    b.HasOne("VipcoMaintenance.Models.Maintenances.SparePart", "SparePart")
+                        .WithMany()
+                        .HasForeignKey("SparePartId");
+                });
+
             modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.Item", b =>
                 {
                     b.HasOne("VipcoMaintenance.Models.Maintenances.Branch", "Branch")
@@ -492,6 +611,13 @@ namespace VipcoMaintenance.Migrations
                         .HasForeignKey("ItemTypeId");
                 });
 
+            modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.ItemMainHasEmployee", b =>
+                {
+                    b.HasOne("VipcoMaintenance.Models.Maintenances.ItemMaintenance", "ItemMaintenance")
+                        .WithMany("ItemMainHasEmployees")
+                        .HasForeignKey("ItemMaintenanceId");
+                });
+
             modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.ItemMaintenance", b =>
                 {
                     b.HasOne("VipcoMaintenance.Models.Maintenances.RequireMaintenance", "RequireMaintenance")
@@ -501,6 +627,10 @@ namespace VipcoMaintenance.Migrations
                     b.HasOne("VipcoMaintenance.Models.Maintenances.TypeMaintenance", "TypeMaintenance")
                         .WithMany("ItemMaintenances")
                         .HasForeignKey("TypeMaintenanceId");
+
+                    b.HasOne("VipcoMaintenance.Models.Maintenances.WorkGroupMaintenance", "WorkGroupMaintenance")
+                        .WithMany("ItemMaintenances")
+                        .HasForeignKey("WorkGroupMaintenanceId");
                 });
 
             modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.ItemType", b =>

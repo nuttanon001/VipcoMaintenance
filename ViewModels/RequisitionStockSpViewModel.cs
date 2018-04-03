@@ -10,5 +10,6 @@ namespace VipcoMaintenance.ViewModels
     {
         public string SparePartName { get; set; }
         public string RequisitionEmpString { get; set; }
+        public double? UnitPrice { get; set; }
     }
 }

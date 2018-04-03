@@ -8,5 +8,6 @@ namespace VipcoMaintenance.ViewModels
         public string MaintenanceEmpString { get; set; }
         public string TypeMaintenanceString { get; set; }
         public string StatusMaintenanceString { get; set; }
+        public string WorkGroupMaintenanceString { get; set; }
     }
 }

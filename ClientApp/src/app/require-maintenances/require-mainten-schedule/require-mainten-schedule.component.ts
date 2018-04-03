@@ -104,7 +104,7 @@ export class RequireMaintenScheduleComponent implements OnInit, OnDestroy {
   onGetData(schedule: OptionRequireMaintenance): void {
     this.service.getRequireMaintenanceSchedule(schedule)
       .subscribe(dbDataSchedule => {
-        console.log("Api Send is", dbDataSchedule);
+        // console.log("Api Send is", dbDataSchedule);
 
         this.totalRecords = dbDataSchedule.TotalRow;
         this.columns = new Array;
@@ -200,7 +200,7 @@ export class RequireMaintenScheduleComponent implements OnInit, OnDestroy {
         .subscribe(conditionNumber => {
           if (conditionNumber) {
             if (conditionNumber === -1) {
-              this.service.actionRequireMaintenance(master.RequireMaintenanceId)
+              this.service.actionRequireMaintenance(master.RequireMaintenanceId, (this.serviceAuth.getAuth.UserName || ""))
                 .subscribe(updateComplate => {
                   this.onGetData(this.reportForm.value);
                 });

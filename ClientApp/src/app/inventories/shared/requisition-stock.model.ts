@@ -15,4 +15,9 @@ export interface RequisitionStock extends BaseModel {
   ItemMaintenanceId?: number;
   // MovementStockSp
   MovementStockSpId?: number;
+  //ViewModel
+  SparePartName?: string;
+  RequisitionEmpString?: string;
+  UnitPrice?: number;
+  TotalPrice?: number;
 }

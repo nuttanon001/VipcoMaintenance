@@ -73,6 +73,24 @@ namespace VipcoMaintenance.Controllers
             }
             return BadRequest();
         }
+        // GET: api/ActionRequireMaintenance/5
+        [HttpGet("ActionRequireMaintenance")]
+        public async Task<IActionResult> ActionRequireMaintenance(int key,string byEmp)
+        {
+            if (key > 0)
+            {
+                var HasData = await this.repository.GetAsync(key);
+                if (HasData != null)
+                {
+                    HasData.MaintenanceApply = DateTime.Now;
+                    HasData.ModifyDate = DateTime.Now;
+                    HasData.Modifyer = byEmp;
+
+                    return new JsonResult(await this.repository.UpdateAsync(HasData, key), this.DefaultJsonSettings);
+                }
+            }
+            return BadRequest();
+        }
 
         // POST: api/RequireMaintenance/GetScroll
         [HttpPost("GetScroll")]
@@ -137,7 +155,16 @@ namespace VipcoMaintenance.Controllers
             var HasData = await QueryData.AsNoTracking().ToListAsync();
             var listData = new List<RequireMaintenanceViewModel>();
             foreach (var item in HasData)
-                listData.Add(this.mapper.Map<RequireMaintenance, RequireMaintenanceViewModel>(item));
+            {
+                // 
+                var MapItem = this.mapper.Map<RequireMaintenance, RequireMaintenanceViewModel>(item);
+                if (MapItem.RequireStatus == RequireStatus.Waiting && MapItem.MaintenanceApply.HasValue)
+                {
+                    MapItem.RequireStatus = RequireStatus.MaintenanceResponse;
+                }
+                listData.Add(MapItem);
+
+            }
 
             return new JsonResult(new ScrollDataViewModel<RequireMaintenanceViewModel>(Scroll, listData), this.DefaultJsonSettings);
         }
@@ -150,7 +177,7 @@ namespace VipcoMaintenance.Controllers
             if (record == null)
                 return BadRequest();
             // +7 Hour
-            record = this.helper.AddHourMethod(record);
+            //record = this.helper.AddHourMethod(record);
             var RunNumber = (await this.repository.GetAllAsQueryable().CountAsync(x => x.RequireDate.Year == record.RequireDate.Year)) + 1;
             record.RequireNo = $"{record.RequireDate.ToString("MM/yy")}-{RunNumber.ToString("0000")}";
             record.CreateDate = DateTime.Now;
@@ -197,7 +224,7 @@ namespace VipcoMaintenance.Controllers
                     if (option.Status.HasValue)
                     {
                         if (option.Status == 1)
-                            QueryData = QueryData.Where(x => x.RequireStatus == RequireStatus.Waiting);
+                            QueryData = QueryData.Where(x => x.RequireStatus == RequireStatus.Waiting || x.RequireStatus == RequireStatus.InProcess);
                         else if (option.Status == 2)
                             QueryData = QueryData.Where(x => x.RequireStatus == RequireStatus.InProcess);
                         else
@@ -268,6 +295,7 @@ namespace VipcoMaintenance.Controllers
                         var Master = new RequireMaintenanceViewModel()
                         {
                             RequireMaintenanceId = Data.RequireMaintenanceId,
+                            MaintenanceApply = Data.MaintenanceApply != null ? Data.MaintenanceApply : null,
                             // RequireString = $"{EmployeeReq} | No.{Data.RequireNo}",
                             ItemCode = $"{Data.Item.ItemCode}/{Data.Item.Name}",
                             RequireEmpString = string.IsNullOrEmpty(Data.RequireEmp) ? "-" : "คุณ" + (await this.repositoryEmployee.GetAsync(Data.RequireEmp)).NameThai

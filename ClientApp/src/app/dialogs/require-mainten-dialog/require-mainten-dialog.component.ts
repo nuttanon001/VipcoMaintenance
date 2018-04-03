@@ -16,7 +16,7 @@ export class RequireMaintenDialogComponent implements OnInit {
   /** require-painting-view-dialog ctor */
   constructor(
     private service: RequireMaintenService,
-    @Inject(MAT_DIALOG_DATA) public requireMaintenanceId: number,
+    @Inject(MAT_DIALOG_DATA) public data: { RequireMaintenanceId: number, ShowCommand: boolean },
     private dialogRef: MatDialogRef<number>) { }
 
   // Parameter
@@ -26,8 +26,8 @@ export class RequireMaintenDialogComponent implements OnInit {
   /** Called by Angular after cutting-plan-dialog component initialized */
   ngOnInit(): void {
     this.canClose = false;
-    if (this.requireMaintenanceId) {
-      this.service.getOneKeyNumber({ RequireMaintenanceId: this.requireMaintenanceId})
+    if (this.data) {
+      this.service.getOneKeyNumber({ RequireMaintenanceId: this.data.RequireMaintenanceId})
         .subscribe(dbData => {
           this.requireMainten = dbData;
         }, error => this.onCancelClick());

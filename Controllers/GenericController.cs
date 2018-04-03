@@ -71,7 +71,7 @@ namespace VipcoMaintenance.Controllers
             if (record == null)
                 return BadRequest();
             // +7 Hour
-            record = this.helper.AddHourMethod(record);
+            //record = this.helper.AddHourMethod(record);
 
             if (record.GetType().GetProperty("CreateDate") != null)
                 record.GetType().GetProperty("CreateDate").SetValue(record, DateTime.Now);
@@ -89,12 +89,12 @@ namespace VipcoMaintenance.Controllers
                 return BadRequest();
 
             // +7 Hour
-            record = this.helper.AddHourMethod(record);
+            //record = this.helper.AddHourMethod(record);
 
             // Set date for CrateDate Entity
             if (record.GetType().GetProperty("ModifyDate") != null)
                 record.GetType().GetProperty("ModifyDate").SetValue(record, DateTime.Now);
-            if (await this.repository.UpdateAsync(record, key) != null)
+            if (await this.repository.UpdateAsync(record, key) == null)
                 return BadRequest();
             return new JsonResult(record, this.DefaultJsonSettings);
         }

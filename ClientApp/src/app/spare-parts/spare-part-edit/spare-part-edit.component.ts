@@ -103,6 +103,7 @@ export class SparePartEditComponent extends BaseEditComponent<SparePart, SparePa
         ]
       ],
       SparePartImage: [this.editValue.SparePartImage],
+      UnitPrice: [this.editValue.UnitPrice],
       MinStock: [this.editValue.MinStock],
       MaxStock: [this.editValue.MaxStock],
       WorkGroupId: [this.editValue.WorkGroupId],

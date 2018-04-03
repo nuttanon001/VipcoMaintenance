@@ -1,14 +1,13 @@
 <div *ngIf="displayValue,else elseBlock">
+  <div *ngIf="requireMainten">
+    <app-item-mainten-has-require [displayValue]="requireMainten">
+    </app-item-mainten-has-require>
+  </div>
   <mat-tab-group>
     <mat-tab>
       <ng-template mat-tab-label>
-        <b>Maintenance infomation view.</b>
+        <b>Maintenance infomation view</b>
       </ng-template>
-      <div class="view-container" *ngIf="requireMainten">
-        <app-item-mainten-has-require [displayValue]="requireMainten">
-        </app-item-mainten-has-require>
-      </div>
-      <hr />
       <div class="view-container">
         <!--Row1-->
         <div class="row my-1">
@@ -18,15 +17,24 @@
           <div class="my-value">
             {{displayValue.ItemMaintenanceNo || "-"}}
           </div>
-
-          <div class="my-label">
-            StatusMaintenance :
-          </div>
-          <div class="my-value">
-            {{displayValue.StatusMaintenance || "-"}}
-          </div>
         </div>
         <!--Row2-->
+        <div class="row my-1">
+          <div class="my-label">
+            Group Maintenance :
+          </div>
+          <div class="my-value">
+            {{displayValue.WorkGroupMaintenanceString || "-"}}
+          </div>
+
+          <div class="my-label">
+            TypeMaintenance :
+          </div>
+          <div class="my-value">
+            {{displayValue.TypeMaintenanceString || "-"}}
+          </div>
+        </div>
+        <!--Row3-->
         <div class="row my-1">
           <div class="my-label">
             Plan :
@@ -46,38 +54,47 @@
             {{(displayValue.ActualEndDate | date:'dd/MM/yyyy')|| "-"}}
           </div>
         </div>
-        <!--Row3-->
+        <!--Row4-->
         <div class="row my-1">
           <div class="my-label">
             Description :
           </div>
-          <div class="my-value">
-            {{displayValue.Description || "-"}}
-          </div>
+          <textarea [value]="displayValue.Description" rows="3" readonly class="my-value">
+          </textarea>
 
           <div class="my-label">
             Remark :
           </div>
-          <div class="my-value">
-            {{displayValue.Remark || "-"}}
-          </div>
+          <textarea [value]="displayValue.Remark" rows="3" readonly class="my-value">
+          </textarea>
         </div>
-        <!--Row4-->
+        <!--Row5-->
         <div class="row my-1">
-          <div class="my-label">
+          <!--<div class="my-label">
             MaintenanceBy :
           </div>
           <div class="my-value">
             {{displayValue.MaintenanceEmpString || "-"}}
-          </div>
-
-          <div class="my-label">
-            TypeMaintenance :
-          </div>
-          <div class="my-value">
-            {{displayValue.TypeMaintenanceString || "-"}}
-          </div>
+          </div>-->
         </div>
+      </div>
+    </mat-tab>
+    <mat-tab *ngIf="itemMainHasEmployees">
+      <ng-template mat-tab-label>
+        <b>Maintenance By</b>
+      </ng-template>
+      <div class="view-container">
+        <app-item-mainten-employee-table [dataRows]="itemMainHasEmployees" [readOnly]="true">
+        </app-item-mainten-employee-table>
+      </div>
+    </mat-tab>
+    <mat-tab *ngIf="requisitionStockes">
+      <ng-template mat-tab-label>
+        <b>Requisition spare-part</b>
+      </ng-template>
+      <div class="view-container">
+        <app-item-mainten-requisition-table [requisitions]="requisitionStockes" [readOnly]="true">
+        </app-item-mainten-requisition-table>
       </div>
     </mat-tab>
   </mat-tab-group>

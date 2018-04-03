@@ -9,9 +9,9 @@
   height: calc(100vh - 200px);
   height: -webkit-calc(100vh - 200px); */
   .row-form {
-    min-height:65px;
-    margin-top:5px;
-    margin-bottom:5px;
+    min-height:50px;
+    margin-top:2px;
+    margin-bottom:2px;
     display: flex;
     flex-direction: row;
 
@@ -51,4 +51,11 @@
 
 .click-input {
   cursor: pointer;
+}
+
+.material-icons {
+  font-size: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }

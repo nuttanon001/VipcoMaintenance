@@ -13,5 +13,6 @@ namespace VipcoMaintenance.ViewModels
         public string ProjectCodeMasterString { get; set; }
         public string BranchString { get; set; }
         public string GroupMISString { get; set; }
+        public string RequireStatusString { get; set; }
     }
 }

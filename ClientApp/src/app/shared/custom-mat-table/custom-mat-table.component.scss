@@ -29,17 +29,28 @@
   }
 }
 
+.intab-table {
+  overflow: auto;
+
+  /*@media only screen and (max-width: 1024px) {
+    min-height: calc(100vh - 400px);
+  }
+
+  @media only screen and (max-width: 1700px) {
+    min-height: calc(100vh - 335px);
+  }*/
+}
+
 .dialog-table {
   overflow: auto;
 
   @media only screen and (max-width: 1024px) {
-    min-height: calc(100vh - 200px);
+    min-height: calc(100vh - 500px);
   }
 
   @media only screen and (max-width: 1700px) {
     min-height: calc(100vh - 400px);
   }
- 
 }
 
 .example-loading-shade {
@@ -76,6 +87,7 @@
 }
 
 .mat-column-select {
+  overflow: initial;
   white-space: unset !important;
   flex: 0 0 35px !important;
   width: 35px !important;

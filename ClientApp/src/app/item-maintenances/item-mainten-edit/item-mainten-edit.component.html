@@ -4,7 +4,10 @@
       <ng-template mat-tab-label>
         <b>Maintenance infomation edit</b>
       </ng-template>
-      <div class="form-container-column">
+      <div class="form-container-column" (click)="openDialog('RequireMaintenance')"
+           style="cursor:pointer;">
+        <i class="text-info">Click here for detail.</i>
+        <hr class="w-75 my-1" />
         <div class="row-form" *ngIf="requireMainten">
           <div class="left-content">
             <mat-form-field>
@@ -15,14 +18,14 @@
 
           <div class="right-content">
             <mat-form-field>
-              <input matInput placeholder="Require description" readonly
-                     id="RequireDescription" [value]="requireMainten.Description">
+              <textarea matInput placeholder="Require description" readonly rows="3"
+                        id="RequireDescription" [value]="requireMainten.Description">
+              </textarea>
             </mat-form-field>
           </div>
         </div>
+        <hr class="w-75 my-0" />
       </div>
-
-      <hr class="w-75 my-0" />
       <form [formGroup]="editValueForm">
         <div class="form-container-column">
           <!--Row1-->
@@ -42,7 +45,35 @@
           <div class="row-form">
             <div class="left-content">
               <mat-form-field>
-                <input matInput [matDatepicker]="PlanStartDate" placeholder="Choose a date plan"
+                <mat-select placeholder="Group Maintenance"
+                            required
+                            id="WorkGroupMaintenanceId" formControlName="WorkGroupMaintenanceId">
+                  <mat-option *ngFor="let groupMaintenance of groupMaintenances" [value]="groupMaintenance.WorkGroupMaintenanceId">
+                    {{ groupMaintenance.Name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editValueForm.controls.WorkGroupMaintenanceId.hasError('required')">Please choose an group maintenance</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="right-content">
+              <mat-form-field>
+                <mat-select placeholder="Type Maintenance"
+                            required
+                            id="TypeMaintenanceId" formControlName="TypeMaintenanceId">
+                  <mat-option *ngFor="let typeMaintenance of typeMaintenances" [value]="typeMaintenance.TypeMaintenanceId">
+                    {{ typeMaintenance.Name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editValueForm.controls.TypeMaintenanceId.hasError('required')">Please choose an type maintenance</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--Row3-->
+          <div class="row-form">
+            <div class="left-content">
+              <mat-form-field>
+                <input matInput [matDatepicker]="PlanStartDate" placeholder="Choose a plan start date  "
                        id="PlanStartDate" formControlName="PlanStartDate" required
                        [max]="editValueForm.controls.PlanEndDate.value">
                 <mat-datepicker-toggle matSuffix [for]="PlanStartDate"></mat-datepicker-toggle>
@@ -55,7 +86,7 @@
 
             <div class="right-content">
               <mat-form-field>
-                <input matInput [matDatepicker]="PlanEndDate" placeholder="Choose a date plan"
+                <input matInput [matDatepicker]="PlanEndDate" placeholder="Choose a plan end date  "
                        id="PlanEndDate" formControlName="PlanEndDate" required
                        [min]="editValueForm.controls.PlanStartDate.value">
                 <mat-datepicker-toggle matSuffix [for]="PlanEndDate"></mat-datepicker-toggle>
@@ -66,11 +97,11 @@
               </mat-form-field>
             </div>
           </div>
-          <!--Row3-->
+          <!--Row4-->
           <div class="row-form">
             <div class="left-content">
               <mat-form-field>
-                <input matInput [matDatepicker]="ActualStartDate" placeholder="Choose a date actual"
+                <input matInput [matDatepicker]="ActualStartDate" placeholder="Choose a actual start date  "
                        id="ActualStartDate" formControlName="ActualStartDate"
                        [max]="editValueForm.controls.ActualEndDate.value">
                 <mat-datepicker-toggle matSuffix [for]="ActualStartDate"></mat-datepicker-toggle>
@@ -80,7 +111,7 @@
 
             <div class="right-content">
               <mat-form-field>
-                <input matInput [matDatepicker]="ActualEndDate" placeholder="Choose a date actual"
+                <input matInput [matDatepicker]="ActualEndDate" placeholder="Choose a actual end date  "
                        id="ActualEndDate" formControlName="ActualEndDate"
                        [min]="editValueForm.controls.ActualStartDate.value">
                 <mat-datepicker-toggle matSuffix [for]="ActualEndDate"></mat-datepicker-toggle>
@@ -88,7 +119,7 @@
               </mat-form-field>
             </div>
           </div>
-          <!--Row4-->
+          <!--Row5-->
           <div class="row-form">
             <div class="left-content">
               <mat-form-field hintLabel="*Required and max 250 characters">
@@ -109,44 +140,78 @@
               </mat-form-field>
             </div>
           </div>
-          <!--Row5-->
-          <div class="row-form">
-            <div class="left-content">
-              <mat-form-field>
-                <input matInput placeholder="Maintenance by" class="click-input"
-                       (click)="openDialog('Employee')" readonly required
-                       id="MaintenanceEmpString" formControlName="MaintenanceEmpString">
-                <mat-error *ngIf="editValueForm.controls.MaintenanceEmpString.hasError('required')">
-                  Maintenance by is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <div class="right-content">
-              <mat-form-field>
-                <mat-select placeholder="Type of Maintenance"
-                            id="TypeMaintenanceId" formControlName="TypeMaintenanceId">
-                  <mat-option *ngFor="let typeMaintenance of typeMaintenances" [value]="typeMaintenance.TypeMaintenanceId">
-                    {{ typeMaintenance.Name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+          <!--Row6-->
+          <!--
+        <div class="row-form">
+          <div class="left-content">
+            <mat-form-field>
+              <input matInput placeholder="Maintenance by" class="click-input"
+                     (click)="openDialog('Employee')" readonly required
+                     id="MaintenanceEmpString" formControlName="MaintenanceEmpString">
+              <mat-error *ngIf="editValueForm.controls.MaintenanceEmpString.hasError('required')">
+                Maintenance by is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
           </div>
+
+          <div class="right-content">
+            &uml;
+          </div>
+        </div>
+        -->
         </div>
       </form>
     </mat-tab>
     <!--
-     <mat-tab>
+   <mat-tab>
+    <ng-template mat-tab-label>
+      <b>Information of require maintenance</b>
+    </ng-template>
+    <div *ngIf="requireMainten">
+      <app-item-mainten-has-require [displayValue]="requireMainten">
+      </app-item-mainten-has-require>
+    </div>
+  </mat-tab>
+  -->
+    <mat-tab>
       <ng-template mat-tab-label>
-        <b>Information of require maintenance</b>
+        <b>Maintenance By</b>
       </ng-template>
-      <div *ngIf="requireMainten">
-        <app-item-mainten-has-require [displayValue]="requireMainten">
-        </app-item-mainten-has-require>
+      <div class="form-container-column">
+        <div class="my-0">
+          <button mat-mini-fab color="primary" (click)="openDialog('Employees')"
+                  matTooltip="Add employee maintenance">
+            <mat-icon aria-hidden="true">add_circle_outline</mat-icon>
+          </button>
+        </div>
+        <div>
+          <app-item-mainten-employee-table [dataRows]="editValue.ItemMainHasEmployees"
+                                           (returnSelected)="onItemMaintenanceEmployeeRemove($event)">
+          </app-item-mainten-employee-table>
+        </div>
       </div>
     </mat-tab>
-    -->
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <b>Requisition spare-part</b>
+      </ng-template>
+      <div class="form-container-column" *ngIf="!requisition; else ItemMaintenRequisition">
+        <div class="my-0">
+          <button mat-mini-fab color="primary" (click)="actionRequisition()"
+                  matTooltip="Add Requisition maintenance">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </div>
+        <div>
+          <app-item-mainten-requisition-table [requisitions]="editValue.RequisitionStockSps" (returnSelected)="actionRequisition($event)">
+          </app-item-mainten-requisition-table>
+        </div>
+      </div>
+      <ng-template #ItemMaintenRequisition>
+        <app-item-mainten-requisition [requisition]="requisition" (returnRequisition)="onComplateOrCancel($event)"></app-item-mainten-requisition>
+      </ng-template>
+    </mat-tab>
   </mat-tab-group>
 </div>
 

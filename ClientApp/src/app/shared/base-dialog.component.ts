@@ -11,6 +11,7 @@ import { DatatableComponent, TableColumn } from "@swimlane/ngx-datatable";
 /** base-dialog component*/
 export abstract class BaseDialogComponent<Model, Service> implements OnInit {
   getValue: Model;
+  getValues: Array<Model>;
   fastSelectd: boolean = false;
   /** cutting-plan-dialog ctor */
   constructor(
@@ -37,6 +38,13 @@ export abstract class BaseDialogComponent<Model, Service> implements OnInit {
     }
   }
 
+  onSelectedValues(values?: Array<Model>): void {
+    if (values) {
+      this.getValues = new Array;
+      this.getValues = [...values];
+    }
+  }
+
   // No Click
   onCancelClick(): void {
     this.dialogRef.close();
@@ -44,6 +52,10 @@ export abstract class BaseDialogComponent<Model, Service> implements OnInit {
 
   // Update Click
   onSelectedClick(): void {
-    this.dialogRef.close(this.getValue);
+    if (this.getValue) {
+      this.dialogRef.close(this.getValue);
+    } else if (this.getValues) {
+      this.dialogRef.close(this.getValues);
+    }
   }
 }

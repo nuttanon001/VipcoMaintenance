@@ -159,13 +159,18 @@ export class DialogsService {
    * @param viewContainerRef
    * @param type
    */
-  public dialogSelectRequireMaintenance(RequireMaintenanceId:number,viewContainerRef: ViewContainerRef): Observable<number> {
+  public dialogSelectRequireMaintenance(RequireMaintenanceId:number,viewContainerRef: ViewContainerRef,ShowCommand:boolean = true): Observable<number> {
     let dialogRef: MatDialogRef<RequireMaintenDialogComponent>;
     let config: MatDialogConfig = new MatDialogConfig();
 
+    let data: { RequireMaintenanceId: number, ShowCommand: boolean };
+    data = {
+      RequireMaintenanceId: RequireMaintenanceId,
+      ShowCommand: ShowCommand
+    };
     // config
     config.viewContainerRef = viewContainerRef;
-    config.data = RequireMaintenanceId;
+    config.data = data;
     // config.height = this.height;
     // config.width= this.width;
     config.hasBackdrop = true;
@@ -201,6 +206,26 @@ export class DialogsService {
    * @param type = mode 0:fastSelected
    */
   public dialogSelectEmployee(viewContainerRef: ViewContainerRef, type: number = 0): Observable<Employee> {
+    let dialogRef: MatDialogRef<EmployeeDialogComponent>;
+    let config: MatDialogConfig = new MatDialogConfig();
+
+    // config
+    config.viewContainerRef = viewContainerRef;
+    config.data = type;
+    // config.height = this.height;
+    // config.width= this.width;
+    config.hasBackdrop = true;
+
+    // open dialog
+    dialogRef = this.dialog.open(EmployeeDialogComponent, config);
+    return dialogRef.afterClosed();
+  }
+
+  /**
+ * @param viewContainerRef
+ * @param type = mode 0:fastSelected
+ */
+  public dialogSelectEmployees(viewContainerRef: ViewContainerRef, type: number = 1): Observable<Array<Employee>> {
     let dialogRef: MatDialogRef<EmployeeDialogComponent>;
     let config: MatDialogConfig = new MatDialogConfig();
 

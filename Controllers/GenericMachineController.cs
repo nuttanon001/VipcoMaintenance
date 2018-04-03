@@ -71,7 +71,7 @@ namespace VipcoMaintenance.Controllers
             if (record == null)
                 return BadRequest();
             // +7 Hour
-            record = this.helper.AddHourMethod(record);
+            //record = this.helper.AddHourMethod(record);
 
             if (record.GetType().GetProperty("CreateDate") != null)
                 record.GetType().GetProperty("CreateDate").SetValue(record, DateTime.Now);
@@ -89,7 +89,7 @@ namespace VipcoMaintenance.Controllers
                 return BadRequest();
 
             // +7 Hour
-            record = this.helper.AddHourMethod(record);
+            //record = this.helper.AddHourMethod(record);
 
             // Set date for CrateDate Entity
             if (record.GetType().GetProperty("ModifyDate") != null)

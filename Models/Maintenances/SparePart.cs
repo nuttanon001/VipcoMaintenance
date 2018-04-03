@@ -25,6 +25,7 @@ namespace VipcoMaintenance.Models.Maintenances
         public string SparePartImage { get; set; }
         public double? MinStock { get; set; }
         public double? MaxStock { get; set; }
+        public double? UnitPrice { get; set; }
         //FK
         // WorkGroup
         public int? WorkGroupId { get; set; }

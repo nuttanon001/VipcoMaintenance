@@ -27,6 +27,8 @@ namespace VipcoMaintenance.Helper
             #region RequireMaintenace
             // RequireMaintenance
             CreateMap<RequireMaintenance, RequireMaintenanceViewModel>()
+                .ForMember(x => x.RequireStatusString,
+                            o => o.MapFrom(s => System.Enum.GetName(typeof(RequireStatus), s.RequireStatus)))
                 .ForMember(x => x.BranchString,
                             o => o.MapFrom(s => s.Branch != null ? s.Branch.Name : "ไม่ระบุ"))
                 .ForMember(x => x.Branch, o => o.Ignore())
@@ -44,6 +46,9 @@ namespace VipcoMaintenance.Helper
                 .ForMember(x => x.TypeMaintenanceString,
                             o => o.MapFrom(s => s.TypeMaintenance == null ? "ไม่ระบุ" : s.TypeMaintenance.Name))
                 .ForMember(x => x.TypeMaintenance, o => o.Ignore())
+                .ForMember(x => x.WorkGroupMaintenanceString,
+                            o => o.MapFrom(s => s.WorkGroupMaintenance == null ? "ไม่ระบุ" : s.WorkGroupMaintenance.Name))
+                .ForMember(x => x.WorkGroupMaintenance,o => o.Ignore())
                 .ForMember(x => x.ItemCode,
                             o => o.MapFrom(s => s.RequireMaintenance == null ? "ไม่ระบุ" : $"{s.RequireMaintenance.Item.ItemCode}/{s.RequireMaintenance.Item.Name}"))
                 .ForMember(x => x.RequireMaintenance, o => o.Ignore());
@@ -65,12 +70,20 @@ namespace VipcoMaintenance.Helper
                 .ForMember(x => x.MovementStockSp, o => o.Ignore());
             #endregion
 
-            #region Requisition
+            #region RequisitionStockSp
             CreateMap<RequisitionStockSp,RequisitionStockSpViewModel>()
                 .ForMember(x => x.SparePartName,
                         o => o.MapFrom(s => s.SparePart == null ? "ไม่ระบุ" : s.SparePart.Name))
+                .ForMember(x => x.UnitPrice,
+                        o => o.MapFrom(s => s.SparePart == null ? 0 : s.SparePart.UnitPrice))
                 .ForMember(x => x.SparePart, o => o.Ignore())
                 .ForMember(x => x.MovementStockSp, o => o.Ignore());
+            #endregion
+
+            #region ItemMainHasEmployee
+
+            CreateMap<ItemMainHasEmployee, ItemMainHasEmployeeViewModel>();
+
             #endregion
         }
     }

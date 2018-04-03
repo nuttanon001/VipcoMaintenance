@@ -68,15 +68,15 @@ export class ItemMaintenMasterComponent extends BaseMasterComponent<ItemMaintena
 
   // on change time zone befor update to webapi
   changeTimezone(value: ItemMaintenance): ItemMaintenance {
-    let zone: string = "Asia/Bangkok";
-    if (value !== null) {
-      if (value.CreateDate !== null) {
-        value.CreateDate = moment.tz(value.CreateDate, zone).toDate();
-      }
-      if (value.ModifyDate !== null) {
-        value.ModifyDate = moment.tz(value.ModifyDate, zone).toDate();
-      }
-    }
+    //let zone: string = "Asia/Bangkok";
+    //if (value !== null) {
+    //  if (value.CreateDate !== null) {
+    //    value.CreateDate = moment.tz(value.CreateDate, zone).toDate();
+    //  }
+    //  if (value.ModifyDate !== null) {
+    //    value.ModifyDate = moment.tz(value.ModifyDate, zone).toDate();
+    //  }
+    //}
     return value;
   }
 

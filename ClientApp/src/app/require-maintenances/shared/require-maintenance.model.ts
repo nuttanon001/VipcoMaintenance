@@ -18,17 +18,20 @@ export interface RequireMaintenance extends BaseModel {
   BranchId?: number;
   // ProjectCodeMaster
   ProjectCodeMasterId?: number;
+  MaintenanceApply?: Date;
   // ViewModel
   ItemCode?: string;
   RequireEmpString?: string;
   ProjectCodeMasterString?: string;
   GroupMISString?: string;
   BranchString?: string;
+  RequireStatusString?: string;
 }
 
 export enum RequireStatus {
   Waiting = 1,
   InProcess,
   Complate,
-  Cancel
+  Cancel,
+  MaintenanceResponse
 }

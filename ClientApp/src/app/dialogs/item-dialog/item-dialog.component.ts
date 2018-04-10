@@ -10,12 +10,13 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 // base-component
 import { BaseDialogComponent } from "../../shared/base-dialog.component";
+import { ItemTypeService } from "../../item-types/shared/item-type.service";
 
 @Component({
   selector: 'app-item-dialog',
   templateUrl: './item-dialog.component.html',
   styleUrls: ['./item-dialog.component.scss'],
-  providers: [ItemService]
+  providers: [ItemService,ItemTypeService]
 })
 export class ItemDialogComponent extends BaseDialogComponent<Item, ItemService> {
   /** employee-dialog ctor */

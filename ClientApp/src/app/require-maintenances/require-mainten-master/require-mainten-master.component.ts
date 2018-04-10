@@ -3,7 +3,7 @@ import { Component, ViewContainerRef, ViewChild } from "@angular/core";
 import { BaseMasterComponent } from "../../shared/base-master-component";
 import { RequireMaintenTableComponent } from "../require-mainten-table/require-mainten-table.component";
 // models
-import { RequireMaintenance } from "../shared/require-maintenance.model";
+import { RequireMaintenance, RequireStatus } from "../shared/require-maintenance.model";
 // services
 import { AuthService } from "../../core/auth/auth.service";
 import { DialogsService } from "../../dialogs/shared/dialogs.service";
@@ -57,5 +57,16 @@ export class RequireMaintenMasterComponent
   // onReload
   onReloadData(): void {
     this.tableComponent.reloadData();
+  }
+
+  // on detail edit override
+  onDetailEdit(editValue?: RequireMaintenance): void {
+    if (editValue) {
+      if (editValue.RequireStatus !== RequireStatus.Waiting) {
+        this.dialogsService.error("Access Deny", "คำขอซ่อมบำรุง อยู่ขณะดำเนินการไม่สามารถแก้ไขได้ !!!", this.viewContainerRef);
+        return;
+      }
+    }
+    super.onDetailEdit(editValue);
   }
 }

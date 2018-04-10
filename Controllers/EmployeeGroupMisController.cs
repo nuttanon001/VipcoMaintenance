@@ -20,6 +20,13 @@ namespace VipcoMaintenance.Controllers
     {
         public EmployeeGroupMisController(IRepositoryMachine<EmployeeGroupMis> repo):base(repo) { }
 
+        [HttpGet("GroupMisByEmpCode")]
+        public async Task<IActionResult> GetGroupMisByEmpCode(string EmpCode)
+        {
+            var HasData = await this.repository.GetAllAsQueryable()
+                                    .FirstOrDefaultAsync(x => x.Employee.Any(z => z.EmpCode == EmpCode));
+            return new JsonResult(HasData, this.DefaultJsonSettings);
+        }
         // POST: api/EmployeeGroupMis/GetScroll
         [HttpPost("GetScroll")]
         public async Task<IActionResult> GetScroll([FromBody] ScrollViewModel Scroll)

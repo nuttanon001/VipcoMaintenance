@@ -122,6 +122,11 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
               .subscribe(dbDataReq => {
                 if (dbDataReq) {
                   this.requireMainten = dbDataReq;
+                  if (!this.typeMaintenances) {
+                    this.getTypeMaintenances();
+                  } else if (this.typeMaintenances.length < 1) {
+                    this.getTypeMaintenances();
+                  }
                 }
               })
           }
@@ -133,7 +138,7 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
         PlanEndDate: new Date,
         RequisitionStockSps: new Array,
         ItemMainHasEmployees: new Array,
-        StatusMaintenance: StatusMaintenance.InProcess,
+        StatusMaintenance: StatusMaintenance.TakeAction,
         Description:"-"
       };
 

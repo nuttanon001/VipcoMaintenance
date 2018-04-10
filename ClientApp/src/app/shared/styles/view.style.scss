@@ -1,4 +1,4 @@
-﻿@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
 
 .view-container {
     display: flex;
@@ -35,7 +35,7 @@
 
 .size-img {
     height: auto;
-    max-width: 300px;
+    max-width: 400px;
 }
 
 :host /deep/ .disabled-row {

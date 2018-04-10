@@ -12,5 +12,7 @@ namespace VipcoMaintenance.ViewModels
         public string ItemTypeString { get; set; }
         public string EmpResposibleString { get; set; }
         public string BranchString { get; set; }
+        public string ItemStatusString { get; set; }
+        public string GroupMisString {get;set;}
     }
 }

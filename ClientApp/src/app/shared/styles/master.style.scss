@@ -46,6 +46,16 @@
     order: 2;
 }
 
+.center-content-scroll {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  order: 2;
+  height: 85vh;
+  overflow: scroll;
+}
+
+
 .center-content-nogrow {
     display: flex;
     flex-direction: column;

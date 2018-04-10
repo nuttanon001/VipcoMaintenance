@@ -7,6 +7,13 @@
     </div>
   </div>
   <div class="mx-2">
+    <mat-form-field>
+      <mat-select placeholder="Type of item">
+        <mat-option *ngFor="let itemType of itemTypes" [value]="itemType.ItemTypeId">
+          {{ itemType.Name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <search-box [isDisabled]="isDisabled"></search-box>
   </div>
 

@@ -1,5 +1,6 @@
 import { Component, ViewContainerRef, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
+import { Location } from "@angular/common";
 // components
 import { BaseMasterComponent } from "../../shared/base-master-component";
 // models
@@ -24,6 +25,7 @@ export class ItemMaintenMasterComponent extends BaseMasterComponent<ItemMaintena
     authService: AuthService,
     dialogsService: DialogsService,
     viewContainerRef: ViewContainerRef,
+    private location: Location,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -38,6 +40,7 @@ export class ItemMaintenMasterComponent extends BaseMasterComponent<ItemMaintena
 
   //Parameter
   backToSchedule: boolean = false;
+  loadReportPaint: boolean = false;
 
   @ViewChild(ItemMaintenTableComponent)
   private tableComponent: ItemMaintenTableComponent;
@@ -68,20 +71,48 @@ export class ItemMaintenMasterComponent extends BaseMasterComponent<ItemMaintena
 
   // on change time zone befor update to webapi
   changeTimezone(value: ItemMaintenance): ItemMaintenance {
-    //let zone: string = "Asia/Bangkok";
-    //if (value !== null) {
-    //  if (value.CreateDate !== null) {
-    //    value.CreateDate = moment.tz(value.CreateDate, zone).toDate();
-    //  }
-    //  if (value.ModifyDate !== null) {
-    //    value.ModifyDate = moment.tz(value.ModifyDate, zone).toDate();
-    //  }
-    //}
+    let zone: string = "Asia/Bangkok";
+    if (value !== null) {
+      if (value.CreateDate !== null) {
+        value.CreateDate = moment.tz(value.CreateDate, zone).toDate();
+      }
+      if (value.ModifyDate !== null) {
+        value.ModifyDate = moment.tz(value.ModifyDate, zone).toDate();
+      }
+    }
     return value;
   }
 
   // onReload
   onReloadData(): void {
     this.tableComponent.reloadData();
+  }
+
+  // on show report
+  onReport(Value?: ItemMaintenance): void {
+    if (Value) {
+      this.loadReportPaint = !this.loadReportPaint;
+    }
+  }
+
+  // on back from report
+  onBack(): void {
+    this.loadReportPaint = !this.loadReportPaint;  
+  }
+
+  // on save complete
+  onSaveComplete(): void {
+    this.dialogsService.context("System message", "Save completed.", this.viewContainerRef)
+      .subscribe(result => {
+        this.canSave = false;
+        this.ShowEdit = false;
+        this.editValue = undefined;
+        this.onDetailView(undefined);
+        if (this.backToSchedule) {
+            this.location.back();
+        } else {
+          this.onReloadData();
+        }
+      });
   }
 }

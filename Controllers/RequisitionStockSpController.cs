@@ -48,6 +48,7 @@ namespace VipcoMaintenance.Controllers
             {
                 var HasData = await this.repository.GetAllAsQueryable().Where(x => x.ItemMaintenanceId == key)
                                        .Include(x => x.SparePart)
+                                       .AsNoTracking()
                                        .ToListAsync();
 
                 if (HasData != null)
@@ -153,7 +154,7 @@ namespace VipcoMaintenance.Controllers
             if (record == null)
                 return BadRequest();
             // +7 Hour
-            // record = this.helper.AddHourMethod(record);
+            record = this.helper.AddHourMethod(record);
             record.CreateDate = DateTime.Now;
 
             if (record.MovementStockSp == null)
@@ -181,7 +182,7 @@ namespace VipcoMaintenance.Controllers
                 return BadRequest();
 
             // +7 Hour
-            //record = this.helper.AddHourMethod(record);
+            record = this.helper.AddHourMethod(record);
 
             // Set date for CrateDate Entity
             record.ModifyDate = DateTime.Now;

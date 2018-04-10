@@ -126,7 +126,7 @@ namespace VipcoMaintenance.Controllers
             if (record == null)
                 return BadRequest();
             // +7 Hour
-            //record = this.helper.AddHourMethod(record);
+            record = this.helper.AddHourMethod(record);
             record.CreateDate = DateTime.Now;
 
             if (record.MovementStockSp == null)
@@ -144,7 +144,7 @@ namespace VipcoMaintenance.Controllers
                 return BadRequest();
             return new JsonResult(record, this.DefaultJsonSettings);
         }
-
+        //PUT: api/AdjutStockSp/
         [HttpPut]
         public override async Task<IActionResult> Update(int key, [FromBody] AdjustStockSp record)
         {
@@ -154,7 +154,7 @@ namespace VipcoMaintenance.Controllers
                 return BadRequest();
 
             // +7 Hour
-            //record = this.helper.AddHourMethod(record);
+            record = this.helper.AddHourMethod(record);
 
             // Set date for CrateDate Entity
             record.ModifyDate = DateTime.Now;

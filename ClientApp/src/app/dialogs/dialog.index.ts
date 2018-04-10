@@ -11,7 +11,6 @@ export { ProjectTableComponent } from "./project-dialog/project-table/project-ta
 export { ItemTableDialogComponent } from "./item-dialog/item-table-dialog.component";
 export { ItemDialogComponent } from "./item-dialog/item-dialog.component";
 // Work-Group
-export { WorkgroupDialogComponent } from "./workgroup-dialog/workgroup-dialog.component";
 // Require-Mainten
 export { RequireMaintenDialogComponent } from "./require-mainten-dialog/require-mainten-dialog.component";
 export { RequireMaintenViewDialogComponent } from "./require-mainten-dialog/require-mainten-view-dialog.component";

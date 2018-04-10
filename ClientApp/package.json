@@ -1,11 +1,11 @@
 {
   "name": "vipco_maintenance",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --extract-css",
-    "build": "ng build --extract-css",
+    "build": "ng build --extract-css --base-href=/maintenance/",
     "build:ssr": "npm run build -- --app=ssr --output-hashing=media",
     "test": "ng test",
     "lint": "ng lint",

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorkgroupDialogComponent } from './workgroup-dialog.component';
+import { AdjustViewComponent } from './adjust-view.component';
 
-describe('WorkgroupDialogComponent', () => {
-  let component: WorkgroupDialogComponent;
-  let fixture: ComponentFixture<WorkgroupDialogComponent>;
+describe('AdjustViewComponent', () => {
+  let component: AdjustViewComponent;
+  let fixture: ComponentFixture<AdjustViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorkgroupDialogComponent ]
+      declarations: [ AdjustViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorkgroupDialogComponent);
+    fixture = TestBed.createComponent(AdjustViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

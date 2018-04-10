@@ -1,6 +1,6 @@
 // angular
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, ViewContainerRef, PACKAGE_ROOT_URL } from "@angular/core";
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, } from "@angular/forms";
 // model
 import { User } from "../shared/user.model";
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
           this.user = this.serviceAuth.getAuth;
 
           // debug here
-          console.log("getAuth is :", JSON.stringify(this.user));
+          // console.log("getAuth is :", JSON.stringify(this.user));
           this.buildForm();
         } else {
           this.onGoBack();
@@ -133,22 +133,25 @@ export class RegisterComponent implements OnInit {
         }
       }
 
-      // console.log("Loop");
-
-      this.serviceEmployee.getOneKeyString(control.value)
+      this.serviceEmployee.getOneKeyString({ EmpCode: control.value})
         .subscribe(employee => {
-          this.service.getEmployeeAlready(employee.EmpCode)
-            .subscribe(data => {
-              this.userForm.patchValue({
-                NameThai: employee.NameThai,
+          if (employee) {
+            this.service.getEmployeeAlready(employee.EmpCode)
+              .subscribe(data => {
+                if (data) {
+                  console.log(JSON.stringify(data));
+                  this.userForm.patchValue({
+                    NameThai: employee.NameThai,
+                  });
+                } else {
+                  let message: any = "this employee was already in system.";
+                  this.serviceDialogs.error("Reguester Error", (message || ""), this.viewContainerRef);
+                  this.userForm.patchValue({
+                    NameThai: "",
+                  });
+                }
               });
-            }, error => {
-              let message: any = error.replace("404 - Not Found", "");
-              this.serviceDialogs.error("Reguester Error", (message || ""), this.viewContainerRef);
-              this.userForm.patchValue({
-                NameThai: "",
-              });
-            });
+          }
         }, error => {
           this.userForm.patchValue({
             NameThai: "",

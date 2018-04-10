@@ -1,6 +1,6 @@
 <div class="master-container">
   <split direction="horizontal" [gutterSize]="7" [useTransition]="true">
-    <split-area [size]="30" [visible]="hideleft" [order]="1">
+    <split-area [size]="35" [visible]="hideleft" [order]="1">
       <div class="child-left-container">
         <!--
         <data-table (selected)="onDetailView($event)" [columns]="columns"
@@ -10,7 +10,7 @@
         <app-item-table (returnSelected)="onDetailView($event)"></app-item-table>
       </div>
     </split-area>
-    <split-area [size]="70" [order]="2">
+    <split-area [size]="65" [order]="2">
       <div class="child-container">
         <!--Left-->
         <div class="left-content">
@@ -41,7 +41,7 @@
           </div>
         </div>
         <!--Right-->
-        <div class="right-content" *ngIf="!hiddenTool">
+        <div class="right-content" >
           <button type="button" mat-icon-button color="accent" (click)="onDetailEdit()"
                   [disabled]="ShowEdit" matTooltip="Create new" matTooltipPosition="left">
             <i class="fa fa-2x fa-plus" aria-hidden="true"></i>

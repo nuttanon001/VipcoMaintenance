@@ -11,6 +11,8 @@ import { BaseCommunicateService } from "../../shared/base-communicate.service";
 // rxjs
 import { Observable } from "rxjs/Observable";
 import { catchError } from "rxjs/operators";
+import { OptionItemMaintenSchedule } from "../../item-maintenances/shared/option-item-mainten-schedule.model";
+import { retry } from "rxjs/operator/retry";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -51,6 +53,13 @@ export class RequireMaintenService extends BaseRestService<RequireMaintenance> {
     
     return this.http.post<any>(url, JSON.stringify(option), httpOptions)
       .pipe(catchError(this.handleError(this.serviceName + "/maintenance waiting", <any>{})));
+  }
+
+  // ===================== Require Maintenance With Item Maintenance Schedule ===========================\\
+  getRequireMaintenanceWithItemMaintenanceSchedule(option: OptionItemMaintenSchedule): Observable<any> {
+    let url: string = `${this.baseUrl}ScheduleWithRequire/`;
+    return this.http.post<any>(url, JSON.stringify(option), httpOptions)
+      .pipe(catchError(this.handleError(this.serviceName + "/main schedule require maintenance", <any>{})));
   }
 }
 

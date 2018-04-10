@@ -6,6 +6,6 @@ export interface Scroll {
   Filter?: string;
   Reload?: boolean;
   Where?: string;
-  HasCondition?: boolean;
+  WhereId?: number;
   TotalRow?: number;
 }

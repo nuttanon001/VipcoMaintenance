@@ -11,6 +11,12 @@
 
   <div class="collapse navbar-collapse pl-4" id="Mynavbars">
     <ul class="navbar-nav mr-auto size-24">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/maintenance/schedule','1']" routerLinkActive="active">
+          <i class="fa fa-calendar-o" aria-hidden="true"></i>
+          <span>Maintenance Schedule</span>
+        </a>
+      </li>
       <li class="nav-item mx-1" *ngIf="GetLevel1">
         <!--(mouseover)="menuOnOpenMenu(1)"-->
         <a #mainMenu="matMenuTrigger" [matMenuTriggerFor]="menu1"
@@ -44,6 +50,10 @@
               <mat-icon>date_range</mat-icon>
               <span>&nbsp;Require-Schedule&nbsp;</span>
             </button>
+            <button mat-menu-item [routerLink]="['/maintenance/schedule','2']" routerLinkActive="active">
+              <mat-icon class="rotate-90">equalizer</mat-icon>
+              <span>&nbsp;Maintenance Progress&nbsp;</span>
+            </button>
             <button mat-menu-item [routerLink]="['/maintenance']" routerLinkActive="active">
               <mat-icon>build</mat-icon>
               <span>&nbsp;Maintenance&nbsp;</span>
@@ -73,6 +83,10 @@
             <button mat-menu-item [routerLink]="['/inventories/receive']" routerLinkActive="active">
               <mat-icon>store</mat-icon>
               <span>&nbsp;Receive spare part&nbsp;</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/inventories/adjust']" routerLinkActive="active">
+              <mat-icon>autorenew</mat-icon>
+              <span>&nbsp;Adjust spare part&nbsp;</span>
             </button>
           </div>
         </mat-menu>

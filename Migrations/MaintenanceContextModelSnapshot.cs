@@ -109,6 +109,8 @@ namespace VipcoMaintenance.Migrations
 
                     b.Property<string>("EmpResponsible");
 
+                    b.Property<string>("GroupMis");
+
                     b.Property<string>("ItemCode")
                         .HasMaxLength(50);
 
@@ -377,6 +379,9 @@ namespace VipcoMaintenance.Migrations
                     b.Property<string>("GroupMIS");
 
                     b.Property<int?>("ItemId");
+
+                    b.Property<string>("MailApply")
+                        .HasMaxLength(250);
 
                     b.Property<DateTime?>("MaintenanceApply");
 

@@ -35,7 +35,7 @@ namespace VipcoMaintenance.Controllers
         [HttpGet("GetItemMainHasEmpByItemMainten")]
         public override async Task<IActionResult> Get(int key)
         {
-            var HasItem = await this.repository.GetAllAsQueryable().Where(x => x.ItemMaintenanceId == key).ToListAsync();
+            var HasItem = await this.repository.GetAllAsQueryable().Where(x => x.ItemMaintenanceId == key).AsNoTracking().ToListAsync();
             if (HasItem != null)
             {
                 var ListItem = new List<ItemMainHasEmployeeViewModel>();

@@ -19,10 +19,14 @@ export interface Item extends BaseModel {
   EmpResponsible?: string;
   // Branch
   BranchId?: number;
+  // GroupMis
+  GroupMis?:string;
   // ViewModel
   ItemTypeString?: string;
   EmpResposibleString?: string;
   BranchString?: string;
+  ItemStatusString?: string;
+  GroupMisString?:string;
 }
 
 export enum ItemStatus {

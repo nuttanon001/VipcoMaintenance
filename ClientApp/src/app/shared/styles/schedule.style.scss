@@ -84,7 +84,6 @@ h4 {
   position: relative !important;
 }
 
-
 .ui-datatable {
   white-space: normal;
 
@@ -106,21 +105,43 @@ h4 {
   font-size: 20px;
 }
 
+$col-height: 20px;
+
+.my-border {
+  border-bottom: solid 1px black;
+}
+
 .plan-col {
   background-color: forestgreen;
   color: forestgreen;
-  border-bottom: solid 1px black;
+  height: $col-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan2-col {
+  background-color: limegreen;
+  color: limegreen;
+  height: $col-height;
 }
 
 .actual-col {
   background-color: steelblue;
   color: steelblue;
+  height: $col-height;
   /*border-top: solid 1px black;*/
 }
 
 .empty-col {
-  background-color: transparent;
-  color: transparent;
+  /*background-color: transparent;*/
+  /*color: transparent;*/
+  height: $col-height;
+  border-top: solid 1px transparent;
+  border-bottom: solid 1px transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 :host /deep/ .chart {
@@ -129,55 +150,14 @@ h4 {
   margin-left: auto;
   margin-right: auto;
   display: block;
-  height: 700px;
-  width: 850px;
+  height: 420px;
+  width: 700px;
 }
 
-:host /deep/ .chart2 {
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
+:host /deep/ .ui-datatable-scrollable-header {
+  font-size: small;
 }
 
-
-@media print {
-
-  :host /deep/ .bottom-container {
-    width: auto;
-    height: auto;
-    overflow: visible;
-    font-size: 9.5pt;
-  }
-
-  :host /deep/ .ui-datatable .ui-datatable-header {
-    width: auto;
-    height: auto;
-    overflow: visible !important;
-    transform: scale(0.7); /* Equal to scaleX(0.7) scaleY(0.7) */
-  }
-
-  :host /deep/ .ui-datatable-scrollable-view
-  .ui-datatable-scrollable-body {
-    overflow: visible !important;
-  }
-
-  :host /deep/ .ui-datatable-scrollable-header {
-    overflow: visible !important;
-  }
-
-  :host /deep/ .ui-paginator-bottom {
-    display: none !important;
-  }
-
-  .no-print {
-    display: none !important;
-  }
-
-  @page {
-    size: 450mm 320mm; /* landscape */
-    /* you can also specify margins here: */
-    margin: 0mm;
-  }
+:host /deep/ .ui-datatable-scrollable-body {
+  font-size: smaller;
 }

@@ -16,6 +16,7 @@ import { RegisterComponent } from './users/register/register.component';
 // Modules
 import { CustomMaterialModule } from "./shared/customer-material/customer-material.module";
 import { DialogsModule } from "./dialogs/dialog.module";
+import { SharedModule } from "./shared/shared.module";
 // Serices
 import { ShareService } from "./shared/share.service";
 import { AuthService } from "./core/auth/auth.service";
@@ -45,6 +46,7 @@ import "popper.js";
     BrowserAnimationsModule,
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
     // Modules
+    SharedModule,
     DialogsModule,
     CustomMaterialModule,
     // Router
@@ -92,7 +94,6 @@ import "popper.js";
       {
         path: "maintenance",
         loadChildren: "./item-maintenances/item-mainten.module#ItemMaintenModule",
-        canActivate: [AuthGuard],
       },
       {
         path: "spare-part",

@@ -29,7 +29,7 @@ export class AuthService {
     };
 
     return this.http.post<User>
-      ("http://192.168.2.31/machine/api/User/Login/", JSON.stringify(user), httpOptions)
+      ("api/User/Login/", JSON.stringify(user), httpOptions)
       .map((dbUser) => {
         this.setAuth = dbUser;
         this.userName = dbUser.UserName; //data.UserName;

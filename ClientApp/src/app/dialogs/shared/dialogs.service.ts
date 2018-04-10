@@ -11,7 +11,6 @@ import {
   EmployeeDialogComponent,
   ProjectDialogComponent,
   ItemDialogComponent,
-  WorkgroupDialogComponent,
   RequireMaintenDialogComponent
 } from "../dialog.index";
 // module
@@ -23,6 +22,7 @@ import { Workgroup } from "../../work-groups/shared/workgroup.model";
 import { observableToBeFn } from "rxjs/testing/TestScheduler";
 import { SparePart } from "../../spare-parts/shared/spare-part.model";
 import { SparePartDialogComponent } from "../spare-part-dialog/spare-part-dialog.component";
+import { ItemMaintenDialogComponent } from "../item-mainten-dialog/item-mainten-dialog.component";
 
 @Injectable()
 export class DialogsService {
@@ -114,26 +114,6 @@ export class DialogsService {
   }
 
   /**
-   * @param viewContainerRef
-   * @param type = mode 0:fastSelected
-   */
-  public dialogSelectWorkGroup(viewContainerRef: ViewContainerRef, type: number = 0): Observable<Workgroup> {
-    let dialogRef: MatDialogRef<WorkgroupDialogComponent>;
-    let config: MatDialogConfig = new MatDialogConfig();
-
-    // config
-    config.viewContainerRef = viewContainerRef;
-    config.data = type;
-    // config.height = this.height;
-    // config.width= this.width;
-    config.hasBackdrop = true;
-
-    // open dialog
-    dialogRef = this.dialog.open(WorkgroupDialogComponent, config);
-    return dialogRef.afterClosed();
-  }
-
-  /**
    * Group Mis
    * @param viewContainerRef
    * @param type = mode 0:fastSelected
@@ -180,6 +160,27 @@ export class DialogsService {
     return dialogRef.afterClosed();
   }
 
+  /**
+ * Item Maintenance
+ * @param viewContainerRef
+ * @param ItemMaintananceId
+ */
+  public dialogSelectItemMaintenance(ItemMaintananceId: number, viewContainerRef: ViewContainerRef ): Observable<number> {
+    let dialogRef: MatDialogRef<ItemMaintenDialogComponent>;
+    let config: MatDialogConfig = new MatDialogConfig();
+ 
+    // config
+    config.viewContainerRef = viewContainerRef;
+    config.data = ItemMaintananceId;
+    // config.height = this.height;
+    // config.width= this.width;
+    config.hasBackdrop = true;
+
+    // open dialog
+    dialogRef = this.dialog.open(ItemMaintenDialogComponent, config);
+    return dialogRef.afterClosed();
+  }
+  
   /**
    * Spare Part
    * @param viewContinerRef

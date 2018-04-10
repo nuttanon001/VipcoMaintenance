@@ -1,9 +1,9 @@
 <div class="master-dialog-vh">
   <H5 style="color:cadetblue">Selected Item</H5>
   <div class="child-container">
-    <div class="center-content ">
-      <dialog-item-table  (returnSelected)="onSelectedValue($event)"
-                         [isDialog]="true"></dialog-item-table>
+    <div class="center-content">
+      <dialog-item-table (returnSelected)="onSelectedValue($event)"
+                         [isDialog]="true" class="my-1"></dialog-item-table>
     </div>
     <div class="right-content">
       <button type="button" mat-icon-button color="primary" (click)="onSelectedClick()"

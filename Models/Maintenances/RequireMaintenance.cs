@@ -19,6 +19,8 @@ namespace VipcoMaintenance.Models.Maintenances
         public string Remark { get; set; }
         public RequireStatus? RequireStatus { get; set; }
         public DateTime? MaintenanceApply { get; set; }
+        [StringLength(250)]
+        public string MailApply { get; set; }
         // FK
         // GroupMis
         public string GroupMIS { get; set; }

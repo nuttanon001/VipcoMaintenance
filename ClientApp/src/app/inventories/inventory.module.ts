@@ -16,6 +16,11 @@ import { RequisitionViewComponent } from './requisition-view/requisition-view.co
 import { RequisitionEditComponent } from './requisition-edit/requisition-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from '../shared/customer-material/customer-material.module';
+import { AdjustStockService, AdjustStockCommunicateService } from './shared/adjust-stock.service';
+import { AdjustViewComponent } from './adjust-view/adjust-view.component';
+import { AdjustEditComponent } from './adjust-edit/adjust-edit.component';
+import { AdjustMasterComponent } from './adjust-master/adjust-master.component';
+import { AdjustTableComponent } from './adjust-table/adjust-table.component';
 
 @NgModule({
   imports: [
@@ -33,13 +38,19 @@ import { CustomMaterialModule } from '../shared/customer-material/customer-mater
     RequisitionMasterComponent,
     RequisitionTableComponent,
     RequisitionViewComponent,
-    RequisitionEditComponent
+    RequisitionEditComponent,
+    AdjustViewComponent,
+    AdjustEditComponent,
+    AdjustMasterComponent,
+    AdjustTableComponent
   ],
   providers: [
     ReceiveStockService,
     ReceiveStockCommunicateService,
     RequisitionStockService,
-    MovementStockService
+    MovementStockService,
+    AdjustStockService,
+    AdjustStockCommunicateService,
   ]
 })
 export class InventoriyModule { }

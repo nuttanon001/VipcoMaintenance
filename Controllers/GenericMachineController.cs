@@ -65,7 +65,7 @@ namespace VipcoMaintenance.Controllers
         //}
 
         [HttpPost]
-        public  async Task<IActionResult> Create([FromBody] Entity record)
+        public virtual async Task<IActionResult> Create([FromBody] Entity record)
         {
             // Set date for CrateDate Entity
             if (record == null)
@@ -81,7 +81,7 @@ namespace VipcoMaintenance.Controllers
         }
 
         [HttpPut()]
-        public async Task<IActionResult> Update(int key, [FromBody] Entity record)
+        public virtual async Task<IActionResult> Update(int key, [FromBody] Entity record)
         {
             if (key < 1)
                 return BadRequest();

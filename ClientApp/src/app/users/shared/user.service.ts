@@ -18,7 +18,7 @@ export class UserService extends BaseRestService<User> {
   ) {
     super(
       http,
-      "http://192.168.2.33/api/User/",
+      "api/User/",
       "UserService",
       "UserId",
       httpErrorHandler
@@ -33,6 +33,6 @@ export class UserService extends BaseRestService<User> {
 
     let url: string = `${this.baseUrl}EmployeeAlready/`;
     return this.http.get<any>(url, options)
-      .pipe(catchError(this.handleError(this.serviceName + "/get by employee already", <any>{})));
+      .pipe(catchError(this.handleError(this.serviceName + "/get by employee already", false)));
   }
 }

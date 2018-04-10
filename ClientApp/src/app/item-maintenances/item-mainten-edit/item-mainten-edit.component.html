@@ -62,7 +62,7 @@
                             required
                             id="TypeMaintenanceId" formControlName="TypeMaintenanceId">
                   <mat-option *ngFor="let typeMaintenance of typeMaintenances" [value]="typeMaintenance.TypeMaintenanceId">
-                    {{ typeMaintenance.Name }}
+                    {{ typeMaintenance.Name || '-' }}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="editValueForm.controls.TypeMaintenanceId.hasError('required')">Please choose an type maintenance</mat-error>

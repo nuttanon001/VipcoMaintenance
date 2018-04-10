@@ -1,5 +1,5 @@
 // angular
-import { Component, ViewContainerRef } from "@angular/core";
+import { Component, ViewContainerRef, group } from "@angular/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 // models
 import { Branch } from "../../branchs/shared/branch.model";
@@ -17,6 +17,7 @@ import {
   RequireMaintenService, RequireMaintenCommunicateService
 } from "../shared/require-mainten.service";
 import { BranchService } from "../../branchs/shared/branch.service";
+import { EmployeeGroupMisService } from "../../employees/shared/employee-group-mis.service";
 
 @Component({
   selector: 'app-require-mainten-edit',
@@ -28,6 +29,7 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
     service: RequireMaintenService,
     serviceCom: RequireMaintenCommunicateService,
     private serviceBranch: BranchService,
+    private serviceGroupMis: EmployeeGroupMisService,
     private serviceShare: ShareService,
     private serviceAuth: AuthService,
     private serviceDialogs: DialogsService,
@@ -53,8 +55,17 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
       this.editValue = {
         RequireMaintenanceId: 0,
         RequireDate: new Date,
-        RequireStatus: RequireStatus.Waiting
+        RequireStatus: RequireStatus.Waiting,
       };
+
+      if (this.serviceAuth.getAuth) {
+        this.editValue.RequireEmp = this.serviceAuth.getAuth.EmpCode;
+        this.editValue.RequireEmpString = this.serviceAuth.getAuth.NameThai;
+        this.editValue.MailApply = this.serviceAuth.getAuth.MailAddress;
+        // Get GroupMIS
+        this.getEmployeeGroupMisByEmpCode(this.editValue.RequireEmp);
+      }
+
       this.buildForm();
     }
   }
@@ -90,13 +101,22 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
       BranchId: [this.editValue.BranchId],
       ProjectCodeMasterId: [this.editValue.ProjectCodeMasterId],
       MaintenanceApply: [this.editValue.MaintenanceApply],
+      MailApply: [this.editValue.MailApply,
+        [
+          Validators.email,
+        ]
+      ],
       // BaseModel
       Creator: [this.editValue.Creator],
       CreateDate: [this.editValue.CreateDate],
       Modifyer: [this.editValue.Modifyer],
       ModifyDate: [this.editValue.ModifyDate],
       // ViewModel
-      ItemCode: [this.editValue.ItemCode],
+      ItemCode: [this.editValue.ItemCode,
+        [
+          Validators.required
+        ]
+      ],
       RequireEmpString: [this.editValue.RequireEmpString],
       ProjectCodeMasterString: [this.editValue.ProjectCodeMasterString],
       GroupMISString: [this.editValue.GroupMISString],
@@ -133,6 +153,24 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
     }
   }
 
+  // get employee group mis
+  getEmployeeGroupMisByEmpCode(EmpCode: string): void {
+    if (EmpCode) {
+      this.serviceGroupMis.getGroupMinsByEmpCode(EmpCode)
+        .subscribe(GroupMis => {
+          if (GroupMis) {
+            this.editValue.GroupMIS = GroupMis.GroupMis;
+            this.editValue.GroupMISString = GroupMis.GroupDesc;
+            // Patch data to form
+            this.editValueForm.patchValue({
+              GroupMIS: this.editValue.GroupMIS,
+              GroupMISString: this.editValue.GroupMISString,
+            });
+          }
+        })
+    }
+  }
+
   // open dialog
   openDialog(type?: string): void {
     if (type) {
@@ -144,6 +182,8 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
                 RequireEmp: emp.EmpCode,
                 RequireEmpString: `คุณ${emp.NameThai}`,
               });
+
+              this.getEmployeeGroupMisByEmpCode(emp.EmpCode);
             }
           });
       } else if (type === "Project") {

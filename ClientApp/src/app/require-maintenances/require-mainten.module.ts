@@ -29,6 +29,7 @@ import {
 import {
   RequireMaintenScheduleComponent
 } from './require-mainten-schedule/require-mainten-schedule.component';
+import { EmployeeGroupMisService } from '../employees/shared/employee-group-mis.service';
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import {
   providers: [
     RequireMaintenService,
     RequireMaintenCommunicateService,
+    EmployeeGroupMisService,
   ]
 })
 export class RequireMaintenModule { }

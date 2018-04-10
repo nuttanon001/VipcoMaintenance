@@ -36,8 +36,14 @@ namespace VipcoMaintenance.Controllers
                 {
                     var QueryData = this.repository.GetAllAsQueryable()
                                         .Where(x => x.ItemTypeId == ItemData.ItemTypeId)
-                                        .AsQueryable();
-                    return new JsonResult(await QueryData.ToListAsync(), this.DefaultJsonSettings);
+                                        .AsQueryable().AsNoTracking();
+                    var HasData = await QueryData.ToListAsync();
+                    return new JsonResult(HasData, this.DefaultJsonSettings);
+                }
+                else
+                {
+                    var QueryData = await this.repository.GetAllAsync();
+                    return new JsonResult(QueryData, this.DefaultJsonSettings);
                 }
             }
 

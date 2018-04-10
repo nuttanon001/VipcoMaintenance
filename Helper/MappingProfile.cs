@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using VipcoMaintenance.Models.Machines;
 using VipcoMaintenance.Models.Maintenances;
 using VipcoMaintenance.ViewModels;
 
@@ -13,6 +14,8 @@ namespace VipcoMaintenance.Helper
 
             // Item
             CreateMap<Item, ItemViewModel>()
+                .ForMember(x => x.ItemStatusString,
+                            o => o.MapFrom(s => System.Enum.GetName(typeof(ItemStatus), s.ItemStatus)))
                 .ForMember(x => x.BranchString,
                             o => o.MapFrom(s => s.Branch == null ? "ไม่ระบุ" : s.Branch.Name))
                 .ForMember(x => x.Branch,o => o.Ignore())
@@ -70,6 +73,14 @@ namespace VipcoMaintenance.Helper
                 .ForMember(x => x.MovementStockSp, o => o.Ignore());
             #endregion
 
+            #region AdjustStockSp
+            CreateMap<AdjustStockSp, AdjustStockSpViewModel>()
+                .ForMember(x => x.SparePartName,
+                            o => o.MapFrom(s => s.SparePart == null ? "ไม่ระบุ" : s.SparePart.Name))
+                .ForMember(x => x.SparePart, o => o.Ignore())
+                .ForMember(x => x.MovementStockSp, o => o.Ignore());
+            #endregion
+
             #region RequisitionStockSp
             CreateMap<RequisitionStockSp,RequisitionStockSpViewModel>()
                 .ForMember(x => x.SparePartName,
@@ -85,6 +96,17 @@ namespace VipcoMaintenance.Helper
             CreateMap<ItemMainHasEmployee, ItemMainHasEmployeeViewModel>();
 
             #endregion
+
+            #region User
+
+            //User
+            CreateMap<User, UserViewModel>()
+                // CuttingPlanNo
+                .ForMember(x => x.NameThai,
+                           o => o.MapFrom(s => s.EmpCodeNavigation == null ? "-" : $"คุณ{s.EmpCodeNavigation.NameThai}"))
+                .ForMember(x => x.EmpCodeNavigation, o => o.Ignore());
+
+            #endregion User
         }
     }
 }

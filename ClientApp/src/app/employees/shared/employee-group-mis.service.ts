@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 // service
 import { HttpErrorHandler } from "../../shared/http-error-handler.service";
 // models
@@ -8,6 +8,8 @@ import { EmployeeGroupMis } from "../../employees/shared/employee-group-mis.mode
 import { BaseRestService } from "../../shared/base-rest.service";
 // rxjs
 import { Observable } from "rxjs/Observable";
+import { catchError } from "rxjs/operators";
+
 @Injectable()
 export class EmployeeGroupMisService extends BaseRestService<EmployeeGroupMis> {
   constructor(
@@ -21,5 +23,14 @@ export class EmployeeGroupMisService extends BaseRestService<EmployeeGroupMis> {
       "GroupMIS",
       httpErrorHandler
     )
+  }
+
+  // ===================== EmployeeGroupMis ===========================\\
+  // action require maintenance
+  getGroupMinsByEmpCode(EmpCode: string): Observable<EmployeeGroupMis> {
+
+    return this.http.get<EmployeeGroupMis>(this.baseUrl + "GroupMisByEmpCode/", {
+      params: new HttpParams().set("EmpCode", EmpCode.toString())
+    }).pipe(catchError(this.handleError(this.serviceName + "/get employee group mis by empcode", <EmployeeGroupMis>{})));
   }
 }

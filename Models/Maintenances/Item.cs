@@ -40,6 +40,8 @@ namespace VipcoMaintenance.Models.Maintenances
         public virtual Branch Branch { get; set; }
         // ReqireMaintenance
         public virtual ICollection<RequireMaintenance> RequireMaintenances { get; set; }
+        // GroupMis
+        public string GroupMis {get;set;}
     }
 
     public enum ItemStatus

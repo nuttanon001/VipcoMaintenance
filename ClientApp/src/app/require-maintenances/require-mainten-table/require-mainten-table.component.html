@@ -7,13 +7,12 @@
     </div>
   </div>
   <div class="mx-2">
-    <search-box [isDisabled]="isDisabled"></search-box>
+    <search-box [isDisabled]="isDisabled" [isOnlyCreate]="isOnlyCreate"></search-box>
   </div>
-
   <mat-table #table [dataSource]="dataSource" class="example-table"
              matSort matSortActive="RequireNo" matSortDisableClear matSortDirection="asc">
     <!--- Note that these columns can be defined in any order.
-  The actual rendered columns are set as a property on the row definition" -->
+    The actual rendered columns are set as a property on the row definition" -->
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
       <mat-header-cell *matHeaderCellDef>

@@ -1,4 +1,4 @@
-<div class="master-container">
+<div class="master-container"  *ngIf="!loadReportPaint;else LoadReportPaintBlock">
   <split direction="horizontal" [gutterSize]="7" [useTransition]="true">
     <split-area [size]="30" [visible]="hideleft" [order]="1">
       <div class="child-left-container">
@@ -8,7 +8,7 @@
         </data-table>
         -->
         <app-item-mainten-table (returnSelected)="onDetailView($event)"
-                                (isDisabled)="false"></app-item-mainten-table>
+                                [isDisabled]="false" [isOnlyCreate]="true"></app-item-mainten-table>
       </div>
     </split-area>
     <split-area [size]="70" [order]="2">
@@ -42,9 +42,9 @@
           </div>
         </div>
         <!--Right-->
-        <div class="right-content" *ngIf="!hiddenTool">
+        <div class="right-content" >
           <button type="button" mat-icon-button color="accent" (click)="onDetailEdit()"
-                  [disabled]="ShowEdit" matTooltip="Create new" matTooltipPosition="left">
+                  disabled matTooltip="Create new" matTooltipPosition="left">
             <i class="fa fa-2x fa-plus" aria-hidden="true"></i>
           </button>
           <button type="button" mat-icon-button color="accent" (click)="onDetailEdit(displayValue)"
@@ -60,8 +60,19 @@
                   [disabled]="!canSave" matTooltip="Save" matTooltipPosition="left">
             <i class="fa fa-2x fa-floppy-o" aria-hidden="true"></i>
           </button>
+          <hr />
+          <button type="button" mat-icon-button color="primary" (click)="onReport(displayValue)"
+                  [disabled]="ShowEdit || DisplayDataNull" matTooltip="Save" matTooltipPosition="left">
+            <i class="fa fa-2x fa-print" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
     </split-area>
   </split>
 </div>
+
+<ng-template #LoadReportPaintBlock>
+  <app-item-mainten-report [ItemMaintenanceId]="displayValue.ItemMaintenanceId"
+                           (Back)="onBack()">
+  </app-item-mainten-report>
+</ng-template>

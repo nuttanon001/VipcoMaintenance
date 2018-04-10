@@ -13,7 +13,7 @@
             {{(displayValue.MaintenanceApply | date:'dd/MM/yyyy')|| "-"}}
           </div>
         </div>
-        <hr class="w-100"/>
+        <hr class="w-100 my-0" />
         <!--Row1-->
         <div class="row my-1">
           <div class="my-label">
@@ -72,10 +72,10 @@
           </div>
 
           <div class="my-label">
-            Status :
+            ReplyMail :
           </div>
           <div class="my-value">
-            {{displayValue.RequireStatusString || "-"}}
+            {{displayValue.MailApply || "-"}}
           </div>
         </div>
         <!--Row5-->
@@ -91,6 +91,15 @@
           </div>
           <textarea [value]="displayValue.Remark" rows="3" readonly class="my-value">
           </textarea>
+        </div>
+        <!--Row6-->
+        <div class="row my-1">
+          <div class="my-label">
+            Status :
+          </div>
+          <div class="my-value">
+            {{displayValue.RequireStatusString || "-"}}
+          </div>
         </div>
       </div>
     </mat-tab>

@@ -125,6 +125,9 @@ export abstract class BaseMasterComponent<Model extends BaseModel, Service exten
   // on detail view
   // abstract onDetailView(value: any): void;
   onDetailView(value?: Model): void {
+    // debug here
+    // console.log(JSON.stringify(value));
+
     if (this.ShowEdit) {
       return;
     }
@@ -132,6 +135,7 @@ export abstract class BaseMasterComponent<Model extends BaseModel, Service exten
       // console.log(value);
       this.service.getOneKeyNumber(value)
         .subscribe(dbData => {
+          // console.log(JSON.stringify(dbData));
           this.displayValue = dbData;
         }, error => this.displayValue = undefined);
     } else {

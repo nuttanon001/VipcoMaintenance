@@ -54,7 +54,10 @@ namespace VipcoMaintenance.Services
         /// <returns>A single object with the provided primary key or null</returns>
         public async Task<TEntity> GetAsync(int id)
         {
-            return await this.entities.FindAsync(id);
+            var entity = await Context.Set<TEntity>().FindAsync(id);
+            Context.Entry(entity).State = EntityState.Detached;
+            return entity;
+            // return await this.entities.FindAsync(id);
         }
 
         public async Task<TEntity> GetAsynvWithIncludes(int id, string PkName, List<string> Includes = null)

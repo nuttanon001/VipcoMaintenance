@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { InventoryCenterComponent } from './inventory-center.component';
 import { ReceiveMasterComponent } from './receive-master/receive-master.component';
+import { AdjustMasterComponent } from './adjust-master/adjust-master.component';
 
 const routes: Routes = [{
   path: "",
@@ -14,6 +15,14 @@ const routes: Routes = [{
     {
       path: "receive",
       component: ReceiveMasterComponent,
+    },
+    {
+      path: "adjust:key",
+      component: AdjustMasterComponent,
+    },
+    {
+      path: "adjust",
+      component: AdjustMasterComponent,
     }
   ]
 }];

@@ -7,6 +7,8 @@ export interface RequireMaintenance extends BaseModel {
   Description?: string;
   Remark?: string;
   RequireStatus?: RequireStatus;
+  MailApply?: string;
+  MaintenanceApply?: Date;
   // FK
   // GroupMis
   GroupMIS?: string;
@@ -18,7 +20,6 @@ export interface RequireMaintenance extends BaseModel {
   BranchId?: number;
   // ProjectCodeMaster
   ProjectCodeMasterId?: number;
-  MaintenanceApply?: Date;
   // ViewModel
   ItemCode?: string;
   RequireEmpString?: string;

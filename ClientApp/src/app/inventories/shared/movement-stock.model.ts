@@ -7,7 +7,7 @@ export interface MovementStock extends BaseModel {
   MovementStatus?: MovementStatus;
 }
 
-enum MovementStatus {
+export enum MovementStatus {
   ReceiveStock = 1,
   RequisitionStock,
   AdjustIncrement,

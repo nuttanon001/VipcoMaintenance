@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 //Modules
 import { CustomMaterialModule } from '../shared/customer-material/customer-material.module';
 import { ItemMaintenRoutingModule } from './item-mainten-routing.module';
+import { SharedModule } from '../shared/shared.module';
+
 //Services
 import { ItemMaintenService, ItemMaintenCommunicateService } from './shared/item-mainten.service';
 import { RequireMaintenService } from "../require-maintenances/shared/require-mainten.service";
@@ -17,19 +19,23 @@ import { ItemMaintenViewComponent } from './item-mainten-view/item-mainten-view.
 import { ItemMaintenEditComponent } from './item-mainten-edit/item-mainten-edit.component';
 import { ItemMaintenTableComponent } from './item-mainten-table/item-mainten-table.component';
 import { ItemMaintenCenterComponent } from './item-mainten-center.component';
-import { ItemMaintenHasRequireComponent } from './shared/item-mainten-has-require.component';
 import { ItemMaintenRequisitionComponent } from './item-mainten-requisition/item-mainten-requisition.component';
-import { ItemMaintenRequisitionTableComponent } from './item-mainten-requisition-table/item-mainten-requisition-table.component';
 import { ItemMaintenHasEmpService } from './shared/item-mainten-has-emp.service';
-import { ItemMaintenEmployeeTableComponent } from './item-mainten-employee-table/item-mainten-employee-table.component';
 import { ItemMaintenReportComponent } from './item-mainten-report/item-mainten-report.component';
+import { ItemMaintenScheduleComponent } from './item-mainten-schedule/item-mainten-schedule.component';
+// Shared
+//import { ItemMaintenEmployeeTableComponent } from './item-mainten-employee-table/item-mainten-employee-table.component';
+//import { ItemMaintenRequisitionTableComponent } from './item-mainten-requisition-table/item-mainten-requisition-table.component';
+//import { ItemMaintenHasRequireComponent } from './shared/item-mainten-has-require.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    ItemMaintenRoutingModule,
+    //Customer
     CustomMaterialModule,
-    ItemMaintenRoutingModule
+    SharedModule,
   ],
   declarations: [
     ItemMaintenMasterComponent,
@@ -37,11 +43,14 @@ import { ItemMaintenReportComponent } from './item-mainten-report/item-mainten-r
     ItemMaintenEditComponent,
     ItemMaintenTableComponent,
     ItemMaintenCenterComponent,
-    ItemMaintenHasRequireComponent,
     ItemMaintenRequisitionComponent,
-    ItemMaintenRequisitionTableComponent,
-    ItemMaintenEmployeeTableComponent,
-    ItemMaintenReportComponent],
+    ItemMaintenReportComponent,
+    ItemMaintenScheduleComponent
+    // Shared
+    //ItemMaintenHasRequireComponent,
+    //ItemMaintenRequisitionTableComponent,
+    //ItemMaintenEmployeeTableComponent,
+  ],
   providers: [
     ItemMaintenService,
     ItemMaintenCommunicateService,

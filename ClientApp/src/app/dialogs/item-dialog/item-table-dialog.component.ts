@@ -5,6 +5,7 @@ import { ItemTableComponent } from "../../items/item-table/item-table.component"
 // Services
 import { ItemService } from "../../items/shared/item.service";
 import { AuthService } from "../../core/auth/auth.service";
+import { ItemTypeService } from "../../item-types/shared/item-type.service";
 
 @Component({
   selector: "dialog-item-table",
@@ -17,7 +18,8 @@ export class ItemTableDialogComponent extends ItemTableComponent{
   constructor(
     service: ItemService,
     authService: AuthService,
+    serviceItemType: ItemTypeService,
   ) {
-    super(service, authService);
+    super(service, authService, serviceItemType);
   }
 }

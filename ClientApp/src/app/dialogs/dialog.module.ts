@@ -14,13 +14,17 @@ import {
   ConfirmDialog, ContextDialog,
   ErrorDialog, EmployeeDialogComponent,
   GroupmisDialogComponent, ItemDialogComponent,
-  ProjectDialogComponent, WorkgroupDialogComponent,
+  ProjectDialogComponent,
   ItemTableDialogComponent, EmployeeTableComponent,
   GroupmisTableComponent, ProjectTableComponent,
   RequireMaintenDialogComponent,RequireMaintenViewDialogComponent
 } from "./dialog.index";
 import { SparePartDialogComponent } from './spare-part-dialog/spare-part-dialog.component';
 import { SparePartTableDialogComponent } from './spare-part-dialog/spare-part-table-dialog.component';
+import { ItemMaintenDialogComponent } from './item-mainten-dialog/item-mainten-dialog.component';
+import { ItemMaintenViewDialogComponent } from './item-mainten-dialog/item-mainten-view-dialog.component';
+import { ItemMaintenModule } from "../item-maintenances/item-mainten.module";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -29,6 +33,7 @@ import { SparePartTableDialogComponent } from './spare-part-dialog/spare-part-ta
     FormsModule,
     ReactiveFormsModule,
     // customer Module
+    SharedModule,
     CustomMaterialModule,
   ],
   declarations: [
@@ -47,7 +52,9 @@ import { SparePartTableDialogComponent } from './spare-part-dialog/spare-part-ta
     RequireMaintenDialogComponent,
     RequireMaintenViewDialogComponent,
     SparePartDialogComponent,
-    SparePartTableDialogComponent
+    SparePartTableDialogComponent,
+    ItemMaintenDialogComponent,
+    ItemMaintenViewDialogComponent
   ],
   providers: [
     DialogsService,
@@ -69,6 +76,8 @@ import { SparePartTableDialogComponent } from './spare-part-dialog/spare-part-ta
     RequireMaintenViewDialogComponent,
     SparePartDialogComponent,
     SparePartTableDialogComponent,
+    ItemMaintenDialogComponent,
+    ItemMaintenViewDialogComponent
   ],
 })
 export class DialogsModule { }

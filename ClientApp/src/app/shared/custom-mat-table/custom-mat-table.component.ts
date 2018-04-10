@@ -34,6 +34,7 @@ export class CustomMatTableComponent<Model,Service extends BaseRestService<Model
 
   // Parameter
   displayedColumns: Array<string> = ["select", "Col1", "Col2", "Col3"];
+  @Input() isOnlyCreate: boolean = false;
   @Input() isDisabled: boolean = true;
   @Input() isMultiple: boolean = false;
   @Output() returnSelected: EventEmitter<Model> = new EventEmitter<Model>();

@@ -129,6 +129,7 @@ export class RequireMaintenScheduleComponent implements OnInit, OnDestroy {
         // console.log("OverTime is:", this.overtimeMasters);
         this.reloadData();
       }, error => {
+        this.totalRecords = 0;
         this.columns = new Array;
         this.requireMaintenance = new Array;
         this.reloadData();
@@ -200,15 +201,18 @@ export class RequireMaintenScheduleComponent implements OnInit, OnDestroy {
         .subscribe(conditionNumber => {
           if (conditionNumber) {
             if (conditionNumber === -1) {
-              this.service.actionRequireMaintenance(master.RequireMaintenanceId, (this.serviceAuth.getAuth.UserName || ""))
-                .subscribe(updateComplate => {
-                  this.onGetData(this.reportForm.value);
-                });
+              this.onUpdateRequireMaintenance(master.RequireMaintenanceId);
+              setTimeout(() => { this.onGetData(this.reportForm.value); }, 750);
             } else if (conditionNumber === 1) {
               this.router.navigate(["maintenance/", master.RequireMaintenanceId]);
             }
           }
         });
     }
+  }
+  // RequireMaintenance Has Action
+  onUpdateRequireMaintenance(RequireMaintenanceId:number): void {
+    this.service.actionRequireMaintenance(RequireMaintenanceId, (this.serviceAuth.getAuth.UserName || ""))
+      .subscribe();
   }
 }

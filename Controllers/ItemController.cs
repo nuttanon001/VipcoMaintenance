@@ -23,22 +23,25 @@ namespace VipcoMaintenance.Controllers
     {
         // IRepository
         private IRepositoryMachine<Employee> repositoryEmp;
+        private IRepositoryMachine<EmployeeGroupMis> repositoryGroupMis;
         private IRepositoryMaintenance<ItemType> repositoryType;
         // Mapper
         private IMapper mapper;
 
         public ItemController(IRepositoryMaintenance<Item> repo, 
             IRepositoryMachine<Employee> repoEmp,
+            IRepositoryMachine<EmployeeGroupMis> repoGroupMis,
             IRepositoryMaintenance<ItemType> repoType,
             IMapper map) : base(repo) {
             // Repository
             this.repositoryEmp = repoEmp;
+            this.repositoryGroupMis = repoGroupMis;
             this.repositoryType = repoType;
             // Mapper
             this.mapper = map;
         }
 
-        // GET: api/controller/5
+        // GET: api/Item/5
         [HttpGet("GetKeyNumber")]
         public override async Task<IActionResult> Get(int key)
         {
@@ -49,6 +52,26 @@ namespace VipcoMaintenance.Controllers
                 if (!string.IsNullOrEmpty(MapItem.EmpResponsible))
                     MapItem.EmpResposibleString = (await this.repositoryEmp.GetAsync(MapItem.EmpResponsible)).NameThai;
                 return new JsonResult(MapItem, this.DefaultJsonSettings);
+            }
+            return BadRequest();
+        }
+
+        // GET: api/Item/ItemByGroup
+        [HttpGet("ItemByGroup")]
+        public async Task<IActionResult> ItemByGroup(string group)
+        {
+            var HasData = await this.repository.GetAllAsQueryable()
+                                    .Where(x => x.GroupMis == group)
+                                    .AsNoTracking().ToListAsync();
+            if (HasData.Any()){
+                var listData = new List<ItemViewModel>();
+                foreach(var item in HasData){
+                    var MapData = this.mapper.Map<Item, ItemViewModel>(item);
+                    if (!string.IsNullOrEmpty(MapData.GroupMis))
+                        MapData.GroupMisString = (await this.repositoryGroupMis.GetAsync(MapData.GroupMis)).GroupDesc ?? "-";
+                    listData.Add(MapData);
+                }
+                return new JsonResult(listData,this.DefaultJsonSettings);
             }
             return BadRequest();
         }
@@ -68,7 +91,10 @@ namespace VipcoMaintenance.Controllers
                                             .AsQueryable().AsNoTracking();
 
             if (Scroll.WhereId.HasValue)
-                QueryData = QueryData.Where(x => x.ItemTypeId == Scroll.WhereId);
+            {
+                if (Scroll.WhereId > 0)
+                    QueryData = QueryData.Where(x => x.ItemTypeId == Scroll.WhereId);
+            }
 
             if (!string.IsNullOrEmpty(Scroll.Where))
                 QueryData = QueryData.Where(x => x.Creator == Scroll.Where);
@@ -119,9 +145,12 @@ namespace VipcoMaintenance.Controllers
             var HasData = await QueryData.AsNoTracking().ToListAsync();
 
             var listData = new List<ItemViewModel>();
-            foreach (var item in HasData)
-                listData.Add(this.mapper.Map<Item, ItemViewModel>(item));
-
+            foreach (var item in HasData){
+                var MapData = this.mapper.Map<Item, ItemViewModel>(item);
+                if (!string.IsNullOrEmpty(MapData.GroupMis))
+                    MapData.GroupMisString = (await this.repositoryGroupMis.GetAsync(MapData.GroupMis)).GroupDesc ?? "-";
+                listData.Add(MapData);
+            }
             return new JsonResult(new ScrollDataViewModel<ItemViewModel>(Scroll, listData), this.DefaultJsonSettings);
         }
     }

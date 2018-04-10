@@ -52,6 +52,8 @@ import { DateOnlyPipe } from "../../pipes/date-only.pipe";
 import * as moment from 'moment';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -103,6 +105,9 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
     CheckboxModule,
     // chart
     //ChartsModule
+    //Angular
+    CommonModule,
+    FormsModule,
   ],
   exports: [
     // material

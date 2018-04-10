@@ -70,15 +70,25 @@
           <!--Row4-->
           <div class="row-form">
             <div class="left-content">
-              <mat-form-field>
+              <mat-form-field hintLabel="*Required and max 250 characters">
                 <input matInput placeholder="Selected item" class="click-input"
-                       (click)="openDialog('Item')" readonly
+                       (click)="openDialog('Item')" readonly [required]="true"
                        id="ItemCode" formControlName="ItemCode">
+                <mat-error *ngIf="editValueForm.controls.ItemCode.hasError('required')">
+                  Item is <strong>required</strong>
+                </mat-error>
               </mat-form-field>
             </div>
 
             <div class="right-content">
-              &nbsp;
+              <mat-form-field>
+                <input matInput placeholder="Email" type="email"
+                       id="MailApply" formControlName="MailApply">
+                <mat-hint>Reply mail.</mat-hint>
+                <mat-error *ngIf="editValueForm.controls.MailApply.hasError('email')">
+                  Please enter a valid email address
+                </mat-error>
+              </mat-form-field>
             </div>
           </div>
           <!--Row5-->

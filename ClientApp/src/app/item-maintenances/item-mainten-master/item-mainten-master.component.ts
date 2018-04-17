@@ -4,7 +4,7 @@ import { Location } from "@angular/common";
 // components
 import { BaseMasterComponent } from "../../shared/base-master-component";
 // models
-import { ItemMaintenance } from "../shared/item-maintenance.model";
+import { ItemMaintenance, StatusMaintenance } from "../shared/item-maintenance.model";
 // services
 import { ItemMaintenService, ItemMaintenCommunicateService } from "../shared/item-mainten.service";
 import { AuthService } from "../../core/auth/auth.service";
@@ -88,6 +88,17 @@ export class ItemMaintenMasterComponent extends BaseMasterComponent<ItemMaintena
     this.tableComponent.reloadData();
   }
 
+  // on detail edit override
+  onDetailEdit(editValue?: ItemMaintenance): void {
+    if (editValue) {
+      if (editValue.StatusMaintenance === StatusMaintenance.Complate) {
+        this.dialogsService.error("Access Deny", "การซ่อมบำรุง ดำเนินการแล้วเสร็จไม่สามารถแก้ไขได้ !!!", this.viewContainerRef);
+        return;
+      }
+    }
+    super.onDetailEdit(editValue);
+  }
+
   // on show report
   onReport(Value?: ItemMaintenance): void {
     if (Value) {
@@ -97,7 +108,10 @@ export class ItemMaintenMasterComponent extends BaseMasterComponent<ItemMaintena
 
   // on back from report
   onBack(): void {
-    this.loadReportPaint = !this.loadReportPaint;  
+    this.loadReportPaint = !this.loadReportPaint;
+    if (this.backToSchedule) {
+      this.location.back();
+    }
   }
 
   // on save complete
@@ -106,11 +120,12 @@ export class ItemMaintenMasterComponent extends BaseMasterComponent<ItemMaintena
       .subscribe(result => {
         this.canSave = false;
         this.ShowEdit = false;
-        this.editValue = undefined;
-        this.onDetailView(undefined);
         if (this.backToSchedule) {
-            this.location.back();
+          this.onReport(this.editValue);
+          //this.location.back();
         } else {
+          this.editValue = undefined;
+          this.onDetailView(undefined);
           this.onReloadData();
         }
       });

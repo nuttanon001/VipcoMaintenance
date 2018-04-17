@@ -7,7 +7,6 @@
       <div class="form-container-column" (click)="openDialog('RequireMaintenance')"
            style="cursor:pointer;">
         <i class="text-info">Click here for detail.</i>
-        <hr class="w-75 my-1" />
         <div class="row-form" *ngIf="requireMainten">
           <div class="left-content">
             <mat-form-field>
@@ -49,7 +48,7 @@
                             required
                             id="WorkGroupMaintenanceId" formControlName="WorkGroupMaintenanceId">
                   <mat-option *ngFor="let groupMaintenance of groupMaintenances" [value]="groupMaintenance.WorkGroupMaintenanceId">
-                    {{ groupMaintenance.Name }}
+                    {{ groupMaintenance.Name }}-{{groupMaintenance.Description}}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="editValueForm.controls.WorkGroupMaintenanceId.hasError('required')">Please choose an group maintenance</mat-error>
@@ -62,7 +61,7 @@
                             required
                             id="TypeMaintenanceId" formControlName="TypeMaintenanceId">
                   <mat-option *ngFor="let typeMaintenance of typeMaintenances" [value]="typeMaintenance.TypeMaintenanceId">
-                    {{ typeMaintenance.Name || '-' }}
+                    {{ typeMaintenance.Name || '-' }}-{{typeMaintenance.Description}}
                   </mat-option>
                 </mat-select>
                 <mat-error *ngIf="editValueForm.controls.TypeMaintenanceId.hasError('required')">Please choose an type maintenance</mat-error>
@@ -72,53 +71,67 @@
           <!--Row3-->
           <div class="row-form">
             <div class="left-content">
-              <mat-form-field>
-                <input matInput [matDatepicker]="PlanStartDate" placeholder="Choose a plan start date  "
-                       id="PlanStartDate" formControlName="PlanStartDate" required
-                       [max]="editValueForm.controls.PlanEndDate.value">
-                <mat-datepicker-toggle matSuffix [for]="PlanStartDate"></mat-datepicker-toggle>
-                <mat-datepicker #PlanStartDate></mat-datepicker>
-                <mat-error *ngIf="editValueForm.controls.PlanStartDate.hasError('required')">
-                  Date plan is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
+              <div class="row-form w-75">
+                <div class="left-content">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="PlanStartDate" placeholder="Plan start date"
+                           id="PlanStartDate" formControlName="PlanStartDate" required
+                           [max]="editValueForm.controls.PlanEndDate.value"
+                           [readonly]="editValueForm.controls.ItemMaintenanceId.value">
+                    <mat-datepicker-toggle matSuffix [for]="PlanStartDate"
+                                           [disabled]="editValueForm.controls.ItemMaintenanceId.value"></mat-datepicker-toggle>
+                    <mat-datepicker #PlanStartDate></mat-datepicker>
+                    <mat-error *ngIf="editValueForm.controls.PlanStartDate.hasError('required')">
+                      Date plan is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div class="right-content"> 
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="PlanEndDate" placeholder="Plan end date"
+                           id="PlanEndDate" formControlName="PlanEndDate" required
+                           [min]="editValueForm.controls.PlanStartDate.value" 
+                           [readonly]="editValueForm.controls.ItemMaintenanceId.value">
+                    <mat-datepicker-toggle matSuffix [for]="PlanEndDate"
+                                           [disabled]="editValueForm.controls.ItemMaintenanceId.value"></mat-datepicker-toggle>
+                    <mat-datepicker #PlanEndDate></mat-datepicker>
+                    <mat-error *ngIf="editValueForm.controls.PlanEndDate.hasError('required')">
+                      Date plan is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
             </div>
 
             <div class="right-content">
-              <mat-form-field>
-                <input matInput [matDatepicker]="PlanEndDate" placeholder="Choose a plan end date  "
-                       id="PlanEndDate" formControlName="PlanEndDate" required
-                       [min]="editValueForm.controls.PlanStartDate.value">
-                <mat-datepicker-toggle matSuffix [for]="PlanEndDate"></mat-datepicker-toggle>
-                <mat-datepicker #PlanEndDate></mat-datepicker>
-                <mat-error *ngIf="editValueForm.controls.PlanEndDate.hasError('required')">
-                  Date plan is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
+              <div class="row-form w-75">
+                <div class="left-content">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="ActualStartDate" placeholder="Actual start date"
+                           id="ActualStartDate" formControlName="ActualStartDate"
+                           [max]="editValueForm.controls.ActualEndDate.value || toDay">
+                    <mat-datepicker-toggle matSuffix [for]="ActualStartDate"></mat-datepicker-toggle>
+                    <mat-datepicker #ActualStartDate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+                <div class="right-content">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="ActualEndDate" placeholder="Actual end date"
+                           id="ActualEndDate" formControlName="ActualEndDate"
+                           [min]="editValueForm.controls.ActualStartDate.value"
+                           [max]="toDay">
+                    <mat-datepicker-toggle matSuffix [for]="ActualEndDate"></mat-datepicker-toggle>
+                    <mat-datepicker #ActualEndDate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
             </div>
+           
           </div>
           <!--Row4-->
-          <div class="row-form">
-            <div class="left-content">
-              <mat-form-field>
-                <input matInput [matDatepicker]="ActualStartDate" placeholder="Choose a actual start date  "
-                       id="ActualStartDate" formControlName="ActualStartDate"
-                       [max]="editValueForm.controls.ActualEndDate.value">
-                <mat-datepicker-toggle matSuffix [for]="ActualStartDate"></mat-datepicker-toggle>
-                <mat-datepicker #ActualStartDate></mat-datepicker>
-              </mat-form-field>
-            </div>
-
-            <div class="right-content">
-              <mat-form-field>
-                <input matInput [matDatepicker]="ActualEndDate" placeholder="Choose a actual end date  "
-                       id="ActualEndDate" formControlName="ActualEndDate"
-                       [min]="editValueForm.controls.ActualStartDate.value">
-                <mat-datepicker-toggle matSuffix [for]="ActualEndDate"></mat-datepicker-toggle>
-                <mat-datepicker #ActualEndDate></mat-datepicker>
-              </mat-form-field>
-            </div>
-          </div>
+          
           <!--Row5-->
           <div class="row-form">
             <div class="left-content">

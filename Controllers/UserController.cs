@@ -45,11 +45,12 @@ namespace VipcoMaintenance.Controllers
         #region GET
 
         // GET: api/User/EmployeeAlready
-        [HttpGet("EmployeeAlready/{EmpCode}")]
+        [HttpGet("EmployeeAlready")]
         public async Task<IActionResult> EmployeeAlready(string EmpCode)
         {
             Expression<Func<User, bool>> condition = u => u.EmpCode == EmpCode;
-            if (await this.repository.AnyDataAsync(condition))
+            var Result = await this.repository.AnyDataAsync(condition);
+            if (Result)
                 return BadRequest(new { Error = " this employee was already in system." });
 
             return new JsonResult(new { Result = true }, this.DefaultJsonSettings);

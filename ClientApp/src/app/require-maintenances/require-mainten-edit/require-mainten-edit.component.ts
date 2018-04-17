@@ -1,6 +1,6 @@
 // angular
 import { Component, ViewContainerRef, group } from "@angular/core";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, Validators, AbstractControl } from "@angular/forms";
 // models
 import { Branch } from "../../branchs/shared/branch.model";
 import { RequireMaintenance,RequireStatus } from "../../require-maintenances/shared/require-maintenance.model";
@@ -101,11 +101,7 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
       BranchId: [this.editValue.BranchId],
       ProjectCodeMasterId: [this.editValue.ProjectCodeMasterId],
       MaintenanceApply: [this.editValue.MaintenanceApply],
-      MailApply: [this.editValue.MailApply,
-        [
-          Validators.email,
-        ]
-      ],
+      MailApply: [this.editValue.MailApply],
       // BaseModel
       Creator: [this.editValue.Creator],
       CreateDate: [this.editValue.CreateDate],

@@ -52,7 +52,7 @@ export class WorkGroupMaintenEditComponent extends BaseEditComponent<WorkGroupMa
   // build form
   buildForm(): void {
     this.editValueForm = this.fb.group({
-      WorkGroupId: [this.editValue.WorkGroupMaintenanceId],
+      WorkGroupMaintenanceId: [this.editValue.WorkGroupMaintenanceId],
       Name: [this.editValue.Name,
         [
           Validators.required,

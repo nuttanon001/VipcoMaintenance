@@ -1,8 +1,8 @@
 .report-box {
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
-  font-size: 12px;
-  line-height: 24px;
+  font-size: 15px;
+  line-height: 30px;
   font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
   color: #555;
 }
@@ -32,8 +32,9 @@
 }
 
 .sub-title {
-  font-size: 15px;
+  font-size: 17px;
   color: windowtext;
+  font-weight: bold;
   text-align: center;
   vertical-align: middle;
 }
@@ -45,9 +46,9 @@
   padding-left: 1px;
   // font
   color: windowtext;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 400;
-  vertical-align: middle;
+  vertical-align: bottom;
 }
 
 .label-sm-font {
@@ -62,8 +63,9 @@
   padding-left: 1px;
   // font
   color: windowtext;
-  font-size: 13px;
-  vertical-align: middle;
+  font-size: 15px;
+  font-style:italic;
+  vertical-align: bottom;
 }
 
 .column {

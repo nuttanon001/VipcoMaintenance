@@ -107,7 +107,7 @@ export abstract class BaseRestService<Model>{
     const options = masterCode ? { params: new HttpParams().set("key", masterCode) } : {};
 
     let url: string = this.baseUrl + subAction;
-    return this.http.get<Array<Model>>(url)
+    return this.http.get<Array<Model>>(url, options)
       .pipe(catchError(this.handleError(this.serviceName + "/get by master", new Array<Model>())));
   }
 
@@ -138,6 +138,11 @@ export abstract class BaseRestService<Model>{
 
   /** update with key number */
   updateModelWithKey(uObject: Model): Observable<Model> {
+    //console.log(JSON.stringify(uObject));
+    //console.log(JSON.stringify(this.keyName));
+    //console.log(JSON.stringify(uObject[this.keyName]));
+
+
     return this.http.put<Model>(this.baseUrl, JSON.stringify(uObject), {
       headers: httpOptions.headers,
       params: new HttpParams().set("key", uObject[this.keyName].toString())

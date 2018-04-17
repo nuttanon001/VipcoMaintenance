@@ -76,7 +76,8 @@ namespace VipcoMaintenance.Controllers
         {
             if (itemMaintenance != null)
             {
-                if (itemMaintenance.StatusMaintenance == StatusMaintenance.TakeAction)
+                if (itemMaintenance.StatusMaintenance == StatusMaintenance.TakeAction || 
+                    itemMaintenance.StatusMaintenance == StatusMaintenance.InProcess)
                 {
                     // Actual start is set
                     if (itemMaintenance.ActualStartDate.HasValue)
@@ -709,6 +710,9 @@ namespace VipcoMaintenance.Controllers
                 (record.StatusMaintenance == StatusMaintenance.Complate ? RequireStatus.Complate : RequireStatus.InProcess);
 
             await this.UpdateRequireMaintenance(record.RequireMaintenanceId.Value, record.Creator,status);
+
+            if (record.RequireMaintenance != null)
+                record.RequireMaintenance = null;
 
             return new JsonResult(record, this.DefaultJsonSettings);
         }

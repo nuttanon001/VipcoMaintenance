@@ -5,8 +5,8 @@ import { ItemMaintenanceHasEmp } from "./item-maintenance-has-emp.model";
 export interface ItemMaintenance extends BaseModel {
   ItemMaintenanceId: number;
   ItemMaintenanceNo?: string;
-  PlanStartDate: Date;
-  PlanEndDate: Date;
+  PlanStartDate?: Date;
+  PlanEndDate?: Date;
   ActualStartDate?: Date;
   ActualEndDate?: Date;
   StatusMaintenance?: StatusMaintenance;

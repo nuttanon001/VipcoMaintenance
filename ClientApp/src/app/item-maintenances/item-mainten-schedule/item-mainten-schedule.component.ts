@@ -376,6 +376,7 @@ export class ItemMaintenScheduleComponent implements OnInit, OnDestroy {
       // update data
       this.service.updateModelWithKey(tempValue).subscribe(
         (complete: any) => {
+          console.log("complete", JSON.stringify(complete));
           this.serviceDialogs
             .context("System message", "Save completed.", this.viewContainerRef)
             .subscribe(result => {

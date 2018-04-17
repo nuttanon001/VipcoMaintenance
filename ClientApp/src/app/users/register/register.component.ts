@@ -139,7 +139,7 @@ export class RegisterComponent implements OnInit {
             this.service.getEmployeeAlready(employee.EmpCode)
               .subscribe(data => {
                 if (data) {
-                  console.log(JSON.stringify(data));
+                  // console.log(JSON.stringify(data));
                   this.userForm.patchValue({
                     NameThai: employee.NameThai,
                   });

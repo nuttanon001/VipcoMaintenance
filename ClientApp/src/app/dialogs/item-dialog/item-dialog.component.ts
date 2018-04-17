@@ -35,6 +35,6 @@ export class ItemDialogComponent extends BaseDialogComponent<Item, ItemService> 
 
   // on init
   onInit(): void {
-    this.fastSelectd = true;
+    this.fastSelectd = this.mode === 0 ? true : false;
   }
 }

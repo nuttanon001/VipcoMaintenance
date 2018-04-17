@@ -293,6 +293,7 @@ namespace VipcoMaintenance.Services
         {
             this.Context.Set<TEntity>().Add(t);
             await this.Context.SaveChangesAsync();
+            this.Context.Entry(t).State = EntityState.Detached;
             return t;
         }
         /// <summary>
@@ -377,6 +378,7 @@ namespace VipcoMaintenance.Services
             {
                 this.Context.Entry(existing).CurrentValues.SetValues(updated);
                 await this.Context.SaveChangesAsync();
+                this.Context.Entry(existing).State = EntityState.Detached;
             }
             return existing;
         }
@@ -397,6 +399,7 @@ namespace VipcoMaintenance.Services
             {
                 this.Context.Entry(existing).CurrentValues.SetValues(updated);
                 await this.Context.SaveChangesAsync();
+                this.Context.Entry(existing).State = EntityState.Detached;
             }
             return existing;
         }

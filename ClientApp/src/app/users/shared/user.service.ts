@@ -29,7 +29,7 @@ export class UserService extends BaseRestService<User> {
   // get check employee already username
   getEmployeeAlready(empCode: string): Observable<any> {
     // Add safe, URL encoded search parameter if there is a search term
-    const options = empCode ? { params: new HttpParams().set('key', empCode) } : {};
+    const options = empCode ? { params: new HttpParams().set('EmpCode', empCode) } : {};
 
     let url: string = `${this.baseUrl}EmployeeAlready/`;
     return this.http.get<any>(url, options)

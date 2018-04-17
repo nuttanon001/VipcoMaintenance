@@ -319,9 +319,9 @@ namespace VipcoMaintenance.Controllers
                             var ProjectData = await this.repositoryProject.
                                         GetAsync(Data.ProjectCodeMasterId ?? 0);
                             ProjectMaster = ProjectData != null ? ($"{ProjectData.ProjectCode}/{ProjectData.ProjectName}") : "-";
-                            if (ProjectMaster.Length > 50)
+                            if (ProjectMaster.Length > 25)
                             {
-                                ProjectMaster = ProjectMaster.Substring(0, 50) + "...";
+                                ProjectMaster = ProjectMaster.Substring(0, 25) + "...";
                             }
                         }
 

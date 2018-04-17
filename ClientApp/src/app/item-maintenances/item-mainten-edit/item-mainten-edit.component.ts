@@ -1,6 +1,6 @@
 // angular
 import { Component, ViewContainerRef } from "@angular/core";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, Validators, AbstractControl } from "@angular/forms";
 // models
 import { ItemMaintenance, StatusMaintenance } from "../shared/item-maintenance.model";
 import { RequireMaintenance, RequireStatus } from "../../require-maintenances/shared/require-maintenance.model";
@@ -52,6 +52,8 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
   groupMaintenances: Array<WorkGroupMaintenance>;
   requisition: RequisitionStock;
   indexItem: number;
+  toDay: Date = new Date;
+
   // on get data by key
   onGetDataByKey(value?: ItemMaintenance): void {
     if (value && value.ItemMaintenanceId) {
@@ -134,8 +136,6 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
     } else {
       this.editValue = {
         ItemMaintenanceId: 0,
-        PlanStartDate: new Date,
-        PlanEndDate: new Date,
         RequisitionStockSps: new Array,
         ItemMainHasEmployees: new Array,
         StatusMaintenance: StatusMaintenance.TakeAction,
@@ -224,6 +224,46 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
     this.editValueForm.valueChanges.subscribe((data: any) => this.onValueChanged(data));
   }
 
+  //============= OverRide ===============//
+  // on value of form change
+  onValueChanged(data?: any): void {
+    if (!this.editValueForm) { return; }
+    const form = this.editValueForm;
+    //Get Control
+    const controlAS: AbstractControl | null = form.get("ActualStartDate");
+    const controlAE: AbstractControl | null = form.get("ActualEndDate");
+
+    if (controlAS && controlAE) {
+      console.log("Control1");
+      if (controlAS.value && controlAE.value) {
+        console.log("Control2");
+        if (controlAS.value > controlAE.value) {
+          this.editValueForm.patchValue({
+            ActualStartDate: controlAE.value
+          });
+        } else if (controlAE.value < controlAS.value) {
+          this.editValueForm.patchValue({
+            ActualEndDate: controlAS.value
+          });
+        }
+      } else {
+        if (!controlAS.value) {
+          if (controlAE.value) {
+            // debug here
+            console.log("controlAE", JSON.stringify(controlAE.value));
+
+            this.editValueForm.patchValue({
+              ActualStartDate: controlAE.value
+            });
+          }
+        }
+      }
+    } 
+
+    super.onValueChanged();
+  }
+  //============= OverRide ===============//
+
   // get type maintenance
   getTypeMaintenances(): void {
     if (!this.typeMaintenances) {
@@ -231,7 +271,7 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
     }
 
     if (this.requireMainten) {
-      this.serviceTypeMainten.getTypeMaintenanceByItem(this.requireMainten.ItemId)
+      this.serviceTypeMainten.getAll()
         .subscribe(dbData => {
           if (dbData) {
             this.typeMaintenances = [...dbData];

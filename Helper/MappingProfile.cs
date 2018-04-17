@@ -19,6 +19,7 @@ namespace VipcoMaintenance.Helper
                 .ForMember(x => x.BranchString,
                             o => o.MapFrom(s => s.Branch == null ? "ไม่ระบุ" : s.Branch.Name))
                 .ForMember(x => x.Branch,o => o.Ignore())
+                .ForMember(x => x.ItemImage,o => o.Ignore())
                 // ItemType
                 .ForMember(x => x.ItemTypeString,
                            o => o.MapFrom(s => s.ItemType == null ? "ไม่ระบุ" : s.ItemType.Name))

@@ -124,6 +124,7 @@ export class ItemEditComponent extends BaseEditComponent<Item, ItemService> {
         Validators.maxLength(200),
       ]
       ],
+      GroupMis: [this.editValue.GroupMis],
       ItemStatus: [this.editValue.ItemStatus],
       ItemImage: [this.editValue.ItemImage],
       Creator: [this.editValue.Creator],
@@ -141,6 +142,7 @@ export class ItemEditComponent extends BaseEditComponent<Item, ItemService> {
       //ViewModel
       ItemTypeString: [this.editValue.ItemTypeString],
       EmpResposibleString: [this.editValue.EmpResposibleString],
+      GroupMisString: [this.editValue.GroupMisString],
     });
     this.editValueForm.valueChanges.subscribe((data: any) => this.onValueChanged(data));
   }
@@ -197,6 +199,16 @@ export class ItemEditComponent extends BaseEditComponent<Item, ItemService> {
               this.editValueForm.patchValue({
                 EmpResponsible: emp.EmpCode,
                 EmpResposibleString: `คุณ${emp.NameThai}`,
+              });
+            }
+          });
+      } else if (type === "GroupOfWork") {
+        this.serviceDialogs.dialogSelectGroupMis(this.viewContainerRef)
+          .subscribe(groupOrWork => {
+            if (groupOrWork) {
+              this.editValueForm.patchValue({
+                GroupMis: groupOrWork.GroupMis,
+                GroupMisString: `${groupOrWork.GroupDesc}`,
               });
             }
           });

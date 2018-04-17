@@ -241,4 +241,24 @@ export class DialogsService {
     dialogRef = this.dialog.open(EmployeeDialogComponent, config);
     return dialogRef.afterClosed();
   }
+
+  /**
+* @param viewContainerRef
+* @param type = mode 0:fastSelected
+*/
+  public dialogSelectItems(viewContainerRef: ViewContainerRef, type: number = 1): Observable<Array<Item>> {
+    let dialogRef: MatDialogRef<ItemDialogComponent>;
+    let config: MatDialogConfig = new MatDialogConfig();
+
+    // config
+    config.viewContainerRef = viewContainerRef;
+    config.data = type;
+    // config.height = this.height;
+    // config.width= this.width;
+    config.hasBackdrop = true;
+
+    // open dialog
+    dialogRef = this.dialog.open(ItemDialogComponent, config);
+    return dialogRef.afterClosed();
+  }
 }

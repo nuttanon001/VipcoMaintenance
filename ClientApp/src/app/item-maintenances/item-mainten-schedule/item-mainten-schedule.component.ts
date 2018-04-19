@@ -14,6 +14,7 @@ import { AuthService } from "../../core/auth/auth.service";
 import { DialogsService } from "../../dialogs/shared/dialogs.service";
 import { ItemMaintenService, ItemMaintenCommunicateService } from "../shared/item-mainten.service";
 import { RequireMaintenService } from "../../require-maintenances/shared/require-mainten.service";
+import { fadeInContent } from "@angular/material";
 
 @Component({
   selector: 'app-item-mainten-schedule',
@@ -31,7 +32,7 @@ export class ItemMaintenScheduleComponent implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute) { }
+    public route: ActivatedRoute) { }
 
   // Parameter
   // form
@@ -56,6 +57,7 @@ export class ItemMaintenScheduleComponent implements OnInit, OnDestroy {
   ItemMaintenanceEdit: ItemMaintenance | undefined;
   canSave: boolean = false;
   // report
+  isLinkMail: boolean = false;
   loadReport: boolean;
   ReportType?: string;
   // angular hook
@@ -348,14 +350,16 @@ export class ItemMaintenScheduleComponent implements OnInit, OnDestroy {
             PlanStartDate: new Date,
             PlanEndDate: new Date
           }).subscribe(dbData => {
-              this.ItemMaintenanceEdit = dbData;
-              setTimeout(() => this.serviceCom.toChildEdit(dbData), 1000);
-            });
+            this.ItemMaintenanceEdit = dbData;
+            setTimeout(() => this.serviceCom.toChildEdit(dbData), 1000);
+          });
         }
       } else {
         // On Schedule readonly show dialog
-        this.serviceDialogs.dialogSelectItemMaintenance(ItemMaintenanceId,this.viewContainerRef);
+        this.serviceDialogs.dialogSelectItemMaintenance(ItemMaintenanceId, this.viewContainerRef);
       }
+    } else {
+      this.serviceDialogs.error("Warning Message", "This maintenance not plan yet.", this.viewContainerRef);
     }
   }
 

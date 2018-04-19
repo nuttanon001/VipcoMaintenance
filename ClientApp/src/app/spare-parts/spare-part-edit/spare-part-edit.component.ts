@@ -71,6 +71,11 @@ export class SparePartEditComponent extends BaseEditComponent<SparePart, SparePa
     // New form
     this.editValueForm = this.fb.group({
       SparePartId: [this.editValue.SparePartId],
+      Code: [this.editValue.Code,
+        [
+          Validators.required,
+        ]
+      ],
       Name: [this.editValue.Name,
         [
           Validators.required,

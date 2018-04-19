@@ -17,6 +17,8 @@ import { SearchBoxComponent } from "../search-box/search-box.component";
 // Services
 import { BaseRestService } from "../base-rest.service";
 import { AuthService } from "../../core/auth/auth.service";
+import { debounce } from "rxjs/operators";
+import { debounceTime } from "rxjs/operator/debounceTime";
 
 //@Component({
 //  selector: "app-custom-mat-table",

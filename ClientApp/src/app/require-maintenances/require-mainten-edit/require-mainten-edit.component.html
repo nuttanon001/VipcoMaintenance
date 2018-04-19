@@ -112,6 +112,43 @@
               </mat-form-field>
             </div>
           </div>
+          <!--Row6-->
+          <div class="row-form">
+            <div class="left-content">
+              <app-attach-file id="AttactFile" (results)="onUpdateAttachResults($event)">
+              </app-attach-file>
+            </div>
+
+            <div class="right-content">
+              <div *ngIf="attachFiles && attachFiles.length > 0">
+                <table class="table table-hover table-sm small">
+                  <colgroup>
+                    <col span="1" style="width: 80%;">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>File Name</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let file of attachFiles; let num2 = index">
+                      <td (click)="onOpenNewLink(file.FileAddress)" style="cursor:pointer;">
+                        {{num2 + 1}}. {{file.FileName}}
+                      </td>
+                      <td>
+                        <div>
+                          <a class="btn btn-sm btn-danger" matTooltip="Remove Attach File" (click)="onDeleteAttachFile(file)">
+                            <em class="fa fa-remove"></em>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </mat-tab>

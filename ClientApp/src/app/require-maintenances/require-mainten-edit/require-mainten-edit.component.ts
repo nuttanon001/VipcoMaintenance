@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, Validators, AbstractControl } from "@angular/
 import { Branch } from "../../branchs/shared/branch.model";
 import { RequireMaintenance,RequireStatus } from "../../require-maintenances/shared/require-maintenance.model";
 import { Item } from "../../items/shared/item.model";
+import { AttachFile } from "../../shared/attach-file.model";
 // components
 import { BaseEditComponent } from "../../shared/base-edit-component";
 // 3rd party
@@ -44,6 +45,7 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
 
   // Parameter
   branchs: Array<Branch>;
+  attachFiles: Array<AttachFile>;
   // on get data by key
   onGetDataByKey(value?: RequireMaintenance): void {
     if (value) {
@@ -74,6 +76,7 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
   buildForm(): void {
     //GetData
     this.getBranchs();
+    this.getAttach();
 
     this.editValueForm = this.fb.group({
       RequireMaintenanceId: [this.editValue.RequireMaintenanceId],
@@ -117,6 +120,8 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
       ProjectCodeMasterString: [this.editValue.ProjectCodeMasterString],
       GroupMISString: [this.editValue.GroupMISString],
       BranchString: [this.editValue.BranchString],
+      AttachFile: [this.editValue.AttachFile],
+      RemoveAttach: [this.editValue.RemoveAttach],
     });
     this.editValueForm.valueChanges.subscribe((data: any) => this.onValueChanged(data));
   }
@@ -213,6 +218,62 @@ export class RequireMaintenEditComponent extends BaseEditComponent<RequireMainte
             }
           });
       }
+    }
+  }
+
+  ////////////
+  // Module //
+  ////////////
+
+  // get attact file
+  getAttach(): void {
+    if (this.editValue && this.editValue.RequireMaintenanceId > 0) {
+      this.service.getAttachFile(this.editValue.RequireMaintenanceId)
+        .subscribe(dbAttach => {
+          this.attachFiles = dbAttach.slice();
+        }, error => console.error(error));
+    }
+  }
+
+  // on Attach Update List
+  onUpdateAttachResults(results: FileList): void {
+    // debug here
+    // console.log("File: ", results);
+    this.editValue.AttachFile = results;
+    // debug here
+    // console.log("Att File: ", this.RequirePaintList.AttachFile);
+
+    this.editValueForm.patchValue({
+      AttachFile: this.editValue.AttachFile
+    });
+  }
+
+  // on Attach delete file
+  onDeleteAttachFile(attach: AttachFile): void {
+    if (attach) {
+      if (!this.editValue.RemoveAttach) {
+        this.editValue.RemoveAttach = new Array;
+      }
+      // remove
+      this.editValue.RemoveAttach.push(attach.AttachFileId);
+      // debug here
+      // console.log("Remove :",this.editValue.RemoveAttach);
+
+      this.editValueForm.patchValue({
+        RemoveAttach: this.editValue.RemoveAttach
+      });
+      let template: Array<AttachFile> =
+        this.attachFiles.filter((e: AttachFile) => e.AttachFileId !== attach.AttachFileId);
+
+      this.attachFiles = new Array();
+      setTimeout(() => this.attachFiles = template.slice(), 50);
+    }
+  }
+
+  // open file attach
+  onOpenNewLink(link: string): void {
+    if (link) {
+      window.open(link, "_blank");
     }
   }
 }

@@ -6,15 +6,26 @@ namespace VipcoMaintenance.Models.Machines
 {
     public partial class MachineContext : DbContext
     {
+        public MachineContext(DbContextOptions<MachineContext> options)
+            : base(options)
+        { }
+        public virtual DbSet<AttachFile> AttachFile { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<EmployeeGroup> EmployeeGroup { get; set; }
         public virtual DbSet<EmployeeGroupMis> EmployeeGroupMis { get; set; }
         public virtual DbSet<ProjectCodeMaster> ProjectCodeMaster { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public MachineContext(DbContextOptions<MachineContext> options) : base(options) { }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AttachFile>(entity =>
+            {
+                entity.Property(e => e.FileAddress)
+                    .IsRequired()
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.FileName).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<Employee>(entity =>
             {
                 entity.HasKey(e => e.EmpCode);

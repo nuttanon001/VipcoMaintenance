@@ -69,4 +69,91 @@ export class RequireMaintenMasterComponent
     }
     super.onDetailEdit(editValue);
   }
+
+  //============== OverRide =================//
+  // on insert data
+  onInsertToDataBase(value: RequireMaintenance): void {
+    if (this.authService.getAuth) {
+      value["Creator"] = this.authService.getAuth.UserName || "";
+    }
+    let attachs: FileList | undefined = value.AttachFile;
+    // change timezone
+    value = this.changeTimezone(value);
+    // insert data
+    this.service.addModel(value).subscribe(
+      (complete: any) => {
+        if (complete && attachs) {
+          this.onAttactFileToDataBase(complete.RequireMaintenanceId, attachs, complete.Creator || "");
+        }
+
+        if (complete) {
+          this.displayValue = complete;
+          this.onSaveComplete();
+        } else {
+          this.editValue.Creator = undefined;
+          this.canSave = true;
+          this.dialogsService.error("Failed !",
+            "Save failed with the following error: Invalid Identifier code !!!", this.viewContainerRef);
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.editValue.Creator = undefined;
+        this.canSave = true;
+        this.dialogsService.error("Failed !",
+          "Save failed with the following error: Invalid Identifier code !!!", this.viewContainerRef);
+      }
+    );
+  }
+
+  // on update data
+  onUpdateToDataBase(value: RequireMaintenance): void {
+    if (this.authService.getAuth) {
+      value["Modifyer"] = this.authService.getAuth.UserName || "";
+    }
+    let attachs: FileList | undefined = value.AttachFile;
+    // remove attach
+    if (value.RemoveAttach) {
+      this.onRemoveFileFromDataBase(value.RemoveAttach);
+    }
+    // change timezone
+    value = this.changeTimezone(value);
+    // update data
+    this.service.updateModelWithKey(value).subscribe(
+      (complete: any) => {
+        if (complete && attachs) {
+          this.onAttactFileToDataBase(complete.RequireMaintenanceId, attachs, complete.Modifyer || "Someone");
+        }
+        if (complete) {
+          this.displayValue = complete;
+          this.onSaveComplete();
+        } else {
+          this.canSave = true;
+          this.dialogsService.error("Failed !",
+            "Save failed with the following error: Invalid Identifier code !!!", this.viewContainerRef);
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.canSave = true;
+        this.dialogsService.error("Failed !",
+          "Save failed with the following error: Invalid Identifier code !!!", this.viewContainerRef);
+      }
+    );
+  }
+
+  // Attach
+  // on attact file
+  onAttactFileToDataBase(RequireMaintenanceId: number, Attacts: FileList, CreateBy: string): void {
+    this.service.postAttactFile(RequireMaintenanceId, Attacts, CreateBy)
+      .subscribe(complate => console.log("Upload Complate"), error => console.error(error));
+  }
+
+  // on remove file
+  onRemoveFileFromDataBase(Attachs: Array<number>): void {
+    Attachs.forEach((value: number) => {
+      this.service.deleteAttactFile(value)
+        .subscribe(complate => console.log("Delete Complate"), error => console.error(error));
+    });
+  }
 }

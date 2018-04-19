@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ItemMaintenCenterComponent } from './item-mainten-center.component';
 import { ItemMaintenMasterComponent } from './item-mainten-master/item-mainten-master.component';
 import { ItemMaintenScheduleComponent } from './item-mainten-schedule/item-mainten-schedule.component';
+import { ItemManitenLinkMailComponent } from './item-maniten-link-mail/item-maniten-link-mail.component';
+// Services
 import { AuthGuard } from '../core/auth/auth-guard.service';
 
 const routes: Routes = [{
@@ -23,6 +25,10 @@ const routes: Routes = [{
     {
       path: "schedule/:condition",
       component: ItemMaintenScheduleComponent,
+    },
+    {
+      path: "link-mail/:condition",
+      component: ItemManitenLinkMailComponent,
     },
     {
       path: "",

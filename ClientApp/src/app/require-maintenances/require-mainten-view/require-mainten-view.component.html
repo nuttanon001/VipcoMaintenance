@@ -101,6 +101,16 @@
             {{displayValue.RequireStatusString || "-"}}
           </div>
         </div>
+        <!--Row7-->
+        <div class="row my-1" *ngIf="attachFiles">
+          <div class="my-label">
+            Attach File :
+          </div>
+          <div class="col-sm-4" style="padding:2px;">
+            <app-attach-file-view [attachFiles]="attachFiles">
+            </app-attach-file-view>
+          </div>
+        </div>
       </div>
     </mat-tab>
   </mat-tab-group>

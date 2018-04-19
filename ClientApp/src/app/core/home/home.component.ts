@@ -21,4 +21,11 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit(): void {
   }
+
+  onOpenNewLink(): void {
+    let link: string = "files/maintenance_doc.pdf";
+    if (link) {
+      window.open(link, "_blank");
+    }
+  }
 }

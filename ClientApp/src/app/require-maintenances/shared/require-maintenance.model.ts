@@ -1,4 +1,5 @@
 import { BaseModel } from "../../shared/base-model.model";
+import { AttachFile } from "../../shared/attach-file.model";
 
 export interface RequireMaintenance extends BaseModel {
   RequireMaintenanceId: number;
@@ -27,6 +28,9 @@ export interface RequireMaintenance extends BaseModel {
   GroupMISString?: string;
   BranchString?: string;
   RequireStatusString?: string;
+  // Attach Model
+  AttachFile?: FileList;
+  RemoveAttach?: Array<number>;
 }
 
 export enum RequireStatus {

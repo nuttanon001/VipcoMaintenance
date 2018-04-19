@@ -49,8 +49,8 @@ export class SearchBoxComponent implements OnInit {
     Observable.fromEvent(this.el.nativeElement, "keyup")
       .map((e: any) => e.target.value) // extract the value of the input
          // .filter((text: string) => text.length > 1) // filter out if empty
+        .debounceTime(500)                         // only once every 250ms
         .distinctUntilChanged()                    // not same value
-        .debounceTime(250)                         // only once every 250ms
         .subscribe(
         (results: any) => { // on sucesss
             // debug here

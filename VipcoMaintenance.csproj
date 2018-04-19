@@ -101,6 +101,8 @@
     <None Remove="ClientApp\src\app\item-maintenances\item-mainten-requisition\item-mainten-requisition.component.ts" />
     <None Remove="ClientApp\src\app\item-maintenances\item-mainten-schedule\item-mainten-schedule.component.spec.ts" />
     <None Remove="ClientApp\src\app\item-maintenances\item-mainten-schedule\item-mainten-schedule.component.ts" />
+    <None Remove="ClientApp\src\app\item-maintenances\item-maniten-link-mail\item-maniten-link-mail.component.spec.ts" />
+    <None Remove="ClientApp\src\app\item-maintenances\item-maniten-link-mail\item-maniten-link-mail.component.ts" />
     <None Remove="ClientApp\src\app\item-maintenances\option-item-mainten-schedule.model.ts" />
     <None Remove="ClientApp\src\app\item-maintenances\shared\item-mainten-has-emp.service.spec.ts" />
     <None Remove="ClientApp\src\app\item-maintenances\shared\item-mainten-has-emp.service.ts" />
@@ -115,6 +117,11 @@
     <None Remove="ClientApp\src\app\items\item-by-group-table\item-by-group-table.component.spec.ts" />
     <None Remove="ClientApp\src\app\items\item-by-group-table\item-by-group-table.component.ts" />
     <None Remove="ClientApp\src\app\items\shared\item-by-group.model.ts" />
+    <None Remove="ClientApp\src\app\shared\attach-file-view\attach-file-view.component.spec.ts" />
+    <None Remove="ClientApp\src\app\shared\attach-file-view\attach-file-view.component.ts" />
+    <None Remove="ClientApp\src\app\shared\attach-file.model.ts" />
+    <None Remove="ClientApp\src\app\shared\attach-file\attach-file.component.spec.ts" />
+    <None Remove="ClientApp\src\app\shared\attach-file\attach-file.component.ts" />
     <None Remove="ClientApp\src\app\shared\base-table-fontdata.component.ts" />
     <None Remove="ClientApp\src\app\shared\search-box\search-box.component.ts" />
     <None Remove="ClientApp\src\app\core\app\app.component.ts" />
@@ -394,6 +401,8 @@
     <TypeScriptCompile Include="ClientApp\src\app\item-maintenances\item-mainten-requisition\item-mainten-requisition.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\item-maintenances\item-mainten-schedule\item-mainten-schedule.component.spec.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\item-maintenances\item-mainten-schedule\item-mainten-schedule.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\item-maintenances\item-maniten-link-mail\item-maniten-link-mail.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\item-maintenances\item-maniten-link-mail\item-maniten-link-mail.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\item-maintenances\shared\option-item-mainten-schedule.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\item-maintenances\shared\item-mainten-has-emp.service.spec.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\item-maintenances\shared\item-mainten-has-emp.service.ts" />
@@ -407,6 +416,11 @@
     <TypeScriptCompile Include="ClientApp\src\app\items\item-by-group-table\item-by-group-table.component.spec.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\items\item-by-group-table\item-by-group-table.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\items\shared\item-by-group.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\attach-file-view\attach-file-view.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\attach-file-view\attach-file-view.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\attach-file.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\attach-file\attach-file.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\attach-file\attach-file.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\base-dialog.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\base-edit-component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\base-master-component.ts" />
@@ -625,6 +639,10 @@
     <TypeScriptCompile Include="ClientApp\src\polyfills.ts" />
     <TypeScriptCompile Include="ClientApp\src\test.ts" />
     <TypeScriptCompile Include="ClientApp\src\typings.d.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -53,7 +53,17 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
   requisition: RequisitionStock;
   indexItem: number;
   toDay: Date = new Date;
-
+  // Property
+  get ReadOnlyControl(): boolean {
+    if (this.editValue) {
+      if (this.editValue.ItemMaintenanceId > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
   // on get data by key
   onGetDataByKey(value?: ItemMaintenance): void {
     if (value && value.ItemMaintenanceId) {
@@ -173,42 +183,42 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
       ItemMaintenanceId: [this.editValue.ItemMaintenanceId],
       ItemMaintenanceNo: [this.editValue.ItemMaintenanceNo],
       PlanStartDate: [this.editValue.PlanStartDate,
-      [
-        Validators.required,
-      ]
+        [
+          Validators.required,
+        ]
       ],
       PlanEndDate: [this.editValue.PlanEndDate,
-      [
-        Validators.required,
-      ]
+        [
+          Validators.required,
+        ]
       ],
       ActualStartDate: [this.editValue.ActualStartDate],
       ActualEndDate: [this.editValue.ActualEndDate],
       StatusMaintenance: [this.editValue.StatusMaintenance],
       Description: [this.editValue.Description,
-      [
-        Validators.required,
-        Validators.maxLength(250)
-      ]
+        [
+          Validators.required,
+          Validators.maxLength(250)
+        ]
       ],
       Remark: [this.editValue.Remark,
-      [
-        Validators.maxLength(250)
-      ]
+        [
+          Validators.maxLength(250)
+        ]
       ],
       MaintenanceEmp: [this.editValue.MaintenanceEmp],
       RequireMaintenanceId: [this.editValue.RequireMaintenanceId],
       TypeMaintenanceId: [this.editValue.TypeMaintenanceId,
-      [
-        Validators.required,
-      ]
+        [
+          Validators.required,
+        ]
       ],
       RequisitionStockSps: [this.editValue.RequisitionStockSps],
       ItemMainHasEmployees: [this.editValue.ItemMainHasEmployees],
       WorkGroupMaintenanceId: [this.editValue.WorkGroupMaintenanceId,
-      [
-        Validators.required,
-      ]
+        [
+          Validators.required,
+        ]
       ],
       // BaseModel
       Creator: [this.editValue.Creator],
@@ -234,9 +244,9 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
     const controlAE: AbstractControl | null = form.get("ActualEndDate");
 
     if (controlAS && controlAE) {
-      console.log("Control1");
+      // console.log("Control1");
       if (controlAS.value && controlAE.value) {
-        console.log("Control2");
+        // console.log("Control2");
         if (controlAS.value > controlAE.value) {
           this.editValueForm.patchValue({
             ActualStartDate: controlAE.value
@@ -250,7 +260,7 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
         if (!controlAS.value) {
           if (controlAE.value) {
             // debug here
-            console.log("controlAE", JSON.stringify(controlAE.value));
+            // console.log("controlAE", JSON.stringify(controlAE.value));
 
             this.editValueForm.patchValue({
               ActualStartDate: controlAE.value
@@ -274,7 +284,16 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
       this.serviceTypeMainten.getAll()
         .subscribe(dbData => {
           if (dbData) {
-            this.typeMaintenances = [...dbData];
+            // this.typeMaintenances = [...dbData];
+            this.typeMaintenances = [...dbData.sort((item1, item2) => {
+              if (item1.Name > item2.Name) {
+                return 1;
+              }
+              if (item1.Name < item2.Name) {
+                return -1;
+              }
+              return 0;
+            })];
           }
         });
     }
@@ -289,7 +308,16 @@ export class ItemMaintenEditComponent extends BaseEditComponent<ItemMaintenance,
     this.serviceGroupMainten.getAll()
       .subscribe(dbData => {
         if (dbData) {
-          this.groupMaintenances = [...dbData];
+          //this.groupMaintenances = [...dbData];
+          this.groupMaintenances = [...dbData.sort((item1, item2) => {
+            if (item1.Name > item2.Name) {
+              return 1;
+            }
+            if (item1.Name < item2.Name) {
+              return -1;
+            }
+            return 0;
+          })];
         }
       })
   }

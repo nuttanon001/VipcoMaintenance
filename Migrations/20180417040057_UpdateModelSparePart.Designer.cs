@@ -12,9 +12,10 @@ using VipcoMaintenance.Models.Maintenances;
 namespace VipcoMaintenance.Migrations
 {
     [DbContext(typeof(MaintenanceContext))]
-    partial class MaintenanceContextModelSnapshot : ModelSnapshot
+    [Migration("20180417040057_UpdateModelSparePart")]
+    partial class UpdateModelSparePart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -412,32 +413,6 @@ namespace VipcoMaintenance.Migrations
                     b.ToTable("RequireMaintenance");
                 });
 
-            modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.RequireMaintenanceHasAttach", b =>
-                {
-                    b.Property<int>("RequireMaintenanceHasAttachId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AttachFileId");
-
-                    b.Property<DateTime?>("CreateDate");
-
-                    b.Property<string>("Creator")
-                        .HasMaxLength(50);
-
-                    b.Property<DateTime?>("ModifyDate");
-
-                    b.Property<string>("Modifyer")
-                        .HasMaxLength(50);
-
-                    b.Property<int?>("RequireMaintenanceId");
-
-                    b.HasKey("RequireMaintenanceHasAttachId");
-
-                    b.HasIndex("RequireMaintenanceId");
-
-                    b.ToTable("RequireMaintenanceHasAttach");
-                });
-
             modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.RequisitionStockSp", b =>
                 {
                     b.Property<int>("RequisitionStockSpId")
@@ -701,13 +676,6 @@ namespace VipcoMaintenance.Migrations
                     b.HasOne("VipcoMaintenance.Models.Maintenances.Item", "Item")
                         .WithMany("RequireMaintenances")
                         .HasForeignKey("ItemId");
-                });
-
-            modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.RequireMaintenanceHasAttach", b =>
-                {
-                    b.HasOne("VipcoMaintenance.Models.Maintenances.RequireMaintenance", "RequireMaintenance")
-                        .WithMany("RequireMaintenanceHasAttaches")
-                        .HasForeignKey("RequireMaintenanceId");
                 });
 
             modelBuilder.Entity("VipcoMaintenance.Models.Maintenances.RequisitionStockSp", b =>

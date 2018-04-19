@@ -12,9 +12,10 @@ using VipcoMaintenance.Models.Maintenances;
 namespace VipcoMaintenance.Migrations
 {
     [DbContext(typeof(MaintenanceContext))]
-    partial class MaintenanceContextModelSnapshot : ModelSnapshot
+    [Migration("20180418031621_AddAttachModel")]
+    partial class AddAttachModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

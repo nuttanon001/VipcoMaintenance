@@ -1,5 +1,5 @@
 <div class="master-container" *ngIf="!ItemMaintenanceEdit;else EditBlock">
-  <div class="child-col-container">
+  <div class="child-col-container" *ngIf="!isLinkMail">
     <h4 class="text-primary">Maintenance Schedule </h4>
     <div class="child-row-container my-1">
       <div style="margin-right:5px;color:forestgreen;">

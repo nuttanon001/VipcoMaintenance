@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace VipcoMaintenance.Models.Maintenances
 {
@@ -24,6 +24,7 @@ namespace VipcoMaintenance.Models.Maintenances
             modelBuilder.Entity<Permission>().ToTable("Permission");
             modelBuilder.Entity<ReceiveStockSp>().ToTable("ReceiveStockSp");
             modelBuilder.Entity<RequireMaintenance>().ToTable("RequireMaintenance");
+            modelBuilder.Entity<RequireMaintenanceHasAttach>().ToTable("RequireMaintenanceHasAttach");
             modelBuilder.Entity<RequisitionStockSp>().ToTable("RequisitionStockSp");
             modelBuilder.Entity<SparePart>().ToTable("SparePart");
             modelBuilder.Entity<TypeMaintenance>().ToTable("TypeMaintenance");
@@ -42,6 +43,7 @@ namespace VipcoMaintenance.Models.Maintenances
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<ReceiveStockSp> ReceiveStockSps { get; set; }
         public DbSet<RequireMaintenance> RequireMaintenances { get; set; }
+        public DbSet<RequireMaintenanceHasAttach> RequireMaintenanceHasAttaches { get; set; }
         public DbSet<RequisitionStockSp> RequisitionStockSps { get; set; }
         public DbSet<SparePart> SpareParts { get; set; }
         public DbSet<TypeMaintenance> TypeMaintenances { get; set; }

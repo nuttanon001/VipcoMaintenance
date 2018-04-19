@@ -23,6 +23,7 @@ import { ItemMaintenRequisitionComponent } from './item-mainten-requisition/item
 import { ItemMaintenHasEmpService } from './shared/item-mainten-has-emp.service';
 import { ItemMaintenReportComponent } from './item-mainten-report/item-mainten-report.component';
 import { ItemMaintenScheduleComponent } from './item-mainten-schedule/item-mainten-schedule.component';
+import { ItemManitenLinkMailComponent } from './item-maniten-link-mail/item-maniten-link-mail.component';
 // Shared
 //import { ItemMaintenEmployeeTableComponent } from './item-mainten-employee-table/item-mainten-employee-table.component';
 //import { ItemMaintenRequisitionTableComponent } from './item-mainten-requisition-table/item-mainten-requisition-table.component';
@@ -45,7 +46,8 @@ import { ItemMaintenScheduleComponent } from './item-mainten-schedule/item-maint
     ItemMaintenCenterComponent,
     ItemMaintenRequisitionComponent,
     ItemMaintenReportComponent,
-    ItemMaintenScheduleComponent
+    ItemMaintenScheduleComponent,
+    ItemManitenLinkMailComponent
     // Shared
     //ItemMaintenHasRequireComponent,
     //ItemMaintenRequisitionTableComponent,

@@ -2,6 +2,7 @@ import { BaseModel } from "../../shared/base-model.model";
 
 export interface SparePart extends BaseModel {
   SparePartId: number;
+  Code?: string;
   Name?: string;
   Description?: string;
   Remark?: string;

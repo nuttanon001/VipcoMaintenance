@@ -36,7 +36,8 @@ namespace VipcoMaintenance.Models.Maintenances
         public virtual ItemMaintenance ItemMaintenance { get; set; }
         // JobNumber
         public int? ProjectCodeMasterId { get; set; }
-
+        // RequireMaintenanceHasAttach
+        public virtual ICollection<RequireMaintenanceHasAttach> RequireMaintenanceHasAttaches { get; set; }
     }
 
     public enum RequireStatus

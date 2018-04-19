@@ -77,9 +77,9 @@
                     <input matInput [matDatepicker]="PlanStartDate" placeholder="Plan start date"
                            id="PlanStartDate" formControlName="PlanStartDate" required
                            [max]="editValueForm.controls.PlanEndDate.value"
-                           [readonly]="editValueForm.controls.ItemMaintenanceId.value">
+                           [readonly]="ReadOnlyControl">
                     <mat-datepicker-toggle matSuffix [for]="PlanStartDate"
-                                           [disabled]="editValueForm.controls.ItemMaintenanceId.value"></mat-datepicker-toggle>
+                                           [disabled]="ReadOnlyControl"></mat-datepicker-toggle>
                     <mat-datepicker #PlanStartDate></mat-datepicker>
                     <mat-error *ngIf="editValueForm.controls.PlanStartDate.hasError('required')">
                       Date plan is <strong>required</strong>
@@ -92,9 +92,9 @@
                     <input matInput [matDatepicker]="PlanEndDate" placeholder="Plan end date"
                            id="PlanEndDate" formControlName="PlanEndDate" required
                            [min]="editValueForm.controls.PlanStartDate.value" 
-                           [readonly]="editValueForm.controls.ItemMaintenanceId.value">
+                           [readonly]="ReadOnlyControl">
                     <mat-datepicker-toggle matSuffix [for]="PlanEndDate"
-                                           [disabled]="editValueForm.controls.ItemMaintenanceId.value"></mat-datepicker-toggle>
+                                           [disabled]="ReadOnlyControl"></mat-datepicker-toggle>
                     <mat-datepicker #PlanEndDate></mat-datepicker>
                     <mat-error *ngIf="editValueForm.controls.PlanEndDate.hasError('required')">
                       Date plan is <strong>required</strong>

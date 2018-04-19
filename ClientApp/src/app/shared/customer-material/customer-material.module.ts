@@ -54,6 +54,8 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { AttachFileComponent } from '../attach-file/attach-file.component';
+import { AttachFileViewComponent } from '../attach-file-view/attach-file-view.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { FormsModule } from "@angular/forms";
     //BaseChartComponent,
     // pipe
     DateOnlyPipe,
+    AttachFileComponent,
+    AttachFileViewComponent,
   ],
   imports: [
     // material
@@ -150,6 +154,8 @@ import { FormsModule } from "@angular/forms";
     CheckboxModule,
     // component
     SearchBoxComponent,
+    AttachFileComponent,
+    AttachFileViewComponent,
     //AttactFileComponent,
     //BaseChartComponent,
     // pipe
@@ -159,6 +165,8 @@ import { FormsModule } from "@angular/forms";
   ],
   entryComponents: [
     SearchBoxComponent,
+    AttachFileComponent,
+    AttachFileViewComponent,
     //AttactFileComponent,
     //BaseChartComponent,
   ],

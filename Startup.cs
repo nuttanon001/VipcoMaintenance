@@ -37,7 +37,7 @@ namespace VipcoMaintenance
             // Change AddDbContextPool if EF Core 2.1
             services.AddDbContextPool<MaintenanceContext>(option =>
                 option.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("MaintenanceConnection")))
-                    .AddDbContext<MachineContext>(option =>
+                    .AddDbContextPool<MachineContext>(option =>
                 option.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("MachineConnection")));
             // Add Repositoy
             services.AddTransient(typeof(IRepositoryMaintenance<>), typeof(RepositoryMaintenance<>))
